@@ -1,0 +1,17 @@
+#board{
+    display: table;
+    border-collapse: collapse;
+}
+
+#board .row{
+    display: table-row;
+
+}
+
+#board .basrow > div {
+    display: table-cell;
+    width: 50px;
+    height: 50px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+}
