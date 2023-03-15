@@ -44,49 +44,49 @@ class Board extends Component {
 
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" />
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
             <Trail />
           </Cell>
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
             <Trail />
           </Cell>
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" />
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
             <Road />
           </Cell>
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
             <Road />
           </Cell>
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" />
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
             <Trail />
           </Cell>
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
             <Trail />
           </Cell>
         </div>
         <div className="row">
           <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} />
+          <Row cellsNum={7} dropp={true} />
           <Cell borderLeftColor="rgb(37, 171, 255)" />
         </div>
 

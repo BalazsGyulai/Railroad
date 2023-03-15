@@ -1,5 +1,6 @@
 import React from 'react'
 import Board from "./components/Board"
+import Items from "./components/Items"
 import "./App.css";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
 
     {/* Board */}
     <Board />
+    <Items />
   </div>;
 }
 
