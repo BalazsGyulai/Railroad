@@ -1,115 +1,44 @@
-import React, { Component } from "react";
-import Row from "./Row";
+import React from "react";
 import Cell from "./Cell";
-import "./Board.css";
-
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
 
-class Board extends Component {
-  state = {};
+const Board = () => {
+  const board = [
+    ["wa", "wa", "ro", "wa", "ra", "wa", "ro", "wa", "wa"], // 1
+    ["wa", null, null, null, null, null, null, null, "wa"], // 2
+    ["ra01", null, null, null, null, null, null, null, "ra01"], // 3
+    ["wa", null, null, null, null, null, null, null, "wa"], // 4
+    ["ro01", null, null, null, null, null, null, null, "ro01"], // 5
+    ["wa", null, null, null, null, null, null, null, "wa"], // 6
+    ["ra01", null, null, null, null, null, null, null, "ra01"], // 7
+    ["wa", null, null, null, null, null, null, null, "wa"], // 8
+    ["wa", "wa", "ro", "wa", "ra", "wa", "ro", "wa", "wa"], // 9
+  ];
 
-  render() {
-    const rows = [];
-
-    for (let i = 0; i < 8; i++) {
-      const buildrow = [];
-
-      for (let y = 0; y < 9; y++) {
-        buildrow.push(<div></div>);
-      }
-
-      rows.push(<div className="row">{buildrow}</div>);
-    }
-
-    return (
-      <div id="board">
-        <div className="row">
-          <Cell />
-          <Cell borderBottomColor="rgb(37, 171, 255)" />
-          <Cell borderBottomColor="rgb(37, 171, 255)">
-            <Road />
-          </Cell>
-          <Cell borderBottomColor="rgb(37, 171, 255)" />
-          <Cell borderBottomColor="rgb(37, 171, 255)">
-            <Trail />
-          </Cell>
-          <Cell borderBottomColor="rgb(37, 171, 255)" />
-          <Cell borderBottomColor="rgb(37, 171, 255)">
-            <Road />
-          </Cell>
-          <Cell borderBottomColor="rgb(37, 171, 255)" />
-          <Cell />
-        </div>
-
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" />
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
-            <Trail />
-          </Cell>
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
-            <Trail />
-          </Cell>
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" />
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
-            <Road />
-          </Cell>
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
-            <Road />
-          </Cell>
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" />
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" rotate="90deg">
-            <Trail />
-          </Cell>
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" rotate="90deg">
-            <Trail />
-          </Cell>
-        </div>
-        <div className="row">
-          <Cell borderRightColor="rgb(37, 171, 255)" />
-          <Row cellsNum={7} dropp={true} />
-          <Cell borderLeftColor="rgb(37, 171, 255)" />
-        </div>
-
-        <div className="row">
-          <Cell />
-          <Cell borderTopColor="rgb(37, 171, 255)" />
-          <Cell borderTopColor="rgb(37, 171, 255)">
-            <Road />
-          </Cell>
-          <Cell borderTopColor="rgb(37, 171, 255)" />
-          <Cell borderTopColor="rgb(37, 171, 255)">
-            <Trail />
-          </Cell>
-          <Cell borderTopColor="rgb(37, 171, 255)" />
-          <Cell borderTopColor="rgb(37, 171, 255)">
-            <Road />
-          </Cell>
-          <Cell borderTopColor="rgb(37, 171, 255)" />
-          <Cell />
-        </div>
+  return board.map((row, i) => (
+    <>
+      <div className="row" key={i}>
+        {row.map((cell, y) =>
+          cell == null ? (
+            <Cell key={y} borderColor="rgb(37, 171, 255)" properties={cell} />
+          ) : cell == "wa" ? (
+            <Cell key={y} properties={cell} />
+          ) : cell.slice(0,2) == "ro" ? (
+            <Cell key={y} properties={cell}>
+              <Road />
+            </Cell>
+          ) : cell.slice(0,2) == "ra" ? (
+            <Cell key={y} properties={cell}>
+              <Trail />
+            </Cell>
+          ) : (
+            ""
+          )
+        )}
       </div>
-    );
-  }
-}
+    </>
+  ));
+};
 
 export default Board;

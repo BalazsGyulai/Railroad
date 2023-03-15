@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Cell.css";
 
 const Cell = (props) => {
+  const type = props.properties?.slice(0,2);
+  let rotate = props.properties?.slice(2,4);
+
+    console.log(`${type}  ${rotate}`);
+
   const initBorderColor = props.borderColor ?? "#fff";
   const initBorderLeftColor =
     props.borderLeftColor ?? initBorderColor ?? "#fff";
@@ -10,7 +15,23 @@ const Cell = (props) => {
   const initBorderRightColor =
     props.borderRightColor ?? initBorderColor ?? "#fff";
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
-  const initRotate = props.rotate ?? 0;
+
+  const [rotated, setRotated] = useState("0");
+
+  useEffect(() => {
+    setRotated(RotateHandler(rotate));
+  }, [])
+
+  const RotateHandler = (val) => {
+    if (parseInt(val) > 4) {
+      rotate = 0;
+    } else if (parseInt(val) < 0) {
+      rotate = 4;
+    }
+
+    return `${parseInt(rotate) * 90}deg`
+  }
+
 
   return (
     <div
@@ -23,7 +44,7 @@ const Cell = (props) => {
         borderTopColor: initBorderTopColor,
       }}
     >
-      <div className="object" style={{ transform: `rotate(${initRotate})` }}>
+      <div className="object" style={{ transform: `rotate(${rotated})` }}>
         {props.children}
       </div>
     </div>
