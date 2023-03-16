@@ -5,8 +5,6 @@ const Cell = (props) => {
   const type = props.properties?.slice(0,2);
   let rotate = props.properties?.slice(2,4);
 
-    console.log(`${type}  ${rotate}`);
-
   const initBorderColor = props.borderColor ?? "#fff";
   const initBorderLeftColor =
     props.borderLeftColor ?? initBorderColor ?? "#fff";

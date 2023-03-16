@@ -10,7 +10,7 @@ const S5 = () => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <rect width="100" height="100" fill="#F5F5F5" />
-      <g id="S5" clip-path="url(#clip0_0_1)">
+      <g id="S5" clipPath="url(#clip0_0_1)">
         <rect
           width="100"
           height="100"

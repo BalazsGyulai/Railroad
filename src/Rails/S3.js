@@ -10,7 +10,7 @@ const S3 = () => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <rect width="100" height="100" fill="#F5F5F5" />
-      <g id="S3" clip-path="url(#clip0_0_1)">
+      <g id="S3" clipPath="url(#clip0_0_1)">
         <rect width="100" height="100" fill="white" />
         <g id="trail">
           <path id="Vector 2" d="M40 6L60 6" stroke="black" strokeWidth="2" />
