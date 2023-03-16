@@ -13,9 +13,9 @@ const Trail = () => {
       <g id="trail">
         <rect width="100" height="100" fill="white" />
         <g id="trail_2">
-          <path id="Vector 2" d="M40 69H60" stroke="black" stroke-width="2" />
-          <path id="Vector 3" d="M40 81H60" stroke="black" stroke-width="2" />
-          <path id="Vector 4" d="M40 93H60" stroke="black" stroke-width="2" />
+          <path id="Vector 2" d="M40 69H60" stroke="black" strokeWidth="2" />
+          <path id="Vector 3" d="M40 81H60" stroke="black" strokeWidth="2" />
+          <path id="Vector 4" d="M40 93H60" stroke="black" strokeWidth="2" />
           <rect
             id="Rectangle 4"
             x="49"
@@ -26,9 +26,9 @@ const Trail = () => {
           />
         </g>
         <g id="trail_3">
-          <path id="Vector 2_2" d="M40 32H60" stroke="black" stroke-width="2" />
-          <path id="Vector 3_2" d="M40 44H60" stroke="black" stroke-width="2" />
-          <path id="Vector 4_2" d="M40 56H60" stroke="black" stroke-width="2" />
+          <path id="Vector 2_2" d="M40 32H60" stroke="black" strokeWidth="2" />
+          <path id="Vector 3_2" d="M40 44H60" stroke="black" strokeWidth="2" />
+          <path id="Vector 4_2" d="M40 56H60" stroke="black" strokeWidth="2" />
           <rect
             id="Rectangle 4_2"
             x="49"
@@ -43,9 +43,9 @@ const Trail = () => {
             id="Vector 3_3"
             d="M40 7L60 7"
             stroke="black"
-            stroke-width="2"
+            strokeWidth="2"
           />
-          <path id="Vector 4_3" d="M40 19H60" stroke="black" stroke-width="2" />
+          <path id="Vector 4_3" d="M40 19H60" stroke="black" strokeWidth="2" />
           <rect id="Rectangle 4_3" x="49" width="2" height="26" fill="black" />
         </g>
       </g>

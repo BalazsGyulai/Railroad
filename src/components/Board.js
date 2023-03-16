@@ -16,29 +16,37 @@ const Board = () => {
     ["wa", "wa", "ro", "wa", "ra", "wa", "ro", "wa", "wa"], // 9
   ];
 
-  return board.map((row, i) => (
-    <>
-      <div className="row" key={i}>
-        {row.map((cell, y) =>
-          cell == null ? (
-            <Cell key={y} borderColor="rgb(37, 171, 255)" properties={cell} />
-          ) : cell == "wa" ? (
-            <Cell key={y} properties={cell} />
-          ) : cell.slice(0,2) == "ro" ? (
-            <Cell key={y} properties={cell}>
-              <Road />
-            </Cell>
-          ) : cell.slice(0,2) == "ra" ? (
-            <Cell key={y} properties={cell}>
-              <Trail />
-            </Cell>
-          ) : (
-            ""
-          )
-        )}
-      </div>
-    </>
-  ));
+  return (
+    <div id="board">
+      {board.map((row, i) => (
+        <>
+          <div className="row" key={i}>
+            {row.map((cell, y) =>
+              cell == null ? (
+                <Cell
+                  key={y}
+                  borderColor="rgb(37, 171, 255)"
+                  properties={cell}
+                />
+              ) : cell == "wa" ? (
+                <Cell key={y} properties={cell} />
+              ) : cell.slice(0, 2) == "ro" ? (
+                <Cell key={y} properties={cell}>
+                  <Road />
+                </Cell>
+              ) : cell.slice(0, 2) == "ra" ? (
+                <Cell key={y} properties={cell}>
+                  <Trail />
+                </Cell>
+              ) : (
+                ""
+              )
+            )}
+          </div>
+        </>
+      ))}
+    </div>
+  );
 };
 
 export default Board;
