@@ -1,42 +1,389 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Cell from "./Cell";
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
+import Moving from "../data/Moving";
+
+const BOARD = [
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ro",
+      item: <Road />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ra",
+      item: <Trail />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ro",
+      item: <Road />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 1
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 2
+  [
+    {
+      name: {
+        name: "ra",
+        item: <Trail />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Trail />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: {
+        name: "ra",
+        item: <Trail />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Trail />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+  ], // 3
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 4
+  [
+    {
+      name: {
+        name: "ro",
+        item: <Road />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Road />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: {
+        name: "ro",
+        item: <Road />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Road />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+  ], // 5
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 6
+  [
+    {
+      name: {
+        name: "ra",
+        item: <Trail />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Trail />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: {
+        name: "ra",
+        item: <Trail />,
+        rotated: 0,
+        flip: 0,
+        round: 0
+      },
+      item: <Trail />,
+      rotated: 1,
+      flip: 0,
+      round: 0,
+    },
+  ], // 7
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 8
+  [
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ro",
+      item: <Road />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ra",
+      item: <Trail />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "ro",
+      item: <Road />,
+      rotated: 0,
+      flip: 0,
+      round: 0
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+    {
+      name: "wa",
+      item: "",
+      rotated: 0,
+      flip: 0,
+      round: 0,
+    },
+  ], // 9
+];
 
 const Board = () => {
-  const board = [
-    ["wa", "wa", "ro", "wa", "ra", "wa", "ro", "wa", "wa"], // 1
-    ["wa", null, null, null, null, null, null, null, "wa"], // 2
-    ["ra01", null, null, null, null, null, null, null, "ra01"], // 3
-    ["wa", null, null, null, null, null, null, null, "wa"], // 4
-    ["ro01", null, null, null, null, null, null, null, "ro01"], // 5
-    ["wa", null, null, null, null, null, null, null, "wa"], // 6
-    ["ra01", null, null, null, null, null, null, null, "ra01"], // 7
-    ["wa", null, null, null, null, null, null, null, "wa"], // 8
-    ["wa", "wa", "ro", "wa", "ra", "wa", "ro", "wa", "wa"], // 9
-  ];
+  const { selected } = useContext(Moving);
+  const [board, setBoard] = useState(BOARD);
 
+  const [selectedCell, setSelectedCell] = useState(null);
+
+  const dropToCellHandler = (pos) => {
+    let newBoard = board;
+    newBoard[pos.y][pos.x] = selected;
+
+    setBoard(newBoard);
+  };
   return (
     <div id="board">
-      {board.map((row, i) => (
+      {BOARD.map((row, y) => (
         <>
-          <div className="row" key={i}>
-            {row.map((cell, y) =>
-              cell == null ? (
+          <div className="row" key={y}>
+            {row.map((cell, x) =>
+              cell.name == null ? (
                 <Cell
                   key={y}
                   borderColor="rgb(37, 171, 255)"
                   properties={cell}
+                  position={{ x: x, y: y }}
+                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
                 />
-              ) : cell == "wa" ? (
-                <Cell key={y} properties={cell} />
-              ) : cell.slice(0, 2) == "ro" ? (
-                <Cell key={y} properties={cell}>
-                  <Road />
+              ) : cell.name == "wa" ? (
+                <Cell
+                  key={y}
+                  properties={cell}
+                  position={{ x: x, y: y }}
+                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
+                />
+              ) : cell.name == "ro"? (
+                <Cell
+                  key={y}
+                  properties={cell}
+                  position={{ x: x, y: y }}
+                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
+                >
+                  {cell.item}
                 </Cell>
-              ) : cell.slice(0, 2) == "ra" ? (
-                <Cell key={y} properties={cell}>
-                  <Trail />
+              ) : cell.name == "ra" ? (
+                <Cell
+                  key={y}
+                  properties={cell}
+                  position={{ x: x, y: y }}
+                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
+                >
+                  {cell.item}
                 </Cell>
               ) : (
                 ""

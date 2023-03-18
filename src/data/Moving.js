@@ -23,6 +23,8 @@ export function MovingManage({ children }) {
         useSelected("null");
     }
 
+    
+
     return (
         <Moving.Provider 
         value={{

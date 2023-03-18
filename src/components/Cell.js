@@ -34,12 +34,14 @@ const Cell = (props) => {
     return `${parseInt(rotate) * 90}deg`;
   };
 
-  const DropSelectedPiece = () => {
-    if (droppedPiece === "") {
-      setDroppedPiece(selected);
-    } else {
-      SetSelected(droppedPiece);
-    }
+  const DropSelectedPiece = (x, y) => {
+
+    props.dropToCell({x: x, y: y});
+    // if (droppedPiece === "") {
+    //   setDroppedPiece(selected);
+    // } else {
+    //   SetSelected(droppedPiece);
+    // }
   };
 
   return (
@@ -56,9 +58,8 @@ const Cell = (props) => {
       <div
         className="object"
         style={{ transform: `rotate(${rotated})` }}
-        onClick={() => DropSelectedPiece()}
+        onClick={() => DropSelectedPiece(props.position.x, props.position.y)}
       >
-        {droppedPiece.item}
         {props.children}
       </div>
     </div>

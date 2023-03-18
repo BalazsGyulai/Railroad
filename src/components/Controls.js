@@ -6,12 +6,17 @@ import RotateRight from "../Icons/RotateRight";
 import "./Controls.css";
 
 const Controls = () => {
+
+  const RotateHandler = (val) => {
+    console.log(val);
+  }
+
   return (
     <div id="controls">
-        <div className="controlItem">
+        <div className="controlItem" onClick={() => RotateHandler(-1)}>
             <RotateLeft />
         </div>
-        <div className="controlItem">
+        <div className="controlItem" onClick={() => RotateHandler(1)}>
             <RotateRight />
         </div>
         <div className="controlItem">
