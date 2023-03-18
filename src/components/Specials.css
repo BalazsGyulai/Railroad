@@ -2,11 +2,3 @@
     display: flex;
     padding: 10px;
 }
-
-#Specials .SpecialItem{
-    width: 60px;
-    height: 60px;
-    padding: 5px;
-    background-color: rgb(0, 106, 255);
-    cursor: pointer;
-}

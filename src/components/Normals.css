@@ -1,0 +1,7 @@
+#normals {
+    display: flex;
+    width: 100%;
+    max-width: 200px;
+    flex-wrap: wrap;
+    padding: 10px;
+}

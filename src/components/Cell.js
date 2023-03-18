@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Cell.css";
+import Moving from "../data/Moving";
 
 const Cell = (props) => {
-  const type = props.properties?.slice(0,2);
-  let rotate = props.properties?.slice(2,4);
+  const { SetSelected, selected, UnselectTheSelectedPiece } =
+    useContext(Moving);
+  const [rotated, setRotated] = useState("0");
+  const [droppedPiece, setDroppedPiece] = useState("");
+
+  const type = props.properties?.slice(0, 2);
+  let rotate = props.properties?.slice(2, 4);
 
   const initBorderColor = props.borderColor ?? "#fff";
   const initBorderLeftColor =
@@ -14,11 +20,9 @@ const Cell = (props) => {
     props.borderRightColor ?? initBorderColor ?? "#fff";
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
 
-  const [rotated, setRotated] = useState("0");
-
   useEffect(() => {
     setRotated(RotateHandler(rotate));
-  }, [])
+  }, []);
 
   const RotateHandler = (val) => {
     if (parseInt(val) > 4) {
@@ -27,9 +31,16 @@ const Cell = (props) => {
       rotate = 4;
     }
 
-    return `${parseInt(rotate) * 90}deg`
-  }
+    return `${parseInt(rotate) * 90}deg`;
+  };
 
+  const DropSelectedPiece = () => {
+    if (droppedPiece === "") {
+      setDroppedPiece(selected);
+    } else {
+      SetSelected(droppedPiece);
+    }
+  };
 
   return (
     <div
@@ -42,7 +53,12 @@ const Cell = (props) => {
         borderTopColor: initBorderTopColor,
       }}
     >
-      <div className="object" style={{ transform: `rotate(${rotated})` }}>
+      <div
+        className="object"
+        style={{ transform: `rotate(${rotated})` }}
+        onClick={() => DropSelectedPiece()}
+      >
+        {droppedPiece.item}
         {props.children}
       </div>
     </div>

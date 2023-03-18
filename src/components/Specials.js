@@ -6,49 +6,57 @@ import S3 from "../Rails/S3"
 import S4 from "../Rails/S4"
 import S5 from "../Rails/S5"
 import "./Specials.css";
-import Moving from "../Rails/Moving"
+import Piece from "./Piece";
+
+const SPECIALS = [
+    {
+        name: "S0",
+        item: <S0 />,
+        rotated: 0,
+        flip: 0
+    },
+    {
+        name: "S1",
+        item: <S1 />,
+        rotated: 0,
+        flip: 0
+    },
+    {
+        name: "S2",
+        item: <S2 />,
+        rotated: 0,
+        flip: 0
+    },
+    {
+        name: "S3",
+        item: <S3 />,
+        rotated: 0,
+        flip: 0
+    },
+    {
+        name: "S4",
+        item: <S4 />,
+        rotated: 0,
+        flip: 0
+    },
+    {
+        name: "S5",
+        item: <S5 />,
+        rotated: 0,
+        flip: 0
+    },
+];
 
 const Specials = () => {
-    const { SetSelected, selected } = useContext(Moving);
-    const SPECIALS = [
-        {
-            name: "S0",
-            item: <S0 />
-        },
-        {
-            name: "S1",
-            item: <S1 />
-        },
-        {
-            name: "S2",
-            item: <S2 />
-        },
-        {
-            name: "S3",
-            item: <S3 />
-        },
-        {
-            name: "S4",
-            item: <S4 />
-        },
-        {
-            name: "S5",
-            item: <S5 />
-        },
-    ];
 
-    const chooseItem = (item) => {
-        SetSelected(item);
-    }
 
   return (
     <div id="Specials">
         {
             SPECIALS.map((special, index) => (
-                <div key={index} className="SpecialItem" onClick={() => chooseItem(special.item)} >{special.item}</div>
+                <Piece key={index} piece={special}/>
             ))
         }
-     {selected}
     </div>
   )
 }
