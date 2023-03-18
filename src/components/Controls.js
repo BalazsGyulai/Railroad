@@ -8,8 +8,17 @@ import "./Controls.css";
 const Controls = () => {
   return (
     <div id="controls">
-        <div>
-            
+        <div className="controlItem">
+            <RotateLeft />
+        </div>
+        <div className="controlItem">
+            <RotateRight />
+        </div>
+        <div className="controlItem">
+            <Flip />
+        </div>
+        <div className="controlItem">
+            <Remove />
         </div>
     </div>
   )
