@@ -1,15 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {MovingManage} from './data/Moving'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { MovingManage } from "./data/Moving";
+import { BoardManage } from "./data/Board";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <MovingManage>
-      <App />
+      <BoardManage>
+        <App />
+      </BoardManage>
     </MovingManage>
   </React.StrictMode>
 );

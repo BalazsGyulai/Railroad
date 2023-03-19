@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Cell.css";
 import Moving from "../data/Moving";
+import BoardTable from "../data/Board";
 
 const Cell = (props) => {
-  const { SetSelected, selected, UnselectTheSelectedPiece } =
-    useContext(Moving);
+  const { SetSelected } = useContext(Moving);
+  const { dropToCellHandler } = useContext(BoardTable);
+
   const [rotated, setRotated] = useState("0");
   const [droppedPiece, setDroppedPiece] = useState("");
 
@@ -18,24 +20,23 @@ const Cell = (props) => {
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
 
   useEffect(() => {
-    if (props.properties !== null){
+    if (props.properties !== null) {
       setRotated(RotateHandler(props.properties.rotated));
       setDroppedPiece(props.properties.item);
     }
-  }, []);
+  }, [props.properties]);
 
   const RotateHandler = (val) => {
     return `${parseInt(val) * 90}deg`;
   };
 
   const DropSelectedPiece = (x, y) => {
-
-    props.dropToCell({x: x, y: y});
-    // if (droppedPiece === "") {
-    //   setDroppedPiece(selected);
-    // } else {
-    //   SetSelected(droppedPiece);
-    // }
+    if (droppedPiece !== "" || droppedPiece !== null) {
+      dropToCellHandler(x, y);
+      SetSelected("");
+    } else {
+      console.log("selected a board item");
+    }
   };
 
   return (
