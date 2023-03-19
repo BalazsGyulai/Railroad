@@ -20,3 +20,16 @@
     width: 100%;
     height: 100%;
 }
+
+.droppedpiece{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.round {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.7em;
+}

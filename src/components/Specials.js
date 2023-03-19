@@ -57,7 +57,7 @@ function SPECIALS() {
 }
 
 const Specials = () => {
-  const { round } = useContext(Moving);
+  const { round, selected} = useContext(Moving);
   const [specials, setSpecials] = useState("");
 
   useEffect(() => {

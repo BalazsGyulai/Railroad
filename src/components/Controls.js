@@ -7,11 +7,7 @@ import "./Controls.css";
 import Moving from "../data/Moving";
 
 const Controls = () => {
-  const { selected } = useContext(Moving);
-
-  const RotateHandler = (val) => {
-    console.log(val);
-  };
+  const { selected, RotateHandler, FlipHandler } = useContext(Moving);
 
   return (
     <div id="controls">
@@ -23,7 +19,7 @@ const Controls = () => {
           <div className="controlItem" onClick={() => RotateHandler(1)}>
             <RotateRight />
           </div>
-          <div className="controlItem">
+          <div className="controlItem" onClick={() => FlipHandler()}>
             <Flip />
           </div>
           <div className="controlItem">

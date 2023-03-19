@@ -52,10 +52,16 @@ const Cell = (props) => {
     >
       <div
         className="object"
-        style={{ transform: `rotate(${rotated})` }}
         onClick={() => DropSelectedPiece(props.position.x, props.position.y)}
       >
+        <div className="droppedpiece" style={{transform: `rotate(${rotated})`}}>
         {droppedPiece}
+        </div>
+        {
+          props.properties !== null && props.properties.round !== 0 ?
+        
+        <div className="round">{props.properties.round !== "0" ? props.properties.round : ""}</div> : ""
+        }
       </div>
     </div>
   );
