@@ -300,7 +300,7 @@ const BOARD = [
 const BoardTable = createContext();
 
 export function BoardManage({ children }) {
-  const { selected } = useContext(Moving);
+  const { selected, NextRoundHandler } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
 
   const dropToCellHandler = (x, y) => {
@@ -309,6 +309,9 @@ export function BoardManage({ children }) {
       newBoard[y][x] = selected;
 
       setBoard(newBoard);
+
+      NextRoundHandler();
+      console.log(newBoard);
     }
   };
 

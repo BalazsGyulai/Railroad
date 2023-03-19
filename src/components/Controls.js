@@ -1,32 +1,40 @@
-import React from 'react';
+import React, { useContext } from "react";
 import Remove from "../Icons/Remove";
 import Flip from "../Icons/Flip";
 import RotateLeft from "../Icons/RotateLeft";
 import RotateRight from "../Icons/RotateRight";
 import "./Controls.css";
+import Moving from "../data/Moving";
 
 const Controls = () => {
+  const { selected } = useContext(Moving);
 
   const RotateHandler = (val) => {
     console.log(val);
-  }
+  };
 
   return (
     <div id="controls">
-        <div className="controlItem" onClick={() => RotateHandler(-1)}>
+      {selected !== "" ? (
+        <>
+          <div className="controlItem" onClick={() => RotateHandler(-1)}>
             <RotateLeft />
-        </div>
-        <div className="controlItem" onClick={() => RotateHandler(1)}>
+          </div>
+          <div className="controlItem" onClick={() => RotateHandler(1)}>
             <RotateRight />
-        </div>
-        <div className="controlItem">
+          </div>
+          <div className="controlItem">
             <Flip />
-        </div>
-        <div className="controlItem">
+          </div>
+          <div className="controlItem">
             <Remove />
-        </div>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Controls
+export default Controls;
