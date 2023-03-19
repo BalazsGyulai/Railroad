@@ -8,9 +8,6 @@ const Cell = (props) => {
   const [rotated, setRotated] = useState("0");
   const [droppedPiece, setDroppedPiece] = useState("");
 
-  const type = props.properties?.slice(0, 2);
-  let rotate = props.properties?.slice(2, 4);
-
   const initBorderColor = props.borderColor ?? "#fff";
   const initBorderLeftColor =
     props.borderLeftColor ?? initBorderColor ?? "#fff";
@@ -21,17 +18,14 @@ const Cell = (props) => {
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
 
   useEffect(() => {
-    setRotated(RotateHandler(rotate));
+    if (props.properties !== null){
+      setRotated(RotateHandler(props.properties.rotated));
+      setDroppedPiece(props.properties.item);
+    }
   }, []);
 
   const RotateHandler = (val) => {
-    if (parseInt(val) > 4) {
-      rotate = 0;
-    } else if (parseInt(val) < 0) {
-      rotate = 4;
-    }
-
-    return `${parseInt(rotate) * 90}deg`;
+    return `${parseInt(val) * 90}deg`;
   };
 
   const DropSelectedPiece = (x, y) => {
@@ -60,7 +54,7 @@ const Cell = (props) => {
         style={{ transform: `rotate(${rotated})` }}
         onClick={() => DropSelectedPiece(props.position.x, props.position.y)}
       >
-        {props.children}
+        {droppedPiece}
       </div>
     </div>
   );

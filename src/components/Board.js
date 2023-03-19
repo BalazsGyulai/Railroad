@@ -25,7 +25,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -39,7 +39,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -53,7 +53,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -95,13 +95,7 @@ const BOARD = [
   ], // 2
   [
     {
-      name: {
-        name: "ra",
-        item: <Trail />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ra",
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -115,13 +109,7 @@ const BOARD = [
     null,
     null,
     {
-      name: {
-        name: "ra",
-        item: <Trail />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ra",
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -153,13 +141,7 @@ const BOARD = [
   ], // 4
   [
     {
-      name: {
-        name: "ro",
-        item: <Road />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ro",
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -173,13 +155,7 @@ const BOARD = [
     null,
     null,
     {
-      name: {
-        name: "ro",
-        item: <Road />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ro",
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -211,13 +187,7 @@ const BOARD = [
   ], // 6
   [
     {
-      name: {
-        name: "ra",
-        item: <Trail />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ra",
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -231,13 +201,7 @@ const BOARD = [
     null,
     null,
     {
-      name: {
-        name: "ra",
-        item: <Trail />,
-        rotated: 0,
-        flip: 0,
-        round: 0
-      },
+      name: "ra",
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -287,7 +251,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -301,7 +265,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -315,7 +279,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0
+      round: 0,
     },
     {
       name: "wa",
@@ -348,45 +312,25 @@ const Board = () => {
   };
   return (
     <div id="board">
-      {BOARD.map((row, y) => (
+      {board.map((row, y) => (
         <>
           <div className="row" key={y}>
             {row.map((cell, x) =>
-              cell.name == null ? (
+              cell === null ? (
                 <Cell
-                  key={y}
+                  key={`${y}${x}`}
                   borderColor="rgb(37, 171, 255)"
                   properties={cell}
                   position={{ x: x, y: y }}
                   dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
                 />
-              ) : cell.name == "wa" ? (
+              ) : (
                 <Cell
-                  key={y}
+                  key={`${y}${x}`}
                   properties={cell}
                   position={{ x: x, y: y }}
                   dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
                 />
-              ) : cell.name == "ro"? (
-                <Cell
-                  key={y}
-                  properties={cell}
-                  position={{ x: x, y: y }}
-                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
-                >
-                  {cell.item}
-                </Cell>
-              ) : cell.name == "ra" ? (
-                <Cell
-                  key={y}
-                  properties={cell}
-                  position={{ x: x, y: y }}
-                  dropToCell={(dropToCell) => dropToCellHandler(dropToCell)}
-                >
-                  {cell.item}
-                </Cell>
-              ) : (
-                ""
               )
             )}
           </div>
