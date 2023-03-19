@@ -29,29 +29,29 @@ export function MovingManage({ children }) {
   };
 
   const RotateHandler = (val) => {
-    let turnable = selected;
+    let turnable = selected.rotated;
 
-    turnable.rotated = turnable.rotated + val;
+    turnable = turnable + val;
 
-    if (turnable.rotated < 0){
-      turnable.rotated = 3;
-    } else if(turnable.rotated > 3) {
-      turnable.rotate = 0;
+    if (turnable < 0){
+      turnable = 3;
+    } else if(turnable > 3) {
+      turnable = 0;
     }
     
-    SetSelected(turnable);
+    SetSelected({...selected, rotated: turnable});
   }
 
   const FlipHandler = () => {
-    let flipable = selected;
+    let flipable = selected.flip;
 
-    if(flipable.flip === 0){
-      flipable.flip = -1;
+    if(flipable === 0){
+      flipable = -1;
     } else {
-      flipable.flip = 0;
+      flipable = 0;
     }
 
-    SetSelected(flipable);
+    SetSelected({...selected, flip: flipable});
   }
 
   return (
