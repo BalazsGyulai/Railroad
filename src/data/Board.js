@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
@@ -300,18 +300,21 @@ const BOARD = [
 const BoardTable = createContext();
 
 export function BoardManage({ children }) {
-  const { selected, NextRoundHandler } = useContext(Moving);
+  const { selected, cellItemSelected, action } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
 
+  useEffect(() => {
+    if (cellItemSelected !== ""){
+      dropToCellHandler(cellItemSelected.x, cellItemSelected.y)
+    }
+  }, [action])
+  
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       let newBoard = board;
       newBoard[y][x] = selected;
 
-      setBoard(newBoard);
-
-      NextRoundHandler();
-      console.log(newBoard);
+      setBoard([...board], board[y][x] = {...selected});
     }
   };
 

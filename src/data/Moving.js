@@ -6,6 +6,11 @@ export function MovingManage({ children }) {
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(1);
   const [action, setAction] = useState(false);
+  const [cellItemSelected, setCellItemSelected] = useState("");
+
+  const updateCellItemSelected = (x, y) => {
+    setCellItemSelected({x: x, y: y});
+  }
 
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
@@ -65,6 +70,8 @@ export function MovingManage({ children }) {
         RotateHandler,
         FlipHandler,
         action,
+        updateCellItemSelected,
+        cellItemSelected
       }}
     >
       {children}
