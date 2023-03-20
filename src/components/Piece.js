@@ -3,18 +3,17 @@ import Moving from "../data/Moving";
 import "./Piece.css";
 
 const Piece = ({ piece }) => {
-  const { SetSelected, selected } = useContext(Moving);
+  const { SetSelected, selected, action } = useContext(Moving);
  const [rotate, setRotate] = useState(piece.rotated);
  const [flip, setFlip] = useState(piece.flip);
  
  useEffect(() => {
   if (selected.name === piece.name){
 
-  
   setRotate(selected.rotated);
   setFlip(selected.flip);
   }
- }, [selected.rotated, selected.flip]);
+ }, [action]);
 
   const chooseItem = (item) => {
     SetSelected(item);

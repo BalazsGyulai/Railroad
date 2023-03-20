@@ -5,11 +5,10 @@ const Moving = createContext();
 export function MovingManage({ children }) {
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(1);
-  
+  const [action, setAction] = useState(false);
 
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
-    
   };
 
   const AnalyseSelected = (newest) => {
@@ -29,30 +28,31 @@ export function MovingManage({ children }) {
   };
 
   const RotateHandler = (val) => {
-    let turnable = selected.rotated;
+    let turnable = selected;
 
-    turnable = turnable + val;
+    turnable.rotated = turnable.rotated + val;
 
-    if (turnable < 0){
-      turnable = 3;
-    } else if(turnable > 3) {
-      turnable = 0;
+    if (turnable.rotated < 0) {
+      turnable.rotated = 3;
+    } else if (turnable.rotated > 3) {
+      turnable.rotated = 0;
     }
-    
-    SetSelected({...selected, rotated: turnable});
-  }
+
+    setAction(!action);
+  };
 
   const FlipHandler = () => {
-    let flipable = selected.flip;
+    let flipable = selected;
 
-    if(flipable === 0){
-      flipable = -1;
+    if (flipable.flip === 0) {
+      flipable.flip = -1;
     } else {
-      flipable = 0;
+      flipable.flip = 0;
     }
 
-    SetSelected({...selected, flip: flipable});
-  }
+    setAction(!action);
+
+  };
 
   return (
     <Moving.Provider
@@ -63,7 +63,8 @@ export function MovingManage({ children }) {
         round,
         NextRoundHandler,
         RotateHandler,
-        FlipHandler
+        FlipHandler,
+        action,
       }}
     >
       {children}
