@@ -6,6 +6,7 @@ export function MovingManage({ children }) {
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(1);
   const [action, setAction] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(false);
   const [cellItemSelected, setCellItemSelected] = useState("");
 
   const updateCellItemSelected = (x, y) => {
@@ -59,6 +60,10 @@ export function MovingManage({ children }) {
 
   };
 
+  const deleteHandler = () => {
+     setDeleteItem(true);
+  }
+
   return (
     <Moving.Provider
       value={{
@@ -71,7 +76,9 @@ export function MovingManage({ children }) {
         FlipHandler,
         action,
         updateCellItemSelected,
-        cellItemSelected
+        cellItemSelected,
+        deleteHandler,
+        deleteItem
       }}
     >
       {children}

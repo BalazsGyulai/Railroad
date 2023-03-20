@@ -300,14 +300,19 @@ const BOARD = [
 const BoardTable = createContext();
 
 export function BoardManage({ children }) {
-  const { selected, cellItemSelected, action } = useContext(Moving);
+  const { selected, cellItemSelected, action, SetSelected } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
 
   useEffect(() => {
     if (cellItemSelected !== ""){
-      dropToCellHandler(cellItemSelected.x, cellItemSelected.y)
+      dropToCellHandler(cellItemSelected.x, cellItemSelected.y);
     }
-  }, [action])
+  }, [action]);
+
+  const deleteCellItem = (x, y) => {
+      setBoard([...board], board[y][x] = {...selected, round: 0});
+      
+  }
   
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
@@ -323,6 +328,7 @@ export function BoardManage({ children }) {
       value={{
         board,
         dropToCellHandler,
+        deleteCellItem
       }}
     >
       {children}

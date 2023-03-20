@@ -4,8 +4,8 @@ import Moving from "../data/Moving";
 import BoardTable from "../data/Board";
 
 const Cell = (props) => {
-  const { SetSelected, action, round, updateCellItemSelected, cellItemSelected } = useContext(Moving);
-  const { dropToCellHandler } = useContext(BoardTable);
+  const { SetSelected, action, round, updateCellItemSelected, deleteItem } = useContext(Moving);
+  const { dropToCellHandler, deleteCellItem } = useContext(BoardTable);
 
   const [rotated, setRotated] = useState("0");
   const [flipped, setFlipped] = useState(0);
@@ -27,6 +27,12 @@ const Cell = (props) => {
       setDroppedPiece(props.properties.item);
     }
   }, [props.properties, action]);
+
+  useEffect(() => {
+    if (deleteItem){
+     deleteCellItem(props.properties.x, props.properties.y);
+    }
+  }, [deleteItem])
 
   const RotateHandler = (val) => {
     return `${parseInt(val) * 90}deg`;
