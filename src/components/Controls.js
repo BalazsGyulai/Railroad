@@ -22,7 +22,7 @@ const Controls = () => {
           <div className="controlItem" onClick={() => FlipHandler()}>
             <Flip />
           </div>
-          <div className="controlItem" onClick={() => deleteHandler()}>
+          <div className="controlItem" onClick={() => deleteHandler(true)}>
             <Remove />
           </div>
         </>

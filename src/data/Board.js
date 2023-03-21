@@ -300,26 +300,43 @@ const BOARD = [
 const BoardTable = createContext();
 
 export function BoardManage({ children }) {
-  const { selected, cellItemSelected, action, SetSelected } = useContext(Moving);
+  const {
+    selected,
+    cellItemSelected,
+    action,
+    SetSelected,
+    upgradeAction,
+    deleteItem,
+    deleteHandler,
+  } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
 
+  function newItem(item){
+    return item;
+  }
+
   useEffect(() => {
-    if (cellItemSelected !== ""){
+    if (deleteItem) {
+      let newBoard = board;
+      newBoard[cellItemSelected.y][cellItemSelected.x] = null;
+
+      setBoard(new newItem(newBoard));
+
+      SetSelected("");
+      upgradeAction();
+      deleteHandler(false);
+    } else {
       dropToCellHandler(cellItemSelected.x, cellItemSelected.y);
     }
+
   }, [action]);
 
-  const deleteCellItem = (x, y) => {
-      setBoard([...board], board[y][x] = {...selected, round: 0});
-      
-  }
-  
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       let newBoard = board;
       newBoard[y][x] = selected;
 
-      setBoard([...board], board[y][x] = {...selected});
+      setBoard([...board], (board[y][x] = { ...selected }));
     }
   };
 
@@ -328,7 +345,6 @@ export function BoardManage({ children }) {
       value={{
         board,
         dropToCellHandler,
-        deleteCellItem
       }}
     >
       {children}

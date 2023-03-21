@@ -4,8 +4,13 @@ import Moving from "../data/Moving";
 import BoardTable from "../data/Board";
 
 const Cell = (props) => {
-  const { SetSelected, action, round, updateCellItemSelected, deleteItem } = useContext(Moving);
-  const { dropToCellHandler, deleteCellItem } = useContext(BoardTable);
+  const {
+    SetSelected,
+    action,
+    round,
+    updateCellItemSelected,
+  } = useContext(Moving);
+  const { dropToCellHandler } = useContext(BoardTable);
 
   const [rotated, setRotated] = useState("0");
   const [flipped, setFlipped] = useState(0);
@@ -25,14 +30,10 @@ const Cell = (props) => {
       setRotated(RotateHandler(props.properties.rotated));
       setFlipped(props.properties.flip);
       setDroppedPiece(props.properties.item);
+    } else {
+      setDroppedPiece(props.properties);
     }
   }, [props.properties, action]);
-
-  useEffect(() => {
-    if (deleteItem){
-     deleteCellItem(props.properties.x, props.properties.y);
-    }
-  }, [deleteItem])
 
   const RotateHandler = (val) => {
     return `${parseInt(val) * 90}deg`;
@@ -40,16 +41,16 @@ const Cell = (props) => {
 
   const DropSelectedPiece = (x, y) => {
     if (props.properties === null) {
-        dropToCellHandler(x, y);
-        SetSelected("");
+      dropToCellHandler(x, y);
+      SetSelected("");
     } else if (props.properties.round === round) {
       updateCellItemSelected(x, y);
       SetSelected(props.properties);
     }
     // console.log(props.properties);
     // if (droppedPiece !== "" || droppedPiece !== null) {
-      //   dropToCellHandler(x, y);
-      //   SetSelected("");
+    //   dropToCellHandler(x, y);
+    //   SetSelected("");
     // } else {
     //   // SetSelected(props.properties);
     //   console.log("clicked on cell item");
@@ -71,14 +72,21 @@ const Cell = (props) => {
         className="object"
         onClick={() => DropSelectedPiece(props.position.x, props.position.y)}
       >
-        <div className="droppedpiece" style={{transform: `rotate(${rotated}) rotateY(${flipped * 180}deg)`}}>
-        {droppedPiece}
+        <div
+          className="droppedpiece"
+          style={{
+            transform: `rotate(${rotated}) rotateY(${flipped * 180}deg)`,
+          }}
+        >
+          {droppedPiece}
         </div>
-        {
-          props.properties !== null && props.properties.round !== 0 ?
-        
-        <div className="round">{props.properties.round !== "0" ? props.properties.round : ""}</div> : ""
-        }
+        {props.properties !== null && props.properties.round !== 0 ? (
+          <div className="round">
+            {props.properties.round !== "0" ? props.properties.round : ""}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

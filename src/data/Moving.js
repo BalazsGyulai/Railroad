@@ -10,8 +10,8 @@ export function MovingManage({ children }) {
   const [cellItemSelected, setCellItemSelected] = useState("");
 
   const updateCellItemSelected = (x, y) => {
-    setCellItemSelected({x: x, y: y});
-  }
+    setCellItemSelected({ x: x, y: y });
+  };
 
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
@@ -44,7 +44,7 @@ export function MovingManage({ children }) {
       turnable.rotated = 0;
     }
 
-    setAction(!action);
+    upgradeAction();
   };
 
   const FlipHandler = () => {
@@ -56,13 +56,18 @@ export function MovingManage({ children }) {
       flipable.flip = 0;
     }
 
-    setAction(!action);
-
+    upgradeAction();
   };
 
-  const deleteHandler = () => {
-     setDeleteItem(true);
-  }
+  const deleteHandler = (val) => {
+    setDeleteItem(val);
+
+    upgradeAction();
+  };
+
+  const upgradeAction = () => {
+    setAction(!action);
+  };
 
   return (
     <Moving.Provider
@@ -78,7 +83,8 @@ export function MovingManage({ children }) {
         updateCellItemSelected,
         cellItemSelected,
         deleteHandler,
-        deleteItem
+        deleteItem,
+        upgradeAction,
       }}
     >
       {children}
