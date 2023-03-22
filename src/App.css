@@ -13,13 +13,54 @@
     width: 50%;
 }
 
+.PiecesHolder{
+    position: relative;
+}
+
 @media (max-width: 769px) {
     .App{
         display: block;
         flex-wrap: nowrap;
+        height: 100vh;
+        overflow: hidden;
+
     }
 
     .PiecesPlace{
         width: 100%;
+    }
+
+    .ExpandBtn{
+        position: relative;
+        width: 100%;
+    }
+
+    .ExpandBtn .ShowMore{
+        width: 100%;
+        border-radius: 9px;
+    }
+    
+    .ShowMore > div {
+        height: 100%;
+        transition: 0.5s;
+    }
+
+    .ExpandBtn .ShowSelected{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 45px;
+        border: 2px solid rgb(0, 59, 143);
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .PiecesHolder{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        transition: 0.5s;
     }
 }

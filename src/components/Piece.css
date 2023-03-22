@@ -28,7 +28,7 @@
   .SpecialItem {
     min-width: 35px;
     min-height: 35px;
-    padding: 10px;
+    padding: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
