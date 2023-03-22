@@ -7,8 +7,13 @@ import "./Controls.css";
 import Moving from "../data/Moving";
 
 const Controls = () => {
-  const { selected, RotateHandler, FlipHandler, deleteHandler } =
-    useContext(Moving);
+  const {
+    selected,
+    RotateHandler,
+    FlipHandler,
+    deleteHandler,
+    cellItemSelected,
+  } = useContext(Moving);
 
   return (
     <div id="controls">
@@ -29,11 +34,16 @@ const Controls = () => {
               <Flip />
             </div>
           </div>
-          <div className="controlItem" onClick={() => deleteHandler(true)}>
-            <div className="SettingsIcon">
-              <Remove />
+
+          {cellItemSelected !== "" ? (
+            <div className="controlItem" onClick={() => deleteHandler(true)}>
+              <div className="SettingsIcon">
+                <Remove />
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </>
       ) : (
         ""

@@ -6,13 +6,13 @@ import BoardTable from "../data/Board";
 const Cell = (props) => {
   const { SetSelected, action, round, updateCellItemSelected } =
     useContext(Moving);
-  const { dropToCellHandler } = useContext(BoardTable);
+  const { dropToCellHandler, cellSize } = useContext(BoardTable);
 
-  const [cellSize, setCellSize] = useState(65);
-  const [windowSize, setWindowSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
+  // const [cellSize, setCellSize] = useState(65);
+  // const [windowSize, setWindowSize] = useState({
+  //   x: window.innerWidth,
+  //   y: window.innerHeight,
+  // });
   const [rotated, setRotated] = useState("0");
   const [flipped, setFlipped] = useState(0);
   const [droppedPiece, setDroppedPiece] = useState("");
@@ -26,41 +26,41 @@ const Cell = (props) => {
     props.borderRightColor ?? initBorderColor ?? "#fff";
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
 
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowSize({ x: window.innerWidth, y: window.innerHeight });
-      let x = window.innerWidth;
-      let y = window.innerHeight;
+  // useEffect(() => {
+  //   const handleWindowResize = () => {
+  //     setWindowSize({ x: window.innerWidth, y: window.innerHeight });
+  //     let x = window.innerWidth;
+  //     let y = window.innerHeight;
 
-      if (x < 769) {
-        if (y / 2 < x) {
-          setCellSize(y / 2 / 9);
-        } else {
-          setCellSize(x / 9);
-        }
-      } else {
-        if (x / 2 < y) {
-          if (x / 2 / 9 > 65) {
-            setCellSize(65);
-          } else {
-            setCellSize(x / 2 / 9);
-          }
-        } else {
-          if (y / 9 > 65) {
-            setCellSize(65);
-          } else {
-            setCellSize(y / 9);
-          }
-        }
-      }
-    };
+  //     if (x < 769) {
+  //       if (y / 2 < x) {
+  //         setCellSize(y / 2 / 9);
+  //       } else {
+  //         setCellSize(x / 9);
+  //       }
+  //     } else {
+  //       if (x / 2 < y) {
+  //         if (x / 2 / 9 > 65) {
+  //           setCellSize(65);
+  //         } else {
+  //           setCellSize(x / 2 / 9);
+  //         }
+  //       } else {
+  //         if (y / 9 > 65) {
+  //           setCellSize(65);
+  //         } else {
+  //           setCellSize(y / 9);
+  //         }
+  //       }
+  //     }
+  //   };
 
-    window.addEventListener("resize", handleWindowResize);
+  //   window.addEventListener("resize", handleWindowResize);
 
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  });
+  //   return () => {
+  //     window.removeEventListener("resize", handleWindowResize);
+  //   };
+  // });
 
   useEffect(() => {
     if (props.properties !== null) {

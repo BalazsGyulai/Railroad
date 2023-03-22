@@ -15,6 +15,10 @@ export function MovingManage({ children }) {
 
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
+
+    if (cellItemSelected !== "") {
+      setCellItemSelected(AnalyseSelected(newest));
+    }
   };
 
   const AnalyseSelected = (newest) => {

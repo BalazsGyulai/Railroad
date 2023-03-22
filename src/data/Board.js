@@ -310,6 +310,11 @@ export function BoardManage({ children }) {
     deleteHandler,
   } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
+  const [windowSize, setWindowSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
+  const [cellSize, setCellSize] = useState(65);
 
   function newItem(item) {
     return item;
@@ -332,6 +337,42 @@ export function BoardManage({ children }) {
     }
   }, [action]);
 
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize({ x: window.innerWidth, y: window.innerHeight });
+      let x = window.innerWidth;
+      let y = window.innerHeight;
+
+      if (x < 769) {
+        if (y / 2 < x) {
+          setCellSize(y / 2 / 9);
+        } else {
+          setCellSize(x / 9);
+        }
+      } else {
+        if (x / 2 < y) {
+          if (x / 2 / 9 > 65) {
+            setCellSize(65);
+          } else {
+            setCellSize(x / 2 / 9);
+          }
+        } else {
+          if (y / 9 > 65) {
+            setCellSize(65);
+          } else {
+            setCellSize(y / 9);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       let newBoard = board;
@@ -346,6 +387,7 @@ export function BoardManage({ children }) {
       value={{
         board,
         dropToCellHandler,
+        cellSize
       }}
     >
       {children}
