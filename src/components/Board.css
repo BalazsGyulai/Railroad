@@ -1,17 +1,25 @@
+#boardPlace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100vh;
+    position: relative;
+}
+
 #board{
     display: table;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
 }
 
 #board .row{
     display: table-row;
-
 }
 
-#board .basrow > div {
-    display: table-cell;
-    width: 50px;
-    height: 50px;
-    background: rgb(255, 255, 255);
-    border: 1px solid rgb(255, 255, 255);
+
+@media (max-width: 769px) {
+    #boardPlace{
+        width: 100%;
+        height: 50vh;
+    }
 }

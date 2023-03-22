@@ -57,7 +57,7 @@ function SPECIALS() {
 }
 
 const Specials = () => {
-  const { round, selected} = useContext(Moving);
+  const { round, selected } = useContext(Moving);
   const [specials, setSpecials] = useState("");
 
   useEffect(() => {
@@ -70,8 +70,19 @@ const Specials = () => {
   }, [round]);
 
   return (
-    <div id="Specials">
-      {specials !== "" ? specials.map((special, index) => <Piece key={`${round}${index}`} piece={special}/>) : ""}
+    <div id="SpecialsPlace">
+      <div id="Specials">
+        {specials !== ""
+          ? specials.map((special, index) => (
+              <Piece
+                key={`${round}${index}`}
+                piece={special}
+                selectedColor="#fff"
+                baseColor="rgb(0, 106, 255)"
+              />
+            ))
+          : ""}
+      </div>
     </div>
   );
 };

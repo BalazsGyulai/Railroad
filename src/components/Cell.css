@@ -1,14 +1,7 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .cell {
     display: table-cell;
     position: relative;
-    width: 51px;
-    height: 51px;
+    height: 65px;
     border-width: 1px;
     border-style: solid;
     cursor: pointer;

@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import Cell from "./Cell";
+import "./Board.css";
 import BoardTable from "../data/Board";
 
 const Board = () => {
   const { board } = useContext(BoardTable);
 
   return (
+    <div id="boardPlace">
     <div id="board">
       {board.map((row, y) => (
         <>
@@ -14,7 +16,7 @@ const Board = () => {
               cell === null ? (
                 <Cell
                   key={`${y}${x}`}
-                  borderColor="rgb(37, 171, 255)"
+                  borderColor="rgb(0, 106, 255)"
                   properties={cell}
                   position={{ x: x, y: y }}
                 />
@@ -29,6 +31,7 @@ const Board = () => {
           </div>
         </>
       ))}
+    </div>
     </div>
   );
 };

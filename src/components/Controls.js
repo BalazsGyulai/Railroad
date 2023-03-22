@@ -7,23 +7,32 @@ import "./Controls.css";
 import Moving from "../data/Moving";
 
 const Controls = () => {
-  const { selected, RotateHandler, FlipHandler, deleteHandler } = useContext(Moving);
+  const { selected, RotateHandler, FlipHandler, deleteHandler } =
+    useContext(Moving);
 
   return (
     <div id="controls">
       {selected !== "" ? (
         <>
           <div className="controlItem" onClick={() => RotateHandler(-1)}>
-            <RotateLeft />
+            <div className="SettingsIcon">
+              <RotateLeft />
+            </div>
           </div>
           <div className="controlItem" onClick={() => RotateHandler(1)}>
-            <RotateRight />
+            <div className="SettingsIcon">
+              <RotateRight />
+            </div>
           </div>
           <div className="controlItem" onClick={() => FlipHandler()}>
-            <Flip />
+            <div className="SettingsIcon">
+              <Flip />
+            </div>
           </div>
           <div className="controlItem" onClick={() => deleteHandler(true)}>
-            <Remove />
+            <div className="SettingsIcon">
+              <Remove />
+            </div>
           </div>
         </>
       ) : (

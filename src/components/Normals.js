@@ -94,10 +94,12 @@ const Normals = () => {
   }, [round]);
 
   return (
-    <div id="normals">
-      {normals !== ""
-        ? normals.map((normal, index) => <Piece key={index} piece={normal} />)
-        : ""}
+    <div id="normalsPlace">
+      <div id="normals">
+        {normals !== ""
+          ? normals.map((normal, index) => <Piece key={index} piece={normal} borderRadius={10} />)
+          : ""}
+      </div>
     </div>
   );
 };

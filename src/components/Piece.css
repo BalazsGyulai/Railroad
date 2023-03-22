@@ -1,7 +1,27 @@
-.SpecialItem{
-    width: 60px;
-    height: 60px;
-    padding: 5px;
-    background-color: rgb(0, 106, 255);
+.SpecialItem {
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SpecialItem > svg {
+  border-radius: 9px;
+  border: 2px solid rgb(0, 59, 143);
+  box-shadow: 8px 8px 0 rgb(0, 59, 143);
+  max-width: 65px;
+  max-height: 65px;
+}
+
+@media (max-width: 769px) {
+  .SpecialItem {
+    min-width: 35px;
+    min-height: 35px;
+    padding: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

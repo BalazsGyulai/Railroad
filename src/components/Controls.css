@@ -1,11 +1,34 @@
 #controls{
+    height: 70px;
     padding: 10px;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .controlItem{
-    margin: 5px;
-    width: 50px;
+    width: 100px;
     height: 50px;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+.controlItem:active{
+    background: rgb(0, 106, 255);
+}
+
+.SettingsIcon{
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.SettingsIcon > svg{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }

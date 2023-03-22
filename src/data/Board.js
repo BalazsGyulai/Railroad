@@ -311,7 +311,7 @@ export function BoardManage({ children }) {
   } = useContext(Moving);
   const [board, setBoard] = useState(BOARD);
 
-  function newItem(item){
+  function newItem(item) {
     return item;
   }
 
@@ -326,9 +326,10 @@ export function BoardManage({ children }) {
       upgradeAction();
       deleteHandler(false);
     } else {
-      dropToCellHandler(cellItemSelected.x, cellItemSelected.y);
+      if (cellItemSelected !== "") {
+        dropToCellHandler(cellItemSelected.x, cellItemSelected.y);
+      }
     }
-
   }, [action]);
 
   const dropToCellHandler = (x, y) => {
