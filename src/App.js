@@ -12,7 +12,7 @@ function App() {
   const { NextRoundHandler, selected } = React.useContext(Moving);
 
   const [wWidth, setwWidth] = React.useState(window.innerWidth);
-  const [showPieces, setShowPieces] = React.useState(false);
+  const [showPieces, setShowPieces] = React.useState(window.innerWidth < 769 ? false : true);
   const [PieceSize, setPieceSize] = React.useState(0);
 
   React.useEffect(() => {
@@ -62,13 +62,13 @@ function App() {
       <Board />
       <div className="PiecesPlace">
         <div>
-          <div onClick={() => NextRoundHandler()}>Next round</div>
+          <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>Next round</div>
           <Controls />
         </div>
         <div
           className="PiecesHolder"
           style={{
-            height: showPieces ? "40vh" : `${PieceSize + 10}px`,
+            height: showPieces ? wWidth < 769 ? "40vh" : "100vh" : `${PieceSize + 10}px`,
             overflow: showPieces ? "auto" : "hidden",
           }}
         >

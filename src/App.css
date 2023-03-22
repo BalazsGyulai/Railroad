@@ -4,6 +4,20 @@
     box-sizing: border-box;
 }
 
+.nextRoundBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 9px;
+    padding: 9px;
+    background: rgb(0, 106, 255);
+    color: #fff;
+}
+
+.nextRoundBtn:active {
+    background: rgb(0, 59, 143);
+}
+
 .App{
     display: flex;
     flex-wrap: wrap;
