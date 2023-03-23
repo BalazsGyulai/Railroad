@@ -8,6 +8,7 @@ import S5 from "../Rails/S5";
 import "./Specials.css";
 import Piece from "./Piece";
 import Moving from "../data/Moving";
+import BoardManage from "../data/Board";
 
 function SPECIALS() {
   return [
@@ -57,17 +58,42 @@ function SPECIALS() {
 }
 
 const Specials = () => {
-  const { round } = useContext(Moving);
+  const { round, action } = useContext(Moving);
+  const { board } = useContext(BoardManage);
   const [specials, setSpecials] = useState("");
 
   useEffect(() => {
     let NewSpecials = new SPECIALS();
+
     for (let i = 0; i < NewSpecials.length; i++) {
       NewSpecials[i].round = round;
     }
 
+    deleteUsedItem(board, NewSpecials);
+
+    console.log(NewSpecials.length);
+    if (NewSpecials.length < 4){
+      NewSpecials = "";
+    }
+
     setSpecials(NewSpecials);
-  }, [round]);
+  }, [round, board, action]);
+
+  const deleteUsedItem = (board, array, usedItem) => {
+    let modifyArray = array;
+
+    for (let y = 0; y < board.length; y++) {
+      for (let x = 0; x < board[y].length; x++) {
+        for (let i = 0; i < modifyArray.length; i++) {
+          if (board[y][x] !== null) {
+            if (modifyArray[i].name === board[y][x].name) {
+              modifyArray.splice(i, 1);
+            }
+          }
+        }
+      }
+    }
+  };
 
   return (
     <div id="SpecialsPlace">
