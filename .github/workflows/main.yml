@@ -11,5 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
   steps:
+    - name: Install
     run: npm install
+
+    - name: build
     run: npm run build
+
+    - name: rename
+    run: mv build docs
