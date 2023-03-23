@@ -71,7 +71,6 @@ const Specials = () => {
 
     deleteUsedItem(board, NewSpecials);
 
-    console.log(NewSpecials.length);
     if (NewSpecials.length < 4){
       NewSpecials = "";
     }
