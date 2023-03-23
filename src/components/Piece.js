@@ -29,7 +29,7 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
 
   useEffect(() => {
     handleWindowResize();
-  })
+  }, [])
 
   const handleWindowResize = () => {
     let x = window.innerWidth;

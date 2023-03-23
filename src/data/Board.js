@@ -338,40 +338,44 @@ export function BoardManage({ children }) {
   }, [action]);
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowSize({ x: window.innerWidth, y: window.innerHeight });
-      let x = window.innerWidth;
-      let y = window.innerHeight;
-
-      if (x < 769) {
-        if (y / 2 < x) {
-          setCellSize(y / 2 / 9);
-        } else {
-          setCellSize(x / 9);
-        }
-      } else {
-        if (x / 2 < y) {
-          if (x / 2 / 9 > 65) {
-            setCellSize(65);
-          } else {
-            setCellSize(x / 2 / 9);
-          }
-        } else {
-          if (y / 9 > 65) {
-            setCellSize(65);
-          } else {
-            setCellSize(y / 9);
-          }
-        }
-      }
-    };
-
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   });
+
+  useEffect(() => {
+    handleWindowResize();
+  }, [])
+
+  const handleWindowResize = () => {
+    setWindowSize({ x: window.innerWidth, y: window.innerHeight });
+    let x = window.innerWidth;
+    let y = window.innerHeight;
+
+    if (x < 769) {
+      if (y / 2 < x) {
+        setCellSize(y / 2 / 9);
+      } else {
+        setCellSize(x / 9);
+      }
+    } else {
+      if (x / 2 < y) {
+        if (x / 2 / 9 > 65) {
+          setCellSize(65);
+        } else {
+          setCellSize(x / 2 / 9);
+        }
+      } else {
+        if (y / 9 > 65) {
+          setCellSize(65);
+        } else {
+          setCellSize(y / 9);
+        }
+      }
+    }
+  };
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
@@ -387,7 +391,7 @@ export function BoardManage({ children }) {
       value={{
         board,
         dropToCellHandler,
-        cellSize
+        cellSize,
       }}
     >
       {children}
