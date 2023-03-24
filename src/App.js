@@ -15,6 +15,8 @@ function App() {
     windowSize.x < 769 ? false : true
   );
 
+  // alma
+
   return (
     <div className="App">
       {/* Board */}
