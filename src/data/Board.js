@@ -314,6 +314,10 @@ export function BoardManage({ children }) {
 
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
+  const [windowSize, setWindowSize] = useState({
+    x: 0,
+    y: 0,
+  })
   const [cellSize, setCellSize] = useState(65);
 
   // --------------------------------------------
@@ -357,6 +361,11 @@ export function BoardManage({ children }) {
   }, [])
 
   const handleWindowResize = () => {
+    setWindowSize({
+      x: window.innerWidth,
+      y: window.innerHeight
+    });
+
     let x = window.innerWidth;
     let y = window.innerHeight;
 
@@ -402,6 +411,7 @@ export function BoardManage({ children }) {
         board,
         dropToCellHandler,
         cellSize,
+        windowSize
       }}
     >
       {children}
