@@ -7,7 +7,6 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
-// aa
 function App() {
   const { NextRoundHandler, selected } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
