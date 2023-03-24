@@ -6,4 +6,8 @@ const io = new Server({
   },
 });
 
+io.on("connect", (socket) => {
+  socket.emit("hello", "almaspite");
+})
+
 io.listen(4000);

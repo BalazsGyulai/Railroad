@@ -7,7 +7,9 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
-import { socket } from './socket';
+import Login from "./pages/Login";
+import { socket } from "./socket";
+
 
 function App() {
   const { NextRoundHandler, selected } = React.useContext(Moving);
@@ -15,6 +17,7 @@ function App() {
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
+  const [LoggedIn, setLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     function onConnect() {
@@ -25,18 +28,16 @@ function App() {
       console.log(false);
     }
 
-    function onFooEvent(value) {
-      console.log(previous => [...previous, value]);
-    }
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('foo', onFooEvent);
+    socket.on("connect", onConnect);
+    socket.on("hello", (arg) => {
+      console.log(arg);
+    })
+    socket.on("disconnect", onDisconnect);
 
     return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('foo', onFooEvent);
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
     };
   }, []);
 
@@ -44,87 +45,97 @@ function App() {
     <div className="App">
       {/* <Login /> */}
       {/* Board */}
-      <Board />
-      <div className="PiecesPlace">
-        <div
-          style={{
-            height:
-              windowSize.x < 769
-                ? `${windowSize.y * 0.2 - (cellSize + 10)}px`
-                : "70px",
-          }}
-        >
-          <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
-            Következő kör
-          </div>
-          <Controls />
-        </div>
-        <div
-          className="PiecesHolder"
-          style={{
-            height:
-              windowSize.x < 769
-                ? showPieces
-                  ? "40vh"
-                  : `${cellSize + 10}px`
-                : `${windowSize.y - 70}px`,
-            overflow: "hidden",
-          }}
-        >
-          {windowSize.x < 769 ? (
-            <div className="ExpandBtn">
-              <div
-                className="ShowMore"
-                onClick={() => setShowPieces(!showPieces)}
-                style={{
-                  height: `${cellSize + 10}px`,
-                  background: showPieces
-                    ? "rgb(0, 106, 255)"
-                    : "rgb(255,255,255)",
-                  fill: showPieces ? "#fff" : "rgb(0, 59, 143)",
-                }}
-              >
-                <div
-                  className="icon"
-                  style={{
-                    transform: showPieces ? "rotate(180deg)" : "rotate(0)",
-                  }}
-                >
-                  <Expand />
-                </div>
-              </div>
 
-              {selected !== "" ? (
-                <div
-                  className="ShowSelected"
-                  style={{
-                    transform: `rotate(${selected.rotated * 90}deg) rotateY(${
-                      selected.flip * 180
-                    }deg)`,
-                    height: cellSize,
-                  }}
-                >
-                  {selected.item}
+      {!LoggedIn ? (
+        <Login changeLogin={() => setLoggedIn(!LoggedIn)} />
+      ) : (
+        <>
+          <Board />
+          <div className="PiecesPlace">
+            <div
+              style={{
+                height:
+                  windowSize.x < 769
+                    ? `${windowSize.y * 0.2 - (cellSize + 10)}px`
+                    : "70px",
+              }}
+            >
+              <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
+                Következő kör
+              </div>
+              <Controls />
+            </div>
+            <div
+              className="PiecesHolder"
+              style={{
+                height:
+                  windowSize.x < 769
+                    ? showPieces
+                      ? "40vh"
+                      : `${cellSize + 10}px`
+                    : `${windowSize.y - 70}px`,
+                overflow: "hidden",
+              }}
+            >
+              {windowSize.x < 769 ? (
+                <div className="ExpandBtn">
+                  <div
+                    className="ShowMore"
+                    onClick={() => setShowPieces(!showPieces)}
+                    style={{
+                      height: `${cellSize + 10}px`,
+                      background: showPieces
+                        ? "rgb(0, 106, 255)"
+                        : "rgb(255,255,255)",
+                      fill: showPieces ? "#fff" : "rgb(0, 59, 143)",
+                    }}
+                  >
+                    <div
+                      className="icon"
+                      style={{
+                        transform: showPieces ? "rotate(180deg)" : "rotate(0)",
+                      }}
+                    >
+                      <Expand />
+                    </div>
+                  </div>
+
+                  {selected !== "" ? (
+                    <div
+                      className="ShowSelected"
+                      style={{
+                        transform: `rotate(${
+                          selected.rotated * 90
+                        }deg) rotateY(${selected.flip * 180}deg)`,
+                        height: cellSize,
+                      }}
+                    >
+                      {selected.item}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ) : (
                 ""
               )}
-            </div>
-          ) : (
-            ""
-          )}
 
-          <div
-            style={{
-              height: windowSize.x < 769 ? `${windowSize.y * 0.4 - (cellSize + 10)}px`: `100%`,
-              overflow: showPieces ? "auto" : "hidden",
-            }}
-          >
-            <Specials />
-            <Normals />
+              <div
+                style={{
+                  height:
+                    windowSize.x < 769
+                      ? `${windowSize.y * 0.4 - (cellSize + 10)}px`
+                      : `100%`,
+                  overflow: showPieces ? "auto" : "hidden",
+                }}
+              >
+                <Specials />
+                <Normals />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
