@@ -300,6 +300,7 @@ const BOARD = [
 const BoardTable = createContext();
 
 export function BoardManage({ children }) {
+  // ---------- other context variables --------
   const {
     selected,
     cellItemSelected,
@@ -309,13 +310,15 @@ export function BoardManage({ children }) {
     deleteItem,
     deleteHandler,
   } = useContext(Moving);
+
+
+  // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
-  const [windowSize, setWindowSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
   const [cellSize, setCellSize] = useState(65);
 
+  // --------------------------------------------
+  // This is for creating a new Board / a new Item
+  // --------------------------------------------
   function newItem(item) {
     return item;
   }
@@ -337,6 +340,10 @@ export function BoardManage({ children }) {
     }
   }, [action]);
 
+  // -------------------------------------------
+  // handles the window size when it changes
+  // -------------------------------------------
+
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
 
@@ -350,7 +357,6 @@ export function BoardManage({ children }) {
   }, [])
 
   const handleWindowResize = () => {
-    setWindowSize({ x: window.innerWidth, y: window.innerHeight });
     let x = window.innerWidth;
     let y = window.innerHeight;
 
@@ -376,6 +382,10 @@ export function BoardManage({ children }) {
       }
     }
   };
+
+  // -------------------------------------
+  // Sets the selected item to the board
+  // -------------------------------------
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {

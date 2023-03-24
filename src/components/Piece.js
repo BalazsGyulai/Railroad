@@ -1,25 +1,28 @@
 import React, { useContext, useState, useEffect } from "react";
 import Moving from "../data/Moving";
+import BoardManage from "../data/Board";
 import "./Piece.css";
 
 const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
+
+  // ------ global variables ---------
+  const { SetSelected, selected, action, updateCellItemSelected } = useContext(Moving);
+  const {cellSize} = useContext(BoardManage);
+
+  // -------- states -----------------
+  const [rotate, setRotate] = useState(piece.rotated);
+  const [flip, setFlip] = useState(piece.flip);
+
+  // -------- styles -----------------
   let SelectedColor = selectedColor ?? "rgb(0, 106, 255)";
   let BaseColor = baseColor ?? "#fff";
   let BorderRadius = borderRadius ?? 0;
-  const { SetSelected, selected, action } = useContext(Moving);
-  const [rotate, setRotate] = useState(piece.rotated);
-  const [flip, setFlip] = useState(piece.flip);
-  const [PieceSize, setPieceSize] = useState(0);
-
   
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
-    
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  });
-  
+  // ---------------------------------
+  // If a control item was tapped the 
+  // action (global variable) will change
+  // and then the new infos will be set for the item
+  // ---------------------------------
   useEffect(() => {
     if (selected.name === piece.name) {
       setRotate(selected.rotated);
@@ -27,39 +30,13 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
     }
   }, [action]);
 
-  useEffect(() => {
-    handleWindowResize();
-  }, [])
-
-  const handleWindowResize = () => {
-    let x = window.innerWidth;
-    let y = window.innerHeight;
-
-    if (x < 769) {
-      if (y / 2 < x) {
-        setPieceSize(y / 2 / 9);
-      } else {
-        setPieceSize(x / 9);
-      }
-    } else {
-      if (x / 2 < y) {
-        if (x / 2 / 9 > 65) {
-          setPieceSize(65);
-        } else {
-          setPieceSize(x / 2 / 9);
-        }
-      } else {
-        if (y / 9 > 65) {
-          setPieceSize(65);
-        } else {
-          setPieceSize(y / 9);
-        }
-      }
-    }
-  };
+  // ------------------------------------------
+  // This will be called if the item was clicked
+  // ------------------------------------------
 
   const chooseItem = (item) => {
     SetSelected(item);
+    updateCellItemSelected("");
   };
 
   return (
@@ -73,8 +50,8 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
     >
       <div
         style={{
-          width: `${PieceSize}px`,
-          height: `${PieceSize}px`,
+          width: `${cellSize}px`,
+          height: `${cellSize}px`,
         }}
       >
         <div

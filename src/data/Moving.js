@@ -9,10 +9,34 @@ export function MovingManage({ children }) {
   const [deleteItem, setDeleteItem] = useState(false);
   const [cellItemSelected, setCellItemSelected] = useState("");
 
+  // ---------------------------------------
+  // This is called by the components if
+  // an item was tapped.
+  // If the value of the x is empty ("") then
+  // it means not a normal/special item was hit
+  // ---------------------------------------
+
   const updateCellItemSelected = (x, y) => {
-    setCellItemSelected({ x: x, y: y });
+    if (x === "" && y === undefined){
+      changeCellItemSelected("");
+    } else {
+      changeCellItemSelected({x: x, y: y});
+    }
   };
 
+  // -----------------------------------------
+  // This changes the value of the cellItemSelected
+  // -----------------------------------------
+
+  const changeCellItemSelected = (val) => {
+    setCellItemSelected(val);
+  }
+
+
+  // ---------------------------------------
+  // This is called when an item is tapped.
+  // This compares when to select or unselect a piece
+  // ---------------------------------------
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
 
@@ -29,14 +53,18 @@ export function MovingManage({ children }) {
     }
   };
 
-  const UnselectTheSelectedPiece = () => {
-    useSelected("");
-  };
 
+  // ---------------------------------------
+  // This is called when the round is changes
+  // ---------------------------------------
   const NextRoundHandler = () => {
     setRound(round + 1);
   };
 
+
+  // -----------------------------------------
+  // This handles the Controls component clicks
+  // -----------------------------------------
   const RotateHandler = (val) => {
     let turnable = selected;
 
@@ -69,6 +97,11 @@ export function MovingManage({ children }) {
     upgradeAction();
   };
 
+  // -------------------------------------
+  // When a control's item was hit this change.
+  // If this change then the page's items will refresh
+  // -------------------------------------
+
   const upgradeAction = () => {
     setAction(!action);
   };
@@ -78,7 +111,6 @@ export function MovingManage({ children }) {
       value={{
         selected,
         SetSelected,
-        UnselectTheSelectedPiece,
         round,
         NextRoundHandler,
         RotateHandler,
