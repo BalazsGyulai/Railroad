@@ -24,7 +24,11 @@ function App() {
       <Board />
       <div className="PiecesPlace">
         <div style={{
+<<<<<<< HEAD
           marginBottom: "60px"
+=======
+          height: windowSize.x < 769 ? `${(windowSize.y * 0.2) - (cellSize + 10)}px` : "70px" 
+>>>>>>> test
         }}>
           <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
             Következő kör
