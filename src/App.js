@@ -7,12 +7,38 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
+import { socket } from './socket';
+
 function App() {
   const { NextRoundHandler, selected } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
+
+  React.useEffect(() => {
+    function onConnect() {
+      console.log(true);
+    }
+
+    function onDisconnect() {
+      console.log(false);
+    }
+
+    function onFooEvent(value) {
+      console.log(previous => [...previous, value]);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('foo', onFooEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('foo', onFooEvent);
+    };
+  }, []);
 
   return (
     <div className="App">
