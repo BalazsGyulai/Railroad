@@ -7,6 +7,7 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
+import Login from "./pages/Login";
 
 function App() {
   const { NextRoundHandler, selected } = React.useContext(Moving);
@@ -14,15 +15,19 @@ function App() {
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
+  
 
   return (
     <div className="App">
+      {/* <Login /> */}
       {/* Board */}
       <Board />
       <div className="PiecesPlace">
-        <div>
+        <div style={{
+          marginBottom: "60px"
+        }}>
           <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
-            Next round
+            Következő kör
           </div>
           <Controls />
         </div>
