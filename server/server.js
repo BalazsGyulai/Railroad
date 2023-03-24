@@ -1,8 +1,9 @@
-import { Server } from "socket.io";
+const { Server } = require("socket.io");
 
-const io = new Server(3000, {});
+const io = new Server({ /* options */ });
 
 io.on("connection", (socket) => {
+  // ...
+});
 
-
-})
+io.listen(4000);

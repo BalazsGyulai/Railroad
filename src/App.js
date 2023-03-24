@@ -15,14 +15,14 @@ function App() {
     windowSize.x < 769 ? false : true
   );
 
-  // alma
-
   return (
     <div className="App">
       {/* Board */}
       <Board />
       <div className="PiecesPlace">
-        <div>
+        <div style={{
+          height: windowSize.x < 769 ? `${(windowSize.y * 0.2) - (cellSize + 10)}px` : "70px" 
+        }}>
           <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
             Next round
           </div>
