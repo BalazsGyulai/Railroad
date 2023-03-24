@@ -13,29 +13,36 @@ function App() {
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
-    
-
 
   return (
     <div className="App">
       {/* <Login /> */}
-      {/* <Login /> */}
       {/* Board */}
       <Board />
       <div className="PiecesPlace">
-        <div style={{
-          height: windowSize.x < 769 ? `${(windowSize.y * 0.2) - (cellSize + 10)}px` : "70px" 
-        }}>
+        <div
+          style={{
+            height:
+              windowSize.x < 769
+                ? `${windowSize.y * 0.2 - (cellSize + 10)}px`
+                : "70px",
+          }}
+        >
           <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
-            Next round
+            Következő kör
           </div>
           <Controls />
         </div>
         <div
           className="PiecesHolder"
           style={{
-            height: windowSize.x < 769 ? showPieces ? "40vh" : `${cellSize + 10}px` : "100vh",
-            overflow: showPieces ? "auto" : "hidden",
+            height:
+              windowSize.x < 769
+                ? showPieces
+                  ? "40vh"
+                  : `${cellSize + 10}px`
+                : `${windowSize.y - 70}px`,
+            overflow: "hidden",
           }}
         >
           {windowSize.x < 769 ? (
@@ -80,8 +87,16 @@ function App() {
           ) : (
             ""
           )}
-          <Specials />
-          <Normals />
+
+          <div
+            style={{
+              height: windowSize.x < 769 ? `${windowSize.y * 0.4 - (cellSize + 10)}px`: `100%`,
+              overflow: showPieces ? "auto" : "hidden",
+            }}
+          >
+            <Specials />
+            <Normals />
+          </div>
         </div>
       </div>
     </div>
