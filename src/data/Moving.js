@@ -40,8 +40,9 @@ export function MovingManage({ children }) {
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
 
+    // reset cell item selected
     if (cellItemSelected !== "") {
-      setCellItemSelected(AnalyseSelected(newest));
+      changeCellItemSelected(AnalyseSelected(newest));
     }
   };
 
@@ -59,6 +60,10 @@ export function MovingManage({ children }) {
   // ---------------------------------------
   const NextRoundHandler = () => {
     setRound(round + 1);
+
+
+    // reset selected
+    SetSelected("");
   };
 
 
