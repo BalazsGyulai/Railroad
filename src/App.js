@@ -8,7 +8,6 @@ import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
 import Login from "./pages/Login";
-import { socket } from "./socket";
 
 
 function App() {
@@ -18,28 +17,6 @@ function App() {
     windowSize.x < 769 ? false : true
   );
   const [LoggedIn, setLoggedIn] = React.useState(false);
-
-  React.useEffect(() => {
-    function onConnect() {
-      console.log(true);
-    }
-
-    function onDisconnect() {
-      console.log(false);
-    }
-
-
-    socket.on("connect", onConnect);
-    socket.on("hello", (arg) => {
-      console.log(arg);
-    })
-    socket.on("disconnect", onDisconnect);
-
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-    };
-  }, []);
 
   return (
     <div className="App">
