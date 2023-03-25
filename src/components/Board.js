@@ -6,8 +6,9 @@ import Moving from "../data/Moving";
 import NextArrow from "../Icons/NextArrow";
 
 const Board = () => {
-  const { board, windowSize, cellSize, newItem } = useContext(BoardTable);
-  const { NextRoundHandler, round, selected, action } = useContext(Moving);
+  const { board, windowSize, cellSize } = useContext(BoardTable);
+  const { NextRoundHandler, round, selected, action, cellItemSelected } =
+    useContext(Moving);
 
   const [calculate, setCalculate] = useState("");
   const [enabledCells, setEnabledCells] = useState("");
@@ -22,7 +23,7 @@ const Board = () => {
 
   useEffect(() => {
     handleEmptyCells(board);
-  }, [selected, action, board]);
+  }, [selected, action, board, cellItemSelected]);
 
   const handleEmptyCells = (board) => {
     let EnableToPlace = [];
@@ -36,164 +37,238 @@ const Board = () => {
       EnableToPlace.push(row);
     }
 
-    if (selected !== "" && selected !== null) {
+    if (selected !== "" && selected !== null && cellItemSelected === "") {
+      // make it enable
       for (let y = 0; y < board.length; y++) {
         for (let x = 0; x < board[y].length; x++) {
-          if (board[y][x] !== null) {
-            if (board[y][x].look && selected.look) {
-              // is the top of the placed item equal with the bottom of the selected item but not null
-              // when the rotate value is odd then you should check the top of the placed item with the top of the selected item because the array wont change, just the item rotate with css
+          if (board[y][x] !== null && board[y][x].look && selected.look) {
+            let Placed = {
+              top: board[y][x].look[
+                ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
+                  ? 2
+                  : 0) +
+                  ((4 - board[y][x].rotated) % 4)) %
+                  4
+              ],
+              right:
+                board[y][x].look[
+                  ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
+                    ? 3
+                    : 1) +
+                    ((4 - board[y][x].rotated) % 4)) %
+                    4
+                ],
+              bottom:
+                board[y][x].look[
+                  ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
+                    ? 0
+                    : 2) +
+                    ((4 - board[y][x].rotated) % 4)) %
+                    4
+                ],
+              left: board[y][x].look[
+                ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
+                  ? 1
+                  : 3) +
+                  ((4 - board[y][x].rotated) % 4)) %
+                  4
+              ],
+            };
 
-              if (y - 1 > 0) {
-                if (selected.rotated % 2 === 1 && selected.flip === -1) {
-                  if (
-                    board[y][x].look[
-                      (0 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(0 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (0 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(0 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y - 1][x] = "enable";
-                  } else {
-                    EnableToPlace[y - 1][x] = null;
-                  }
-                } else {
-                  if (
-                    board[y][x].look[
-                      (0 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(2 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (0 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(2 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y - 1][x] = "enable";
-                  } else {
-                    EnableToPlace[y - 1][x] = null;
+            let Selected = {
+              top: selected.look[
+                ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
+                  ((4 - selected.rotated) % 4)) %
+                  4
+              ],
+              right:
+                selected.look[
+                  ((selected.rotated % 2 === 0 && selected.flip === -1
+                    ? 3
+                    : 1) +
+                    ((4 - selected.rotated) % 4)) %
+                    4
+                ],
+              bottom:
+                selected.look[
+                  ((selected.rotated % 2 === 1 && selected.flip === -1
+                    ? 0
+                    : 2) +
+                    ((4 - selected.rotated) % 4)) %
+                    4
+                ],
+              left: selected.look[
+                ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
+                  ((4 - selected.rotated) % 4)) %
+                  4
+              ],
+            };
+
+            // top <-> bottom
+            if (y - 1 > 0) {
+              if (
+                Placed.top === Selected.bottom &&
+                Placed.top !== null &&
+                Selected.bottom !== null
+              ) {
+                EnableToPlace[y - 1][x] = "enable";
+              }
+            }
+
+            if (y + 1 < board.length) {
+              if (
+                Placed.bottom === Selected.top &&
+                Placed.bottom !== null &&
+                Selected.top !== null
+              ) {
+                EnableToPlace[y + 1][x] = "enable";
+              }
+            }
+
+            // left <-> right
+            if (x - 1 > 0) {
+              if (
+                Placed.left === Selected.right &&
+                Placed.left !== null &&
+                Selected.right !== null
+              ) {
+                EnableToPlace[y][x - 1] = "enable";
+              }
+            }
+
+            if (x + 1 < board[y].length) {
+              if (
+                Placed.right === Selected.left &&
+                Placed.right !== null &&
+                Selected.left !== null
+              ) {
+                EnableToPlace[y][x + 1] = "enable";
+              }
+            }
+          }
+        }
+      }
+
+      // unable if you cant place it
+      for (let y = 0; y < EnableToPlace.length; y++) {
+        // for (let y = 4; y < 5; y++) {
+        for (let x = 0; x < EnableToPlace[y].length; x++) {
+          if (EnableToPlace[y][x] !== null && selected.look) {
+            let Selected = {
+              top: selected.look[
+                ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
+                  ((4 - selected.rotated) % 4)) %
+                  4
+              ],
+              right:
+                selected.look[
+                  ((selected.rotated % 2 === 0 && selected.flip === -1
+                    ? 3
+                    : 1) +
+                    ((4 - selected.rotated) % 4)) %
+                    4
+                ],
+              bottom:
+                selected.look[
+                  ((selected.rotated % 2 === 1 && selected.flip === -1
+                    ? 0
+                    : 2) +
+                    ((4 - selected.rotated) % 4)) %
+                    4
+                ],
+              left: selected.look[
+                ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
+                  ((4 - selected.rotated) % 4)) %
+                  4
+              ],
+            };
+
+            // top <-> bottom
+            if (y - 1 > 0) {
+              if (board[y - 1][x] !== null && board[y - 1][x].look) {
+                let AbovePlaced = {
+                  bottom:
+                    board[y - 1][x].look[
+                      ((board[y - 1][x].rotated % 2 === 1 &&
+                      board[y - 1][x].flip === -1
+                        ? 0
+                        : 2) +
+                        ((4 - board[y - 1][x].rotated) % 4)) %
+                        4
+                    ],
+                };
+
+                if (Selected.top !== AbovePlaced.bottom) {
+                  if (Selected.top !== null && AbovePlaced.bottom !== null) {
+                    EnableToPlace[y][x] = null;
                   }
                 }
               }
+            }
 
-              // is the bottom of the placed item equal with the top of the selected item but not null
-              // when the rotate value is odd then you should check the bottom of the placed item with the bottom of the selected item because the array wont change, just the item rotate with css
+            // right <-> left
 
-              if (y + 1 < board.length) {
-                if (selected.rotated % 2 === 1 && selected.flip === -1) {
-                  if (
-                    board[y][x].look[
-                      (2 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(2 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (2 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(2 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y + 1][x] = "enable";
-                  } else {
-                    EnableToPlace[y + 1][x] = null;
-                  }
-                } else {
-                  if (
-                    board[y][x].look[
-                      (2 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(0 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (2 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(0 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y + 1][x] = "enable";
-                  } else {
-                    EnableToPlace[y + 1][x] = null;
+            if (x + 1 < EnableToPlace[y].length) {
+              if (board[y][x + 1] !== null && board[y][x + 1].look) {
+                let LeftSide = {
+                  left: board[y][x + 1].look[
+                    ((board[y][x + 1].rotated % 2 === 0 &&
+                    board[y][x + 1].flip === -1
+                      ? 1
+                      : 3) +
+                      ((4 - board[y][x + 1].rotated) % 4)) %
+                      4
+                  ],
+                };
+
+                if (Selected.right !== LeftSide.left) {
+                  if (Selected.right !== null && LeftSide.left !== null) {
+                    EnableToPlace[y][x] = null;
                   }
                 }
               }
+            }
 
-              // is the right side of the placed item equal with the left side of the selected item but not null
-              // when the rotate value is even then you should check the right side of the placed item with the right side of the selected item because the array wont change, just the item rotate with css
+            // bottom <-> top
+            if (y + 1 < EnableToPlace.length) {
+              if (board[y + 1][x] !== null && board[y + 1][x].look) {
+                let UnderPlace = {
+                  top: board[y + 1][x].look[
+                    ((board[y + 1][x].rotated % 2 === 1 &&
+                    board[y + 1][x].flip === -1
+                      ? 2
+                      : 0) +
+                      ((4 - board[y + 1][x].rotated) % 4)) %
+                      4
+                  ],
+                };
 
-              if (x + 1 < board[y].length) {
-                if (selected.rotated % 2 === 0 && selected.flip === -1) {
-                  // flipped
-                  if (
-                    board[y][x].look[
-                      (1 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(1 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (1 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(1 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y][x + 1] = "enable";
-                  } else {
-                    EnableToPlace[y][x + 1] = null;
-                  }
-                } else {
-                  // not flipped
-                  if (
-                    board[y][x].look[
-                      (1 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(3 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (1 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(3 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y][x + 1] = "enable";
-                  } else {
-                    EnableToPlace[y][x + 1] = null;
+                if (Selected.bottom !== UnderPlace.top) {
+                  if (Selected.bottom !== null && UnderPlace.top !== null) {
+                    EnableToPlace[y][x] = null;
                   }
                 }
               }
+            }
 
-              // is the left side of the placed item equal with the right side of the selected item but not null
-              // when the rotate value is even then you should check the left side of the placed item with the left side of the selected item because the array wont change, just the item rotate with css
-              if (x - 1 > 0) {
-                if (selected.rotated % 2 === 0 && selected.flip === -1) {
-                  if (
-                    board[y][x].look[
-                      (3 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(3 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (3 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(3 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y][x - 1] = "enable";
-                  } else {
-                    EnableToPlace[y][x - 1] = null;
-                  }
-                } else {
-                  if (
-                    board[y][x].look[
-                      (3 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] ===
-                      selected.look[(1 + ((4 - selected.rotated) % 4)) % 4] &&
-                    board[y][x].look[
-                      (3 + ((4 - board[y][x].rotated) % 4)) % 4
-                    ] !== null &&
-                    selected.look[(1 + ((4 - selected.rotated) % 4)) % 4] !==
-                      null
-                  ) {
-                    EnableToPlace[y][x - 1] = "enable";
-                  } else {
-                    EnableToPlace[y][x - 1] = null;
+            // left <-> right
+            if (x - 1 > 0) {
+              if (board[y][x - 1] !== null && board[y][x - 1].look) {
+                let RightSide = {
+                  right:
+                    board[y][x - 1].look[
+                      ((board[y][x - 1].rotated % 2 === 0 &&
+                      board[y][x - 1].flip === -1
+                        ? 3
+                        : 1) +
+                        ((4 - board[y][x - 1].rotated) % 4)) %
+                        4
+                    ],
+                };
+
+                if (Selected.left !== RightSide.right) {
+                  if (Selected.left !== null && RightSide.right !== null) {
+                    EnableToPlace[y][x] = null;
                   }
                 }
               }
@@ -202,6 +277,7 @@ const Board = () => {
         }
       }
     }
+
     // console.log(selected.look[(3 + (4 - selected.rotated) % 4) % 4]);
     setEnabledCells(EnableToPlace);
   };

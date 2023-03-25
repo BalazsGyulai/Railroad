@@ -4,7 +4,7 @@ import Moving from "../data/Moving";
 import BoardTable from "../data/Board";
 
 const Cell = (props) => {
-  const { SetSelected, action, round, updateCellItemSelected } =
+  const { SetSelected, action, round, updateCellItemSelected, changeCellItemSelected } =
     useContext(Moving);
   const { dropToCellHandler, cellSize } = useContext(BoardTable);
 
@@ -46,6 +46,7 @@ const Cell = (props) => {
   const DropSelectedPiece = (x, y) => {
     if (props.properties === null) {
       dropToCellHandler(x, y);
+      changeCellItemSelected("");
       SetSelected("");
     } else if (props.properties.round === round) {
       updateCellItemSelected(x, y);

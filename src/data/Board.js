@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
-import WA from "../Icons/WA"
+import WA from "../Icons/WA";
 
 const BOARD = [
   [
@@ -342,15 +342,15 @@ export function BoardManage({ children }) {
     upgradeAction,
     deleteItem,
     deleteHandler,
+    placedAllItem,
   } = useContext(Moving);
-
 
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
   const [windowSize, setWindowSize] = useState({
     x: 0,
     y: 0,
-  })
+  });
   const [cellSize, setCellSize] = useState(65);
 
   // --------------------------------------------
@@ -359,7 +359,6 @@ export function BoardManage({ children }) {
   function newItem(item) {
     return item;
   }
-  
 
   useEffect(() => {
     if (deleteItem) {
@@ -392,20 +391,19 @@ export function BoardManage({ children }) {
 
   useEffect(() => {
     handleWindowResize();
-
-  }, [])
+  }, []);
 
   const handleWindowResize = () => {
     setWindowSize({
       x: window.innerWidth,
-      y: window.innerHeight
+      y: window.innerHeight,
     });
 
     let x = window.innerWidth;
     let y = window.innerHeight;
 
     if (x < 769) {
-      if ((y - (cellSize + 10) * 4 - 5) < x) {
+      if (y - (cellSize + 10) * 4 - 5 < x) {
         setCellSize((y - (cellSize + 10) * 4 - 5) / 9);
       } else {
         setCellSize(x / 9);
@@ -432,12 +430,33 @@ export function BoardManage({ children }) {
   // Sets the selected item to the board
   // -------------------------------------
 
-  const dropToCellHandler = (x, y) => {
-    if (selected !== "" && selected !== null) {
+  const dropPieceHandler = (x, y) => {
+    let found = false;
+    if (selected.name[0] === "S") {
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (board[i][j] !== null && board[i][j].name === selected.name) {
+            found = true;
+          }
+        }
+      }
+    }
+
+    if (!found) {
       let newBoard = board;
       newBoard[y][x] = selected;
 
       setBoard([...board], (board[y][x] = { ...selected }));
+    }
+  }
+
+  const dropToCellHandler = (x, y) => {
+    if (selected !== "" && selected !== null) {
+      if (!placedAllItem) {
+        dropPieceHandler(x,y);
+      } else if (selected.name[0] === "S") {
+        dropPieceHandler(x,y);
+      }
     }
   };
 
@@ -448,7 +467,7 @@ export function BoardManage({ children }) {
         dropToCellHandler,
         cellSize,
         windowSize,
-        newItem
+        newItem,
       }}
     >
       {children}

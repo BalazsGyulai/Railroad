@@ -91,10 +91,9 @@ function NORMALS() {
 }
 
 const Normals = () => {
-  const { round, action } = useContext(Moving);
+  const { round, action, placedAllItem, updatePlacedAllItems } = useContext(Moving);
   const { board } = useContext(BoardManage);
   const [normals, setNormals] = useState("");
-  const [placedAllItem, setPlacedAllItems] = useState(false);
 
   useEffect(() => {
     let NewSpecials = new NORMALS();
@@ -117,9 +116,9 @@ const Normals = () => {
     }
 
     if (countPlacedItem >= 4) {
-      setPlacedAllItems(true);
+      updatePlacedAllItems(true);
     } else {
-      setPlacedAllItems(false);
+      updatePlacedAllItems(false);
     }
 
   }, [board, action]);
