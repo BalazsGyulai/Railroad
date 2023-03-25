@@ -9,9 +9,7 @@ const A3 = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect width="100" height="100" fill="#F5F5F5" />
-      <g id="A3" clip-path="url(#clip0_0_1)">
-        <rect width="100" height="100" fill="white" />
+      <g id="A3" clipPath="url(#clip0_0_1)">
         <path
           id="Vector 10"
           d="M0 41H32C36.9706 41 41 36.9706 41 32V0"
@@ -29,7 +27,7 @@ const A3 = () => {
           d="M0 50L35.86 50.3586C43.6463 50.4365 50 44.146 50 36.3593V0"
           stroke="black"
           strokeWidth="2"
-          stroke-dasharray="11 11"
+          strokeDasharray="11 11"
         />
       </g>
       <defs>
