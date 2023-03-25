@@ -11,6 +11,7 @@ import B2 from "../Rails/B2";
 import Piece from "./Piece";
 import "./Normals.css";
 import Moving from "../data/Moving";
+import BoardManage from "../data/Board";
 
 function NORMALS() {
   return [
@@ -81,8 +82,10 @@ function NORMALS() {
 }
 
 const Normals = () => {
-  const { round } = useContext(Moving);
+  const { round, action } = useContext(Moving);
+  const { board } = useContext(BoardManage);
   const [normals, setNormals] = useState("");
+  const [placedAllItem, setPlacedAllItems] = useState(false);
 
   useEffect(() => {
     let NewSpecials = new NORMALS();
@@ -93,11 +96,32 @@ const Normals = () => {
     setNormals(NewSpecials);
   }, [round]);
 
+  useEffect(() => {
+    let countPlacedItem = 0; // count the item which is placed in the round
+
+    for (let y = 0; y < board.length; y++) {
+      for (let x = 0; x < board[y].length; x++) {
+        if (board[y][x] !== null && board[y][x].round === round && board[y][x].name[0] !== "S") {
+          countPlacedItem += 1;
+        }
+      }
+    }
+
+    if (countPlacedItem >= 4) {
+      setPlacedAllItems(true);
+    } else {
+      setPlacedAllItems(false);
+    }
+
+  }, [board, action]);
+
   return (
     <div id="normalsPlace">
       <div id="normals">
-        {normals !== ""
-          ? normals.map((normal, index) => <Piece key={index} piece={normal} borderRadius={10} />)
+        {normals !== "" && !placedAllItem
+          ? normals.map((normal, index) => (
+              <Piece key={index} piece={normal} borderRadius={10} />
+            ))
           : ""}
       </div>
     </div>

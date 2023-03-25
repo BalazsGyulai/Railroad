@@ -3,20 +3,41 @@ import Cell from "./Cell";
 import "./Board.css";
 import BoardTable from "../data/Board";
 import Moving from "../data/Moving";
+import NextArrow from "../Icons/NextArrow";
 
 const Board = () => {
   const { board, windowSize, cellSize } = useContext(BoardTable);
-  const { NextRoundHandler } = React.useContext(Moving);
+  const { NextRoundHandler, round } = React.useContext(Moving);
 
   return (
     <div id="boardHolder">
       <div
+        className="statsHolder"
         style={{
           height: `${cellSize + 10}px`,
         }}
       >
-        <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
-          Következő kör
+        <div className="RoundHolder" style={{
+          width: `${(cellSize * 0.7) * 2}px`,
+          height: `${cellSize * 0.7}px`
+        }}>
+          <div className="RoundDisplay" style={{
+          width: `${cellSize * 0.7}px`,
+          height: `${cellSize * 0.7}px`
+          }}>
+          {round}
+          </div>
+          <div
+            className="nextRoundBtn"
+            onClick={() => NextRoundHandler()}
+            style={{
+              width:  `${(cellSize * 0.7) * 2 - (cellSize * 0.7) / 2}px`,
+              padding: `5px 5px 5px ${((cellSize * 0.7) / 2 + 5)}px`,
+              borderRadius: `0 ${cellSize/2}px ${cellSize/2}px 0`
+            }}
+          >
+            <NextArrow />
+          </div>
         </div>
       </div>
 

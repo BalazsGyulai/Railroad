@@ -59,7 +59,7 @@ function SPECIALS() {
 
 const Specials = () => {
   const { round, action } = useContext(Moving);
-  const { board, cellSize } = useContext(BoardManage);
+  const { board } = useContext(BoardManage);
   const [specials, setSpecials] = useState("");
 
   useEffect(() => {
