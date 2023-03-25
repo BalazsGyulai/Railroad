@@ -44,6 +44,7 @@ export function MovingManage({ children }) {
     if (cellItemSelected !== "") {
       changeCellItemSelected(AnalyseSelected(newest));
     }
+
   };
 
   const AnalyseSelected = (newest) => {
@@ -61,9 +62,10 @@ export function MovingManage({ children }) {
   const NextRoundHandler = () => {
     setRound(round + 1);
 
-
     // reset selected
     SetSelected("");
+
+    upgradeAction();
   };
 
 
@@ -126,6 +128,7 @@ export function MovingManage({ children }) {
         deleteHandler,
         deleteItem,
         upgradeAction,
+        changeCellItemSelected
       }}
     >
       {children}

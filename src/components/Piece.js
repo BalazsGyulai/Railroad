@@ -6,7 +6,7 @@ import "./Piece.css";
 const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
 
   // ------ global variables ---------
-  const { SetSelected, selected, action, updateCellItemSelected } = useContext(Moving);
+  const { SetSelected, selected, action, changeCellItemSelected, round } = useContext(Moving);
   const {cellSize} = useContext(BoardManage);
 
   // -------- states -----------------
@@ -27,8 +27,13 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
     if (selected.name === piece.name) {
       setRotate(selected.rotated);
       setFlip(selected.flip);
-    }
+    } 
   }, [action]);
+
+  useEffect(() => {
+    setRotate(0);
+    setFlip(0);
+  }, [round])
 
   // ------------------------------------------
   // This will be called if the item was clicked
@@ -36,7 +41,7 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
 
   const chooseItem = (item) => {
     SetSelected(item);
-    updateCellItemSelected("");
+    changeCellItemSelected("");
   };
 
   return (
