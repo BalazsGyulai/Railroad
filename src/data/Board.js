@@ -370,8 +370,8 @@ export function BoardManage({ children }) {
     let y = window.innerHeight;
 
     if (x < 769) {
-      if (y / 2 < x) {
-        setCellSize(y / 2 / 9);
+      if (y * 0.7 < x) {
+        setCellSize(y * 0.7 / 9);
       } else {
         setCellSize(x / 9);
       }

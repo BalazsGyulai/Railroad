@@ -51,7 +51,9 @@ function App() {
                 className="ShowMore"
                 onClick={() => setShowPieces(!showPieces)}
                 style={{
+                  width: `${windowSize.x * 0.8 - cellSize - 10}px`,
                   height: `${cellSize + 10}px`,
+                  borderRadius: `${(cellSize + 10) / 2}px`,
                   background: showPieces
                     ? "rgb(0, 106, 255)"
                     : "rgb(255,255,255)",
