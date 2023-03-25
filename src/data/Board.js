@@ -2,25 +2,29 @@ import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
+import WA from "../Icons/WA"
 
 const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 0,
       flip: 0,
@@ -28,13 +32,15 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 0,
       flip: 0,
@@ -42,13 +48,15 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 0,
       flip: 0,
@@ -56,23 +64,26 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 1
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -86,7 +97,8 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -95,6 +107,7 @@ const BOARD = [
   [
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -109,6 +122,7 @@ const BOARD = [
     null,
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -118,9 +132,10 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     null,
@@ -132,15 +147,17 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 4
   [
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -155,6 +172,7 @@ const BOARD = [
     null,
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -164,7 +182,8 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -178,7 +197,8 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -187,6 +207,7 @@ const BOARD = [
   [
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -201,6 +222,7 @@ const BOARD = [
     null,
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -210,9 +232,10 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     null,
@@ -224,29 +247,33 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 8
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 0,
       flip: 0,
@@ -254,13 +281,15 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ra",
+      look: ["s", null, "s", null],
       item: <Trail />,
       rotated: 0,
       flip: 0,
@@ -268,13 +297,15 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ro",
+      look: ["u", null, "u", null],
       item: <Road />,
       rotated: 0,
       flip: 0,
@@ -282,14 +313,16 @@ const BOARD = [
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
+      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -326,6 +359,7 @@ export function BoardManage({ children }) {
   function newItem(item) {
     return item;
   }
+  
 
   useEffect(() => {
     if (deleteItem) {
@@ -358,6 +392,7 @@ export function BoardManage({ children }) {
 
   useEffect(() => {
     handleWindowResize();
+
   }, [])
 
   const handleWindowResize = () => {
@@ -412,7 +447,8 @@ export function BoardManage({ children }) {
         board,
         dropToCellHandler,
         cellSize,
-        windowSize
+        windowSize,
+        newItem
       }}
     >
       {children}

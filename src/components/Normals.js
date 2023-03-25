@@ -21,6 +21,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", null, null, "s"]
     },
     {
       name: "A1",
@@ -28,6 +29,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", "s", null, "s"]
     },
     {
       name: "A2",
@@ -35,6 +37,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", null, "s", null]
     },
     {
       name: "A3",
@@ -42,6 +45,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", null, null, "u"]
     },
     {
       name: "A4",
@@ -49,6 +53,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "u", null, "u"]
     },
     {
       name: "A5",
@@ -56,6 +61,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", null, "u", null]
     },
     {
       name: "B0",
@@ -63,6 +69,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "s", "u", "s"]
     },
     {
       name: "B1",
@@ -70,6 +77,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", null, "u", null]
     },
     {
       name: "B2",
@@ -77,6 +85,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", null, null, "u"]
     },
   ];
 }

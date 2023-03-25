@@ -25,42 +25,9 @@ const Cell = (props) => {
   const initBorderRightColor =
     props.borderRightColor ?? initBorderColor ?? "#fff";
   const initBorderTopColor = props.borderTopColor ?? initBorderColor ?? "#fff";
-
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     setWindowSize({ x: window.innerWidth, y: window.innerHeight });
-  //     let x = window.innerWidth;
-  //     let y = window.innerHeight;
-
-  //     if (x < 769) {
-  //       if (y / 2 < x) {
-  //         setCellSize(y / 2 / 9);
-  //       } else {
-  //         setCellSize(x / 9);
-  //       }
-  //     } else {
-  //       if (x / 2 < y) {
-  //         if (x / 2 / 9 > 65) {
-  //           setCellSize(65);
-  //         } else {
-  //           setCellSize(x / 2 / 9);
-  //         }
-  //       } else {
-  //         if (y / 9 > 65) {
-  //           setCellSize(65);
-  //         } else {
-  //           setCellSize(y / 9);
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("resize", handleWindowResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleWindowResize);
-  //   };
-  // });
+  const initFillColor =
+    props.properties !== null ? props.properties.fill ?? "#000" : "#000";
+  const selectable = props.selectable ?? false;
 
   useEffect(() => {
     if (props.properties !== null) {
@@ -84,14 +51,6 @@ const Cell = (props) => {
       updateCellItemSelected(x, y);
       SetSelected(props.properties);
     }
-    // console.log(props.properties);
-    // if (droppedPiece !== "" || droppedPiece !== null) {
-    //   dropToCellHandler(x, y);
-    //   SetSelected("");
-    // } else {
-    //   // SetSelected(props.properties);
-    //   console.log("clicked on cell item");
-    // }
   };
 
   return (
@@ -105,6 +64,14 @@ const Cell = (props) => {
         borderBottomColor: initBorderBottomColor,
         borderRightColor: initBorderRightColor,
         borderTopColor: initBorderTopColor,
+        background:
+        selectable === "enable" ? "#97DB4F" :
+          props.position.x <= 5 &&
+          props.position.x >= 3 &&
+          props.position.y <= 5 &&
+          props.position.y >= 3
+            ? "#d6e7ff"
+            : "#fff",
       }}
     >
       <div
