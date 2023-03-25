@@ -430,44 +430,32 @@ export function BoardManage({ children }) {
   // Sets the selected item to the board
   // -------------------------------------
 
+  const dropPieceHandler = (x, y) => {
+    let found = false;
+    if (selected.name[0] === "S") {
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (board[i][j] !== null && board[i][j].name === selected.name) {
+            found = true;
+          }
+        }
+      }
+    }
+
+    if (!found) {
+      let newBoard = board;
+      newBoard[y][x] = selected;
+
+      setBoard([...board], (board[y][x] = { ...selected }));
+    }
+  }
+
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       if (!placedAllItem) {
-        let found = false;
-        if (selected.name[0] === "S") {
-          for (let y = 0; y < board.length; y++) {
-            for (let x = 0; x < board[y].length; x++) {
-              if (board[y][x] !== null && board[y][x].name === selected.name) {
-                found = true;
-              }
-            }
-          }
-        }
-
-        if (!found) {
-          let newBoard = board;
-          newBoard[y][x] = selected;
-
-          setBoard([...board], (board[y][x] = { ...selected }));
-        }
+        dropPieceHandler(x,y);
       } else if (selected.name[0] === "S") {
-        let found = false;
-        if (selected.name[0] === "S") {
-          for (let y = 0; y < board.length; y++) {
-            for (let x = 0; x < board[y].length; x++) {
-              if (board[y][x] !== null && board[y][x].name === selected.name) {
-                found = true;
-              }
-            }
-          }
-        }
-
-        if (!found) {
-          let newBoard = board;
-          newBoard[y][x] = selected;
-
-          setBoard([...board], (board[y][x] = { ...selected }));
-        }
+        dropPieceHandler(x,y);
       }
     }
   };
