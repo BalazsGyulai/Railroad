@@ -199,7 +199,7 @@ const Board = () => {
                 };
 
                 if (Selected.top !== AbovePlaced.bottom) {
-                  if (Selected.top !== null && AbovePlaced.bottom !== null) {
+                  if (Selected.top !== null && AbovePlaced.bottom !== null && AbovePlaced.bottom !== "wa") {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -222,7 +222,7 @@ const Board = () => {
                 };
 
                 if (Selected.right !== LeftSide.left) {
-                  if (Selected.right !== null && LeftSide.left !== null) {
+                  if (Selected.right !== null && LeftSide.left !== null && LeftSide.left !== "wa") {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -244,7 +244,7 @@ const Board = () => {
                 };
 
                 if (Selected.bottom !== UnderPlace.top) {
-                  if (Selected.bottom !== null && UnderPlace.top !== null) {
+                  if (Selected.bottom !== null && UnderPlace.top !== null && UnderPlace.top !== "wa") {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -267,7 +267,7 @@ const Board = () => {
                 };
 
                 if (Selected.left !== RightSide.right) {
-                  if (Selected.left !== null && RightSide.right !== null) {
+                  if (Selected.left !== null && RightSide.right !== null && RightSide.right !== "wa") {
                     EnableToPlace[y][x] = null;
                   }
                 }
