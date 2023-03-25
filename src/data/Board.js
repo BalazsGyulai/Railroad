@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
 import Road from "../Rails/Road";
 import Trail from "../Rails/Trail";
-import WA from "../Icons/WA"
+import WA from "../Icons/WA";
 
 const BOARD = [
   [
@@ -342,15 +342,15 @@ export function BoardManage({ children }) {
     upgradeAction,
     deleteItem,
     deleteHandler,
+    placedAllItem,
   } = useContext(Moving);
-
 
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
   const [windowSize, setWindowSize] = useState({
     x: 0,
     y: 0,
-  })
+  });
   const [cellSize, setCellSize] = useState(65);
 
   // --------------------------------------------
@@ -359,7 +359,6 @@ export function BoardManage({ children }) {
   function newItem(item) {
     return item;
   }
-  
 
   useEffect(() => {
     if (deleteItem) {
@@ -392,20 +391,19 @@ export function BoardManage({ children }) {
 
   useEffect(() => {
     handleWindowResize();
-
-  }, [])
+  }, []);
 
   const handleWindowResize = () => {
     setWindowSize({
       x: window.innerWidth,
-      y: window.innerHeight
+      y: window.innerHeight,
     });
 
     let x = window.innerWidth;
     let y = window.innerHeight;
 
     if (x < 769) {
-      if ((y - (cellSize + 10) * 4 - 5) < x) {
+      if (y - (cellSize + 10) * 4 - 5 < x) {
         setCellSize((y - (cellSize + 10) * 4 - 5) / 9);
       } else {
         setCellSize(x / 9);
@@ -434,10 +432,43 @@ export function BoardManage({ children }) {
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
-      let newBoard = board;
-      newBoard[y][x] = selected;
+      if (!placedAllItem) {
+        let found = false;
+        if (selected.name[0] === "S") {
+          for (let y = 0; y < board.length; y++) {
+            for (let x = 0; x < board[y].length; x++) {
+              if (board[y][x] !== null && board[y][x].name === selected.name) {
+                found = true;
+              }
+            }
+          }
+        }
 
-      setBoard([...board], (board[y][x] = { ...selected }));
+        if (!found) {
+          let newBoard = board;
+          newBoard[y][x] = selected;
+
+          setBoard([...board], (board[y][x] = { ...selected }));
+        }
+      } else if (selected.name[0] === "S") {
+        let found = false;
+        if (selected.name[0] === "S") {
+          for (let y = 0; y < board.length; y++) {
+            for (let x = 0; x < board[y].length; x++) {
+              if (board[y][x] !== null && board[y][x].name === selected.name) {
+                found = true;
+              }
+            }
+          }
+        }
+
+        if (!found) {
+          let newBoard = board;
+          newBoard[y][x] = selected;
+
+          setBoard([...board], (board[y][x] = { ...selected }));
+        }
+      }
     }
   };
 
@@ -448,7 +479,7 @@ export function BoardManage({ children }) {
         dropToCellHandler,
         cellSize,
         windowSize,
-        newItem
+        newItem,
       }}
     >
       {children}

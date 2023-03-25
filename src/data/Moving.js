@@ -8,6 +8,11 @@ export function MovingManage({ children }) {
   const [action, setAction] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
   const [cellItemSelected, setCellItemSelected] = useState("");
+  const [placedAllItem, setPlacedAllItems] = useState(false);
+
+  const updatePlacedAllItems = (val) => {
+    setPlacedAllItems(val)
+  } 
 
   // ---------------------------------------
   // This is called by the components if
@@ -17,11 +22,7 @@ export function MovingManage({ children }) {
   // ---------------------------------------
 
   const updateCellItemSelected = (x, y) => {
-    if (x === "" && y === undefined){
-      changeCellItemSelected("");
-    } else {
-      changeCellItemSelected({x: x, y: y});
-    }
+    changeCellItemSelected({ x: x, y: y });
   };
 
   // -----------------------------------------
@@ -30,8 +31,7 @@ export function MovingManage({ children }) {
 
   const changeCellItemSelected = (val) => {
     setCellItemSelected(val);
-  }
-
+  };
 
   // ---------------------------------------
   // This is called when an item is tapped.
@@ -41,10 +41,9 @@ export function MovingManage({ children }) {
     useSelected(AnalyseSelected(newest));
 
     // reset cell item selected
-    if (cellItemSelected !== "") {
-      changeCellItemSelected(AnalyseSelected(newest));
-    }
-
+    // if (cellItemSelected !== "") {
+    //   changeCellItemSelected(AnalyseSelected(newest));
+    // }
   };
 
   const AnalyseSelected = (newest) => {
@@ -54,7 +53,6 @@ export function MovingManage({ children }) {
       return newest;
     }
   };
-
 
   // ---------------------------------------
   // This is called when the round is changes
@@ -67,7 +65,6 @@ export function MovingManage({ children }) {
 
     upgradeAction();
   };
-
 
   // -----------------------------------------
   // This handles the Controls component clicks
@@ -128,7 +125,9 @@ export function MovingManage({ children }) {
         deleteHandler,
         deleteItem,
         upgradeAction,
-        changeCellItemSelected
+        changeCellItemSelected,
+        placedAllItem,
+        updatePlacedAllItems
       }}
     >
       {children}
