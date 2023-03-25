@@ -8,7 +8,7 @@ const Board = () => {
 
   return (
     <div id="boardPlace" style={{
-      height: windowSize.x < 769 ? `${windowSize.y * 0.8 - (cellSize + 10)}px` : `${windowSize.y}`
+      height: windowSize.x < 769 ? `${windowSize.y - (cellSize + 10) * 3 - 5}px` : `${windowSize.y}px`
     }}>
       <div id="board">
         {board.map((row, y) => (
