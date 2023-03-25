@@ -1,8 +1,12 @@
+#boardHolder{
+    width: 50%;
+}
+
 #boardPlace {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    width: 100%;
     position: relative;
 }
 
@@ -17,7 +21,7 @@
 
 
 @media (max-width: 769px) {
-    #boardPlace{
+    #boardHolder{
         width: 100%;
     }
 }

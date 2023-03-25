@@ -370,8 +370,8 @@ export function BoardManage({ children }) {
     let y = window.innerHeight;
 
     if (x < 769) {
-      if (y * 0.7 < x) {
-        setCellSize(y * 0.7 / 9);
+      if ((y - (cellSize + 10) * 4 - 5) < x) {
+        setCellSize((y - (cellSize + 10) * 4 - 5) / 9);
       } else {
         setCellSize(x / 9);
       }
@@ -381,12 +381,13 @@ export function BoardManage({ children }) {
           setCellSize(65);
         } else {
           setCellSize(x / 2 / 9);
+          // setCellSize((y - (cellSize + 10)) / 9);
         }
       } else {
         if (y / 9 > 65) {
           setCellSize(65);
         } else {
-          setCellSize(y / 9);
+          setCellSize((y - (cellSize + 10)) / 9);
         }
       }
     }

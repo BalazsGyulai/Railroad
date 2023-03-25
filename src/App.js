@@ -8,7 +8,7 @@ import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
 function App() {
-  const { NextRoundHandler, selected } = React.useContext(Moving);
+  const { selected } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
@@ -28,9 +28,7 @@ function App() {
                 : "70px",
           }}
         >
-          <div className="nextRoundBtn" onClick={() => NextRoundHandler()}>
-            Következő kör
-          </div>
+          
           <Controls />
         </div>
         <div
