@@ -59,7 +59,7 @@ function SPECIALS() {
 
 const Specials = () => {
   const { round, action } = useContext(Moving);
-  const { board } = useContext(BoardManage);
+  const { board, cellSize } = useContext(BoardManage);
   const [specials, setSpecials] = useState("");
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Specials = () => {
 
     deleteUsedItem(board, NewSpecials);
 
-    if (NewSpecials.length < 4){
+    if (NewSpecials.length < 4) {
       NewSpecials = "";
     }
 
@@ -95,18 +95,25 @@ const Specials = () => {
   };
 
   return (
-    <div id="SpecialsPlace">
-      <div id="Specials">
-        {specials !== ""
-          ? specials.map((special, index) => (
-              <Piece
-                key={`${round}${index}`}
-                piece={special}
-                selectedColor="#fff"
-                baseColor="rgb(0, 106, 255)"
-              />
-            ))
-          : ""}
+    <div id="SpecialsHolder">
+      {specials.length >= 4 ? (
+        <div className="SpecialsLeft">{specials.length - 3}</div>
+      ) : (
+        ""
+      )}
+      <div id="SpecialsPlace">
+        <div id="Specials">
+          {specials !== ""
+            ? specials.map((special, index) => (
+                <Piece
+                  key={`${round}${index}`}
+                  piece={special}
+                  selectedColor="#fff"
+                  baseColor="rgb(0, 106, 255)"
+                />
+              ))
+            : ""}
+        </div>
       </div>
     </div>
   );
