@@ -7,18 +7,28 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
+import LoginData from "./data/Login";
+import Login from "./pages/Login";
+import JoinPage from "./pages/JoinPage";
+
 function App() {
   const { selected } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
+  const {loggedIn, mode, page} = React.useContext(LoginData);
+
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
 
   return (
     <div className="App">
-      {/* <Login /> */}
-      {/* Board */}
-      <Board />
+      {
+        loggedIn || mode !== "" ? 
+            page === "join" ?
+            <JoinPage /> :
+        (
+          <>
+          <Board />
       <div className="PiecesPlace">
         <div
           style={{
@@ -99,6 +109,12 @@ function App() {
           </div>
         </div>
       </div>
+          </>
+        ) : (
+          <Login />
+        )
+      }
+      
     </div>
   );
 }

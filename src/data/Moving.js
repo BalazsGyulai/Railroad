@@ -1,8 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import LoginMange from "./Login";
 
 const Moving = createContext();
 
 export function MovingManage({ children }) {
+  const {loggedIn, mode} = useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(1);
   const [action, setAction] = useState(false);
@@ -10,6 +12,17 @@ export function MovingManage({ children }) {
   const [cellItemSelected, setCellItemSelected] = useState("");
   const [placedAllItem, setPlacedAllItems] = useState(false);
 
+  useEffect(() =>{
+    if (loggedIn === false && mode === "creative"){
+      RoundHandler(1);
+    } else if(loggedIn && mode === "multiPlayer") {
+      RoundHandler(0);
+    }
+
+    console.log(`${mode}  ${loggedIn}`);
+
+  }, [mode, loggedIn])
+  
   const updatePlacedAllItems = (val) => {
     setPlacedAllItems(val)
   } 
@@ -57,8 +70,13 @@ export function MovingManage({ children }) {
   // ---------------------------------------
   // This is called when the round is changes
   // ---------------------------------------
+
+  const RoundHandler = (val) => {
+    setRound(val);
+  }
+
   const NextRoundHandler = () => {
-    setRound(round + 1);
+    RoundHandler(round + 1);
 
     // reset selected
     SetSelected("");
