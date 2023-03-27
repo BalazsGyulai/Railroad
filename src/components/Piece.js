@@ -19,7 +19,14 @@ import S3 from "../Rails/S3";
 import S4 from "../Rails/S4";
 import S5 from "../Rails/S5";
 
-const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
+const Piece = ({
+  piece,
+  selectedColor,
+  baseColor,
+  borderRadius,
+  clickable,
+  callClicked,
+}) => {
   // ------ global variables ---------
   const { SetSelected, selected, action, changeCellItemSelected, round } =
     useContext(Moving);
@@ -28,6 +35,7 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
   // -------- states -----------------
   const [rotate, setRotate] = useState(piece.rotated);
   const [flip, setFlip] = useState(piece.flip);
+  const CLICKABLE = clickable ?? false;
 
   // -------- styles -----------------
   let SelectedColor = selectedColor ?? "rgb(0, 106, 255)";
@@ -50,14 +58,18 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
     setRotate(0);
     setFlip(0);
   }, [round]);
-
+  
   // ------------------------------------------
   // This will be called if the item was clicked
   // ------------------------------------------
-
+  
   const chooseItem = (item) => {
-    SetSelected(item);
-    changeCellItemSelected("");
+    if (CLICKABLE) {
+      SetSelected(item);
+      changeCellItemSelected("");
+    } else {
+      callClicked();
+    }
   };
 
   return (

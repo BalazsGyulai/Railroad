@@ -168,7 +168,7 @@ const Normals = () => {
       <div id="normals">
         {normals !== "" && !placedAllItem
           ? normals.map((normal, index) => (
-              <Piece key={index} piece={normal} borderRadius={10} />
+              <Piece key={index} piece={normal} borderRadius={10} clickable={true} />
             ))
           : ""}
       </div>

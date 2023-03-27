@@ -116,6 +116,7 @@ const Specials = () => {
                   piece={special}
                   selectedColor="#fff"
                   baseColor="rgb(0, 106, 255)"
+                  clickable={true}
                 />
               ))
             : ""}

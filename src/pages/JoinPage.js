@@ -4,21 +4,12 @@ import "./JoinPage.css";
 import CodeImg from "../Icons/CodeImg";
 import Moving from "../data/Moving";
 import BoardManage from "../data/Board";
-import A0 from "../Rails/A0";
-import A1 from "../Rails/A1";
-import A2 from "../Rails/A2";
-import A3 from "../Rails/A3";
-import A4 from "../Rails/A4";
-import A5 from "../Rails/A5";
-import B0 from "../Rails/B0";
-import B1 from "../Rails/B1";
-import B2 from "../Rails/B2";
+import Piece from "../components/Piece";
 
 function NORMALS() {
   return [
     {
       name: "A0",
-      item: <A0 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -26,7 +17,6 @@ function NORMALS() {
     },
     {
       name: "A1",
-      item: <A1 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -34,7 +24,6 @@ function NORMALS() {
     },
     {
       name: "A2",
-      item: <A2 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -42,7 +31,6 @@ function NORMALS() {
     },
     {
       name: "A3",
-      item: <A3 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -50,7 +38,6 @@ function NORMALS() {
     },
     {
       name: "A4",
-      item: <A4 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -58,7 +45,6 @@ function NORMALS() {
     },
     {
       name: "A5",
-      item: <A5 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -66,7 +52,6 @@ function NORMALS() {
     },
     {
       name: "B0",
-      item: <B0 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -74,7 +59,6 @@ function NORMALS() {
     },
     {
       name: "B1",
-      item: <B1 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -82,7 +66,6 @@ function NORMALS() {
     },
     {
       name: "B2",
-      item: <B2 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -133,6 +116,7 @@ const JoinPage = () => {
   }
 
   const SelectCube = (index) => {
+    console.log(index);
     setselectedCubes([...selectedcubes, cubes[index]]);
   };
 
@@ -143,14 +127,14 @@ const JoinPage = () => {
         round,
         code: JSON.parse(sessionStorage.getItem("user")).code,
         rolled: selectedcubes,
-        page: "game"
+        page: "game",
       }),
     })
       .then((data) => data.json())
       .then((data) => {
         console.log(data);
         if (data.status === "ok") {
-            // PageHandler("game");
+          PageHandler("game");
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -209,7 +193,18 @@ const JoinPage = () => {
             <div className="cubes">
               {cubes !== ""
                 ? cubes.map((face, index) => (
-                    <div key={index} onClick={() => SelectCube(index)}>
+                    <Piece
+                      key={index}
+                      piece={face}
+                      borderRadius={10}
+                      selectedColor="#fff"
+                      baseColor="rgb(0, 106, 255)"
+                      callClicked={() => SelectCube(index)}
+                    />
+                  ))
+                : ""}
+            </div>
+            {/* <div key={index} onClick={() => SelectCube(index)}>
                       <div
                         style={{
                           width: `${cellSize}px`,
@@ -218,24 +213,18 @@ const JoinPage = () => {
                       >
                         {face.item}
                       </div>
-                    </div>
-                  ))
-                : ""}
-            </div>
+                    </div> */}
 
             <div className="selectedCubes">
               {selectedcubes !== ""
                 ? selectedcubes.map((cube, index) => (
-                    <div key={index}>
-                      <div
-                        style={{
-                          width: `${cellSize}px`,
-                          height: `${cellSize}px`,
-                        }}
-                      >
-                        {cube.item}
-                      </div>
-                    </div>
+                  <Piece
+                      key={index}
+                      piece={cube}
+                      borderRadius={10}
+                      selectedColor="#fff"
+                      baseColor="#fff"
+                    />
                   ))
                 : ""}
             </div>
@@ -249,6 +238,7 @@ const JoinPage = () => {
         </div>
       )}
     </div>
+                  
   );
 };
 
