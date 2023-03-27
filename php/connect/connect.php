@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 define("DB_HOST", "localhost");
 define('DB_USER', '1126_railroadink');
 define('DB_PASSWORD', 'Gyu0531Ba');

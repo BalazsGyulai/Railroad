@@ -1,5 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 require("./header.php");
+
 
 if ($input !== NULL && $input["email"] !== "" && $input["userName"] !== "") {
     require_once("./connect/connect.php");
