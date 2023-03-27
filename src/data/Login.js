@@ -9,15 +9,33 @@ export function LoginMange({ children }) {
   const baseURL = "http://localhost/";
 
   useEffect(() => {
-    if (sessionStorage.getItem("user") !== null){
-        loggedInHandler(true);
-        modeHandler("multiPlayer");
+    if (sessionStorage.getItem("user") !== null) {
+      loggedInHandler(true);
+      modeHandler("multiPlayer");
+      setInterval(() => {
+        fetch(`${baseURL}page.php`, {
+          method: "post",
+          body: JSON.stringify({
+            code: JSON.parse(sessionStorage.getItem("user")).code,
+          }),
+        })
+          .then((data) => data.json())
+          .then((data) => {
+            if (data.status === "ok") {
+              PageHandler(data.page.actpage);
+            } else if (data.status === "failed to connect") {
+              console.log("failed to connect");
+            } else {
+              console.log("something is wrong");
+            }
+          });
+      }, 1000);
     }
   }, []);
 
   const PageHandler = (val) => {
-    setPage(val)
-  }
+    setPage(val);
+  };
 
   const loggedInHandler = (val) => {
     setLoggedIn(val);
@@ -36,7 +54,7 @@ export function LoginMange({ children }) {
         baseURL,
         modeHandler,
         PageHandler,
-        page
+        page,
       }}
     >
       {children}

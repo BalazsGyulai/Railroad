@@ -12,6 +12,7 @@ import Piece from "./Piece";
 import "./Normals.css";
 import Moving from "../data/Moving";
 import BoardManage from "../data/Board";
+import LoginData from "../data/Login";
 
 function NORMALS() {
   return [
@@ -21,7 +22,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["s", null, null, "s"]
+      look: ["s", null, null, "s"],
     },
     {
       name: "A1",
@@ -29,7 +30,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["s", "s", null, "s"]
+      look: ["s", "s", null, "s"],
     },
     {
       name: "A2",
@@ -37,7 +38,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["s", null, "s", null]
+      look: ["s", null, "s", null],
     },
     {
       name: "A3",
@@ -45,7 +46,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["u", null, null, "u"]
+      look: ["u", null, null, "u"],
     },
     {
       name: "A4",
@@ -53,7 +54,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["u", "u", null, "u"]
+      look: ["u", "u", null, "u"],
     },
     {
       name: "A5",
@@ -61,7 +62,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["u", null, "u", null]
+      look: ["u", null, "u", null],
     },
     {
       name: "B0",
@@ -69,7 +70,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["u", "s", "u", "s"]
+      look: ["u", "s", "u", "s"],
     },
     {
       name: "B1",
@@ -77,7 +78,7 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["s", null, "u", null]
+      look: ["s", null, "u", null],
     },
     {
       name: "B2",
@@ -85,13 +86,19 @@ function NORMALS() {
       rotated: 0,
       flip: 0,
       round: 0,
-      look: ["s", null, null, "u"]
+      look: ["s", null, null, "u"],
     },
   ];
 }
 
+function NewItem(val) {
+  return val;
+}
+
 const Normals = () => {
-  const { round, action, placedAllItem, updatePlacedAllItems } = useContext(Moving);
+  const { loggedIn, baseURL, page } = useContext(LoginData);
+  const { round, action, placedAllItem, updatePlacedAllItems } =
+    useContext(Moving);
   const { board } = useContext(BoardManage);
   const [normals, setNormals] = useState("");
 
@@ -104,12 +111,46 @@ const Normals = () => {
     setNormals(NewSpecials);
   }, [round]);
 
+  const getRolledPieces = () => {
+    fetch(`${baseURL}rolled.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          let NewSpecials = new NORMALS();
+          let Fetched = JSON.parse(data.rolled.rolled);
+          let Stay = [];
+          for (let y = 0; y < Fetched.length; y++) {
+            for (let i = 0; i < NewSpecials.length; i++) {
+              if (Fetched[y].name === NewSpecials[i].name) {
+                Stay.push(new NewItem(NewSpecials[i]));
+                Stay[i].round = round;
+              }
+            }
+          }
+          // setNormals(Stay);
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
+  };
+
   useEffect(() => {
     let countPlacedItem = 0; // count the item which is placed in the round
 
     for (let y = 0; y < board.length; y++) {
       for (let x = 0; x < board[y].length; x++) {
-        if (board[y][x] !== null && board[y][x].round === round && board[y][x].name[0] !== "S") {
+        if (
+          board[y][x] !== null &&
+          board[y][x].round === round &&
+          board[y][x].name[0] !== "S"
+        ) {
           countPlacedItem += 1;
         }
       }
@@ -120,7 +161,6 @@ const Normals = () => {
     } else {
       updatePlacedAllItems(false);
     }
-
   }, [board, action]);
 
   return (
