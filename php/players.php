@@ -8,7 +8,7 @@ if ($input !== NULL && $input["code"] !== "") {
     $data = [];
 
     $stmt = $database->stmt_init();
-    if (!$stmt = $database->prepare("SELECT users.*, groups.code, groups.round, groups.rolled, playersstatus.status FROM users INNER JOIN groups ON users.codeID = groups.id INNER JOIN playersstatus ON playersstatus.userID = users.id WHERE groups.code = ?")) {
+    if (!$stmt = $database->prepare("SELECT users.*, groups.code, groups.round, groups.rolled, playersstatus.status FROM users INNER JOIN groups ON users.codeID = groups.groupid INNER JOIN playersstatus ON playersstatus.userID = users.id WHERE groups.code = ?")) {
         $data["status"] = "failed to connect";
         echo json_encode($data);
         exit;

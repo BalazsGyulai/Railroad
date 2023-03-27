@@ -52,65 +52,90 @@
 }
 
 #JoinPage .players > div:nth-child(even) {
-    background: rgba(177, 209, 255, 0.397);
+  background: rgba(177, 209, 255, 0.397);
 }
 
-#JoinPage .players .headerCell{
-    font-weight: bold;
-    text-align: center;
+#JoinPage .players .headerCell {
+  font-weight: bold;
+  text-align: center;
 }
 
-#JoinPage .GameBtn{
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
+#JoinPage .GameBtn {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
 }
 
-#JoinPage button{
-    width: 70%;
-    height: 40px;
-    max-width: 500px;
-    min-width: 250px;
-    background: rgb(0, 106, 255);
-    border: none;
-    border-radius: 9px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    outline: none;
+#JoinPage button {
+  width: 70%;
+  height: 40px;
+  max-width: 500px;
+  min-width: 250px;
+  background: rgb(0, 106, 255);
+  border: none;
+  border-radius: 9px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  outline: none;
 }
 
-#JoinPage button:active{
-    background: rgb(0, 59, 143);
+#JoinPage button:active {
+  background: rgb(0, 59, 143);
 }
 
-#JoinPage .waiting{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
+#JoinPage .waiting {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
 }
 
-#JoinPage .cubes{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    width: 100%;
-    background: rgb(0, 106, 255);
+#JoinPage .cubes {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  max-width: 500px;
+  overflow-x: auto;
+  background: rgb(0, 106, 255);
 }
 
-#JoinPage .cubes > div{
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
+#JoinPage .cubes::-webkit-scrollbar{
+  height: 10px;
 }
 
-#JoinPage .cubes > div > div{
-    background: #fff;
+#JoinPage .cubes::-webkit-scrollbar-track{
+  background-color: rgb(0, 106, 255, 0);
+  margin: 0 10px;
+}
+
+#JoinPage .cubes::-webkit-scrollbar-thumb{
+  border: 3px solid rgb(0, 106, 255);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+#JoinPage .cubesHolder {
+  position: relative;
+  width: 100%;
+  background: #fff;
+}
+
+#JoinPage .selectedCubes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#JoinPage .selectedCubesHolder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

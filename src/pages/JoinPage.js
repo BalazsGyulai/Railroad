@@ -122,9 +122,9 @@ const JoinPage = () => {
   const deleteRolled = (index) => {
     let rolled = selectedcubes;
 
-    rolled.splice(index,1);
+    rolled.splice(index, 1);
     setselectedCubes([...rolled]);
-  }
+  };
 
   const startGameHandler = () => {
     fetch(`${baseURL}nextGame.php`, {
@@ -132,7 +132,7 @@ const JoinPage = () => {
       body: JSON.stringify({
         round,
         code: JSON.parse(sessionStorage.getItem("user")).code,
-        rolled: selectedcubes === [] || selectedcubes === null || selectedcubes === "" ? null : selectedcubes,
+        rolled: selectedcubes,
         page: "game",
       }),
     })
@@ -194,46 +194,55 @@ const JoinPage = () => {
         ) : page === "roll" ? (
           <>
             <div className="GameBtn">
-              <button onClick={() => startGameHandler()}>Játék indítása</button>
+              {selectedcubes.length > 0 ? (
+                <button onClick={() => startGameHandler()}>
+                  Játék indítása
+                </button>
+              ) : (
+                ""
+              )}
             </div>
-            <div className="cubes">
-              {cubes !== ""
-                ? cubes.map((face, index) => (
-                    <Piece
-                      key={index}
-                      piece={face}
-                      borderRadius={10}
-                      selectedColor="#fff"
-                      baseColor="rgb(0, 106, 255)"
-                      callClicked={() => SelectCube(index)}
-                    />
-                  ))
-                : ""}
+            <div className="cubesHolder">
+              {selectedcubes.length < 4 ? (
+                <div className="cubes">
+                  {cubes !== ""
+                    ? cubes.map((face, index) => (
+                        <Piece
+                          key={index}
+                          piece={face}
+                          borderRadius={10}
+                          selectedColor="#fff"
+                          baseColor="rgb(0, 106, 255)"
+                          callClicked={() => SelectCube(index)}
+                        />
+                      ))
+                    : ""}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            {/* <div key={index} onClick={() => SelectCube(index)}>
-                      <div
-                        style={{
-                          width: `${cellSize}px`,
-                          height: `${cellSize}px`,
-                        }}
-                      >
-                        {face.item}
-                      </div>
-                    </div> */}
 
-            <div className="selectedCubes">
-              {selectedcubes !== ""
-                ? selectedcubes.map((cube, index) => (
-                  <Piece
-                      key={index}
-                      piece={cube}
-                      borderRadius={10}
-                      selectedColor="#fff"
-                      baseColor="#fff"
-                      callClicked={() => deleteRolled(index)}
-                    />
-                  ))
-                : ""}
+            <div className="selectedCubesHolder">
+              <div
+                className="selectedCubes"
+                style={{
+                  width: `${(cellSize + 50) * 2}px`,
+                }}
+              >
+                {selectedcubes !== ""
+                  ? selectedcubes.map((cube, index) => (
+                      <Piece
+                        key={index}
+                        piece={cube}
+                        borderRadius={10}
+                        selectedColor="#fff"
+                        baseColor="#fff"
+                        callClicked={() => deleteRolled(index)}
+                      />
+                    ))
+                  : ""}
+              </div>
             </div>
           </>
         ) : (
@@ -245,7 +254,6 @@ const JoinPage = () => {
         </div>
       )}
     </div>
-                  
   );
 };
 

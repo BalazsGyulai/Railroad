@@ -1,15 +1,12 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
-import Road from "../Rails/Road";
-import Trail from "../Rails/Trail";
-import WA from "../Icons/WA";
+import LoginMange from "./Login";
 
 const BOARD = [
   [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -17,7 +14,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -25,7 +21,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -33,7 +28,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -41,7 +35,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -49,7 +42,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -57,7 +49,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -65,7 +56,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -73,7 +63,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -83,7 +72,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -98,7 +86,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -108,7 +95,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -123,7 +109,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -133,7 +118,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -148,7 +132,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -158,7 +141,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -173,7 +155,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -183,7 +164,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -198,7 +178,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -208,7 +187,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -223,7 +201,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 1,
       flip: 0,
       round: 0,
@@ -233,7 +210,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -248,7 +224,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -258,7 +233,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -266,7 +240,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -274,7 +247,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -282,7 +254,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -290,7 +261,6 @@ const BOARD = [
     {
       name: "ra",
       look: ["s", null, "s", null],
-      item: <Trail />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -298,7 +268,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 1,
       round: 0,
@@ -306,7 +275,6 @@ const BOARD = [
     {
       name: "ro",
       look: ["u", null, "u", null],
-      item: <Road />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -314,7 +282,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -322,7 +289,6 @@ const BOARD = [
     {
       name: "wa",
       look: ["wa", "wa", "wa", "wa"],
-      item: <WA />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -344,7 +310,7 @@ export function BoardManage({ children }) {
     deleteHandler,
     placedAllItem,
   } = useContext(Moving);
-
+  const { loggedIn, mode, baseURL } = useContext(LoginMange);
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
   const [windowSize, setWindowSize] = useState({
@@ -377,6 +343,10 @@ export function BoardManage({ children }) {
     }
   }, [action]);
 
+  useEffect(() => {
+    saveBoard();
+  }, [board]);
+
   // -------------------------------------------
   // handles the window size when it changes
   // -------------------------------------------
@@ -389,8 +359,36 @@ export function BoardManage({ children }) {
     };
   });
 
+  const getBoard = () => {
+    if (loggedIn && mode === "multiPlayer") {
+      fetch(`${baseURL}getBoard.php`, {
+        method: "post",
+        body: JSON.stringify({
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          
+          if (data.status === "ok") {
+            let board = JSON.parse(data.board.userBoard);
+
+            if (board !== null){
+              setBoard(board);
+            }
+
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     handleWindowResize();
+    getBoard();
   }, []);
 
   const handleWindowResize = () => {
@@ -448,15 +446,31 @@ export function BoardManage({ children }) {
 
       setBoard([...board], (board[y][x] = { ...selected }));
     }
-  }
+  };
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       if (!placedAllItem) {
-        dropPieceHandler(x,y);
+        dropPieceHandler(x, y);
       } else if (selected.name[0] === "S") {
-        dropPieceHandler(x,y);
+        dropPieceHandler(x, y);
       }
+    }
+  };
+
+  const saveBoard = () => {
+    if (loggedIn && mode === "multiPlayer") {
+      fetch(`${baseURL}saveBoard.php`, {
+        method: "post",
+        body: JSON.stringify({
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+          board,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+         
+        });
     }
   };
 
@@ -468,6 +482,7 @@ export function BoardManage({ children }) {
         cellSize,
         windowSize,
         newItem,
+        getBoard,
       }}
     >
       {children}

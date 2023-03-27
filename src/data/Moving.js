@@ -16,25 +16,25 @@ export function MovingManage({ children }) {
     if (loggedIn === false && mode === "creative"){
       RoundHandler(1);
     } else if(loggedIn && mode === "multiPlayer") {
-      // setInterval(() => {
-      //   fetch(`${baseURL}page.php`, {
-      //     method: "post",
-      //     body: JSON.stringify({
-      //       code: JSON.parse(sessionStorage.getItem("user")).code,
-      //     }),
-      //   })
-      //     .then((data) => data.json())
-      //     .then((data) => {
-      //       if (data.status === "ok") {
-      //         // console.log(data.page.round)
-      //         RoundHandler(data.page.round);
-      //       } else if (data.status === "failed to connect") {
-      //         console.log("failed to connect");
-      //       } else {
-      //         console.log("something is wrong");
-      //       }
-      //     });
-      // }, 1000);
+      setInterval(() => {
+        fetch(`${baseURL}page.php`, {
+          method: "post",
+          body: JSON.stringify({
+            code: JSON.parse(sessionStorage.getItem("user")).code,
+          }),
+        })
+          .then((data) => data.json())
+          .then((data) => {
+            if (data.status === "ok") {
+              // console.log(data.page.round)
+              RoundHandler(data.page.round);
+            } else if (data.status === "failed to connect") {
+              console.log("failed to connect");
+            } else {
+              console.log("something is wrong");
+            }
+          });
+      }, 1000);
     }
 
   }, [mode, loggedIn])
@@ -92,6 +92,28 @@ export function MovingManage({ children }) {
   }
 
   const NextRoundHandler = () => {
+
+    if (loggedIn && mode === "multiPlayer"){
+      fetch(`${baseURL}setPage.php`, {
+        method: "post",
+        body: JSON.stringify({
+          round: round + 1,
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            console.log(data)
+            // RoundHandler(data.page.round);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        }); 
+    }
+
     RoundHandler(round + 1);
 
     // reset selected

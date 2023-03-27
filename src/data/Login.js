@@ -6,12 +6,17 @@ export function LoginMange({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [mode, setMode] = useState("");
   const [page, setPage] = useState("join");
-  const baseURL = "http://localhost/";
+  const baseURL = "https://railroadink.gyulaibalazs.hu/";
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {
       loggedInHandler(true);
       modeHandler("multiPlayer");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn && mode === "multiPlayer") {
       setInterval(() => {
         fetch(`${baseURL}page.php`, {
           method: "post",
@@ -31,7 +36,7 @@ export function LoginMange({ children }) {
           });
       }, 1000);
     }
-  }, []);
+  }, [loggedIn, mode]);
 
   const PageHandler = (val) => {
     setPage(val);

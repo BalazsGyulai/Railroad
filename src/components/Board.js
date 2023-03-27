@@ -6,7 +6,8 @@ import Moving from "../data/Moving";
 import NextArrow from "../Icons/NextArrow";
 
 const Board = () => {
-  const { board, windowSize, cellSize } = useContext(BoardTable);
+
+  const { board, windowSize, cellSize,getBoard } = useContext(BoardTable);
   const { NextRoundHandler, round, selected, action, cellItemSelected } =
     useContext(Moving);
 
@@ -14,9 +15,10 @@ const Board = () => {
   const [enabledCells, setEnabledCells] = useState("");
 
   useEffect(() => {
+    getBoard();
     handlerCalculate(board);
   }, []);
-
+  
   useEffect(() => {
     handlerCalculate(board);
   }, [board, action]);
@@ -24,6 +26,8 @@ const Board = () => {
   useEffect(() => {
     handleEmptyCells(board);
   }, [selected, action, board, cellItemSelected]);
+
+  
 
   const handleEmptyCells = (board) => {
     let EnableToPlace = [];
@@ -199,7 +203,11 @@ const Board = () => {
                 };
 
                 if (Selected.top !== AbovePlaced.bottom) {
-                  if (Selected.top !== null && AbovePlaced.bottom !== null && AbovePlaced.bottom !== "wa") {
+                  if (
+                    Selected.top !== null &&
+                    AbovePlaced.bottom !== null &&
+                    AbovePlaced.bottom !== "wa"
+                  ) {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -222,7 +230,11 @@ const Board = () => {
                 };
 
                 if (Selected.right !== LeftSide.left) {
-                  if (Selected.right !== null && LeftSide.left !== null && LeftSide.left !== "wa") {
+                  if (
+                    Selected.right !== null &&
+                    LeftSide.left !== null &&
+                    LeftSide.left !== "wa"
+                  ) {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -244,7 +256,11 @@ const Board = () => {
                 };
 
                 if (Selected.bottom !== UnderPlace.top) {
-                  if (Selected.bottom !== null && UnderPlace.top !== null && UnderPlace.top !== "wa") {
+                  if (
+                    Selected.bottom !== null &&
+                    UnderPlace.top !== null &&
+                    UnderPlace.top !== "wa"
+                  ) {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -267,7 +283,11 @@ const Board = () => {
                 };
 
                 if (Selected.left !== RightSide.right) {
-                  if (Selected.left !== null && RightSide.right !== null && RightSide.right !== "wa") {
+                  if (
+                    Selected.left !== null &&
+                    RightSide.right !== null &&
+                    RightSide.right !== "wa"
+                  ) {
                     EnableToPlace[y][x] = null;
                   }
                 }
@@ -278,7 +298,6 @@ const Board = () => {
       }
     }
 
-    // console.log(selected.look[(3 + (4 - selected.rotated) % 4) % 4]);
     setEnabledCells(EnableToPlace);
   };
 
@@ -318,17 +337,22 @@ const Board = () => {
           >
             {round}
           </div>
-          <div
-            className="nextRoundBtn"
-            onClick={() => NextRoundHandler()}
-            style={{
-              width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
-              padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
-              borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
-            }}
-          >
-            <NextArrow />
-          </div>
+          {sessionStorage.getItem("user") &&
+          JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
+            <div
+              className="nextRoundBtn"
+              onClick={() => NextRoundHandler()}
+              style={{
+                width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
+                padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
+                borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
+              }}
+            >
+              <NextArrow />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 
