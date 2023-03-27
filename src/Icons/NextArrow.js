@@ -1,6 +1,6 @@
 import React from "react";
 
-const expand = () => {
+const NextArrow = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,9 +8,9 @@ const expand = () => {
       viewBox="0 96 960 960"
       width="100%"
     >
-      <path d="m283 711-43-43 240-240 240 239-43 43-197-197-197 198Z" />
+      <path d="m375 816-43-43 198-198-198-198 43-43 241 241-241 241Z" />
     </svg>
   );
 };
 
-export default expand;
+export default NextArrow;

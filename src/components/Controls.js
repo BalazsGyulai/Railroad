@@ -5,6 +5,7 @@ import RotateLeft from "../Icons/RotateLeft";
 import RotateRight from "../Icons/RotateRight";
 import "./Controls.css";
 import Moving from "../data/Moving";
+import BoardTable from "../data/Board";
 
 const Controls = () => {
   const {
@@ -14,9 +15,12 @@ const Controls = () => {
     deleteHandler,
     cellItemSelected,
   } = useContext(Moving);
+  const {cellSize} = useContext(BoardTable)
 
   return (
-    <div id="controls">
+    <div id="controls" style={{
+      height: `${cellSize + 10}px`
+    }}>
       {selected !== "" ? (
         <>
           <div className="controlItem" onClick={() => RotateHandler(-1)}>

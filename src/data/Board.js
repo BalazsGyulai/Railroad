@@ -1,78 +1,77 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import Moving from "./Moving";
-import Road from "../Rails/Road";
-import Trail from "../Rails/Trail";
+import LoginMange from "./Login";
 
 const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 1
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
@@ -86,7 +85,7 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
@@ -95,7 +94,7 @@ const BOARD = [
   [
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -109,7 +108,7 @@ const BOARD = [
     null,
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -118,9 +117,9 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     null,
@@ -132,16 +131,16 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 4
   [
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -155,7 +154,7 @@ const BOARD = [
     null,
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -164,7 +163,7 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
@@ -178,7 +177,7 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
@@ -187,7 +186,7 @@ const BOARD = [
   [
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -201,7 +200,7 @@ const BOARD = [
     null,
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 1,
       flip: 0,
       round: 0,
@@ -210,9 +209,9 @@ const BOARD = [
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     null,
@@ -224,72 +223,72 @@ const BOARD = [
     null,
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
   ], // 8
   [
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "ra",
-      item: <Trail />,
+      look: ["s", null, "s", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
-      flip: 0,
+      flip: 1,
       round: 0,
     },
     {
       name: "ro",
-      item: <Road />,
+      look: ["u", null, "u", null],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
     },
     {
       name: "wa",
-      item: "",
+      look: ["wa", "wa", "wa", "wa"],
       rotated: 0,
       flip: 0,
       round: 0,
@@ -309,15 +308,15 @@ export function BoardManage({ children }) {
     upgradeAction,
     deleteItem,
     deleteHandler,
+    placedAllItem,
   } = useContext(Moving);
-
-
+  const { loggedIn, mode, baseURL } = useContext(LoginMange);
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
   const [windowSize, setWindowSize] = useState({
     x: 0,
     y: 0,
-  })
+  });
   const [cellSize, setCellSize] = useState(65);
 
   // --------------------------------------------
@@ -344,6 +343,10 @@ export function BoardManage({ children }) {
     }
   }, [action]);
 
+  useEffect(() => {
+    saveBoard();
+  }, [board]);
+
   // -------------------------------------------
   // handles the window size when it changes
   // -------------------------------------------
@@ -356,22 +359,50 @@ export function BoardManage({ children }) {
     };
   });
 
+  const getBoard = () => {
+    if (loggedIn && mode === "multiPlayer") {
+      fetch(`${baseURL}getBoard.php`, {
+        method: "post",
+        body: JSON.stringify({
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          
+          if (data.status === "ok") {
+            let board = JSON.parse(data.board.userBoard);
+
+            if (board !== null){
+              setBoard(board);
+            }
+
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     handleWindowResize();
-  }, [])
+    getBoard();
+  }, []);
 
   const handleWindowResize = () => {
     setWindowSize({
       x: window.innerWidth,
-      y: window.innerHeight
+      y: window.innerHeight,
     });
 
     let x = window.innerWidth;
     let y = window.innerHeight;
 
     if (x < 769) {
-      if (y / 2 < x) {
-        setCellSize(y / 2 / 9);
+      if (y - (cellSize + 10) * 4 - 5 < x) {
+        setCellSize((y - (cellSize + 10) * 4 - 5) / 9);
       } else {
         setCellSize(x / 9);
       }
@@ -381,12 +412,13 @@ export function BoardManage({ children }) {
           setCellSize(65);
         } else {
           setCellSize(x / 2 / 9);
+          // setCellSize((y - (cellSize + 10)) / 9);
         }
       } else {
         if (y / 9 > 65) {
           setCellSize(65);
         } else {
-          setCellSize(y / 9);
+          setCellSize((y - (cellSize + 10)) / 9);
         }
       }
     }
@@ -396,12 +428,49 @@ export function BoardManage({ children }) {
   // Sets the selected item to the board
   // -------------------------------------
 
-  const dropToCellHandler = (x, y) => {
-    if (selected !== "" && selected !== null) {
+  const dropPieceHandler = (x, y) => {
+    let found = false;
+    if (selected.name[0] === "S") {
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (board[i][j] !== null && board[i][j].name === selected.name) {
+            found = true;
+          }
+        }
+      }
+    }
+
+    if (!found) {
       let newBoard = board;
       newBoard[y][x] = selected;
 
       setBoard([...board], (board[y][x] = { ...selected }));
+    }
+  };
+
+  const dropToCellHandler = (x, y) => {
+    if (selected !== "" && selected !== null) {
+      if (!placedAllItem) {
+        dropPieceHandler(x, y);
+      } else if (selected.name[0] === "S") {
+        dropPieceHandler(x, y);
+      }
+    }
+  };
+
+  const saveBoard = () => {
+    if (loggedIn && mode === "multiPlayer") {
+      fetch(`${baseURL}saveBoard.php`, {
+        method: "post",
+        body: JSON.stringify({
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+          board,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+         
+        });
     }
   };
 
@@ -411,7 +480,9 @@ export function BoardManage({ children }) {
         board,
         dropToCellHandler,
         cellSize,
-        windowSize
+        windowSize,
+        newItem,
+        getBoard,
       }}
     >
       {children}

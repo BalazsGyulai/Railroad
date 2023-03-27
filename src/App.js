@@ -7,12 +7,15 @@ import Moving from "./data/Moving";
 import "./App.css";
 import Expand from "./Icons/Expand";
 import BoardTable from "./data/Board";
+import LoginData from "./data/Login";
 import Login from "./pages/Login";
-
+import JoinPage from "./pages/JoinPage";
 
 function App() {
-  const { NextRoundHandler, selected } = React.useContext(Moving);
+  const { selected } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
+  const {loggedIn, mode, page} = React.useContext(LoginData);
+
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
   );
@@ -20,8 +23,61 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Login /> */}
-      {/* Board */}
+      {
+        loggedIn || mode !== "" ? 
+            page === "join" ?
+            <JoinPage /> :
+        (
+          <>
+          <Board />
+      <div className="PiecesPlace">
+        <div
+          style={{
+            height:
+              windowSize.x < 769
+                ? `${windowSize.y * 0.2 - (cellSize + 10)}px`
+                : "70px",
+          }}
+        >
+          
+          <Controls />
+        </div>
+        <div
+          className="PiecesHolder"
+          style={{
+            height:
+              windowSize.x < 769
+                ? showPieces
+                  ? "40vh"
+                  : `${cellSize + 10}px`
+                : `${windowSize.y - 70}px`,
+            overflow: "hidden",
+          }}
+        >
+          {windowSize.x < 769 ? (
+            <div className="ExpandBtn">
+              <div
+                className="ShowMore"
+                onClick={() => setShowPieces(!showPieces)}
+                style={{
+                  width: `${windowSize.x * 0.8 - cellSize - 10}px`,
+                  height: `${cellSize + 10}px`,
+                  borderRadius: `${(cellSize + 10) / 2}px`,
+                  background: showPieces
+                    ? "rgb(0, 106, 255)"
+                    : "rgb(255,255,255)",
+                  fill: showPieces ? "#fff" : "rgb(0, 59, 143)",
+                }}
+              >
+                <div
+                  className="icon"
+                  style={{
+                    transform: showPieces ? "rotate(180deg)" : "rotate(0)",
+                  }}
+                >
+                  <Expand />
+                </div>
+              </div>
 
       {!LoggedIn ? (
         <Login changeLogin={() => setLoggedIn(!LoggedIn)} />
@@ -111,8 +167,14 @@ function App() {
               </div>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
+          </>
+        ) : (
+          <Login />
+        )
+      }
+      
     </div>
   );
 }

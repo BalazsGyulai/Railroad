@@ -18,6 +18,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "u", "s", "u"]
     },
     {
       name: "S1",
@@ -25,6 +26,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", "s", "u", "s"]
     },
     {
       name: "S2",
@@ -32,6 +34,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "u", "u", "u"]
     },
     {
       name: "S3",
@@ -39,6 +42,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["s", "s", "s", "s"]
     },
     {
       name: "S4",
@@ -46,6 +50,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "s", "s", "u"]
     },
     {
       name: "S5",
@@ -53,6 +58,7 @@ function SPECIALS() {
       rotated: 0,
       flip: 0,
       round: 0,
+      look: ["u", "s", "u", "s"]
     },
   ];
 }
@@ -71,7 +77,7 @@ const Specials = () => {
 
     deleteUsedItem(board, NewSpecials);
 
-    if (NewSpecials.length < 4){
+    if (NewSpecials.length < 4) {
       NewSpecials = "";
     }
 
@@ -95,18 +101,26 @@ const Specials = () => {
   };
 
   return (
-    <div id="SpecialsPlace">
-      <div id="Specials">
-        {specials !== ""
-          ? specials.map((special, index) => (
-              <Piece
-                key={`${round}${index}`}
-                piece={special}
-                selectedColor="#fff"
-                baseColor="rgb(0, 106, 255)"
-              />
-            ))
-          : ""}
+    <div id="SpecialsHolder">
+      {specials.length >= 4 ? (
+        <div className="SpecialsLeft">{specials.length - 3}</div>
+      ) : (
+        ""
+      )}
+      <div id="SpecialsPlace">
+        <div id="Specials">
+          {specials !== ""
+            ? specials.map((special, index) => (
+                <Piece
+                  key={`${round}${index}`}
+                  piece={special}
+                  selectedColor="#fff"
+                  baseColor="rgb(0, 106, 255)"
+                  clickable={true}
+                />
+              ))
+            : ""}
+        </div>
       </div>
     </div>
   );

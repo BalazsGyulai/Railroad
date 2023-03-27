@@ -1,25 +1,68 @@
+#boardHolder {
+  width: 50%;
+}
+
 #boardPlace {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 100vh;
-    position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
 }
 
-#board{
-    display: table;
-    /* border-collapse: collapse; */
+#board {
+  display: table;
+  /* border-collapse: collapse; */
 }
 
-#board .row{
-    display: table-row;
+#board .row {
+  display: table-row;
 }
 
+.statsHolder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.RoundHolder {
+  position: relative;
+  display: flex;
+  /* height: 70%; */
+}
+
+.RoundDisplay {
+    z-index: 2;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vh;
+  font-weight: bold;
+  border: 2px solid rgb(0, 59, 143);
+}
+
+.nextRoundBtn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  padding: 9px;
+  background: rgb(0, 106, 255);
+  color: #fff;
+  fill: #fff;
+  cursor: pointer;
+}
+
+.nextRoundBtn:active {
+  background: rgb(0, 59, 143);
+}
 
 @media (max-width: 769px) {
-    #boardPlace{
-        width: 100%;
-        height: 80vh;
-    }
+  #boardHolder {
+    width: 100%;
+  }
 }

@@ -1,13 +1,47 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import LoginMange from "./Login";
 
 const Moving = createContext();
 
 export function MovingManage({ children }) {
+  const {loggedIn, mode, baseURL} = useContext(LoginMange);
   const [selected, useSelected] = useState("");
-  const [round, setRound] = useState(1);
+  const [round, setRound] = useState(0);
   const [action, setAction] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
   const [cellItemSelected, setCellItemSelected] = useState("");
+  const [placedAllItem, setPlacedAllItems] = useState(false);
+
+  useEffect(() =>{
+    if (loggedIn === false && mode === "creative"){
+      RoundHandler(1);
+    } else if(loggedIn && mode === "multiPlayer") {
+      setInterval(() => {
+        fetch(`${baseURL}page.php`, {
+          method: "post",
+          body: JSON.stringify({
+            code: JSON.parse(sessionStorage.getItem("user")).code,
+          }),
+        })
+          .then((data) => data.json())
+          .then((data) => {
+            if (data.status === "ok") {
+              // console.log(data.page.round)
+              RoundHandler(data.page.round);
+            } else if (data.status === "failed to connect") {
+              console.log("failed to connect");
+            } else {
+              console.log("something is wrong");
+            }
+          });
+      }, 1000);
+    }
+
+  }, [mode, loggedIn])
+  
+  const updatePlacedAllItems = (val) => {
+    setPlacedAllItems(val)
+  } 
 
   // ---------------------------------------
   // This is called by the components if
@@ -17,11 +51,7 @@ export function MovingManage({ children }) {
   // ---------------------------------------
 
   const updateCellItemSelected = (x, y) => {
-    if (x === "" && y === undefined){
-      changeCellItemSelected("");
-    } else {
-      changeCellItemSelected({x: x, y: y});
-    }
+    changeCellItemSelected({ x: x, y: y });
   };
 
   // -----------------------------------------
@@ -30,8 +60,7 @@ export function MovingManage({ children }) {
 
   const changeCellItemSelected = (val) => {
     setCellItemSelected(val);
-  }
-
+  };
 
   // ---------------------------------------
   // This is called when an item is tapped.
@@ -40,9 +69,10 @@ export function MovingManage({ children }) {
   const SetSelected = (newest) => {
     useSelected(AnalyseSelected(newest));
 
-    if (cellItemSelected !== "") {
-      setCellItemSelected(AnalyseSelected(newest));
-    }
+    // reset cell item selected
+    // if (cellItemSelected !== "") {
+    //   changeCellItemSelected(AnalyseSelected(newest));
+    // }
   };
 
   const AnalyseSelected = (newest) => {
@@ -53,14 +83,44 @@ export function MovingManage({ children }) {
     }
   };
 
-
   // ---------------------------------------
   // This is called when the round is changes
   // ---------------------------------------
-  const NextRoundHandler = () => {
-    setRound(round + 1);
-  };
 
+  const RoundHandler = (val) => {
+    setRound(val);
+  }
+
+  const NextRoundHandler = () => {
+
+    if (loggedIn && mode === "multiPlayer"){
+      fetch(`${baseURL}setPage.php`, {
+        method: "post",
+        body: JSON.stringify({
+          round: round + 1,
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            console.log(data)
+            // RoundHandler(data.page.round);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        }); 
+    }
+
+    RoundHandler(round + 1);
+
+    // reset selected
+    SetSelected("");
+
+    upgradeAction();
+  };
 
   // -----------------------------------------
   // This handles the Controls component clicks
@@ -121,6 +181,9 @@ export function MovingManage({ children }) {
         deleteHandler,
         deleteItem,
         upgradeAction,
+        changeCellItemSelected,
+        placedAllItem,
+        updatePlacedAllItems
       }}
     >
       {children}

@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MovingManage } from "./data/Moving";
 import { BoardManage } from "./data/Board";
+import { LoginMange } from "./data/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MovingManage>
-      <BoardManage>
-        <App />
-      </BoardManage>
-    </MovingManage>
+    <LoginMange>
+      <MovingManage>
+        <BoardManage>
+          <App />
+        </BoardManage>
+      </MovingManage>
+    </LoginMange>
   </React.StrictMode>
 );
 
