@@ -116,9 +116,15 @@ const JoinPage = () => {
   }
 
   const SelectCube = (index) => {
-    console.log(index);
     setselectedCubes([...selectedcubes, cubes[index]]);
   };
+
+  const deleteRolled = (index) => {
+    let rolled = selectedcubes;
+
+    rolled.splice(index,1);
+    setselectedCubes([...rolled]);
+  }
 
   const startGameHandler = () => {
     fetch(`${baseURL}nextGame.php`, {
@@ -126,7 +132,7 @@ const JoinPage = () => {
       body: JSON.stringify({
         round,
         code: JSON.parse(sessionStorage.getItem("user")).code,
-        rolled: selectedcubes,
+        rolled: selectedcubes === [] || selectedcubes === null || selectedcubes === "" ? null : selectedcubes,
         page: "game",
       }),
     })
@@ -224,6 +230,7 @@ const JoinPage = () => {
                       borderRadius={10}
                       selectedColor="#fff"
                       baseColor="#fff"
+                      callClicked={() => deleteRolled(index)}
                     />
                   ))
                 : ""}
