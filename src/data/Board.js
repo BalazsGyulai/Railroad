@@ -309,6 +309,7 @@ export function BoardManage({ children }) {
     deleteItem,
     deleteHandler,
     placedAllItem,
+    saveAction,
   } = useContext(Moving);
   const { loggedIn, mode, baseURL } = useContext(LoginMange);
   // --------- local global variables -----------
@@ -344,8 +345,8 @@ export function BoardManage({ children }) {
   }, [action]);
 
   useEffect(() => {
-    saveBoard();
-  }, [board]);
+    saveBoard(board);
+  }, [saveAction]);
 
   // -------------------------------------------
   // handles the window size when it changes
@@ -369,14 +370,12 @@ export function BoardManage({ children }) {
       })
         .then((data) => data.json())
         .then((data) => {
-          
           if (data.status === "ok") {
             let board = JSON.parse(data.board.userBoard);
 
-            if (board !== null){
+            if (board !== null) {
               setBoard(board);
             }
-
           } else if (data.status === "failed to connect") {
             console.log("failed to connect");
           } else {
@@ -445,6 +444,7 @@ export function BoardManage({ children }) {
       newBoard[y][x] = selected;
 
       setBoard([...board], (board[y][x] = { ...selected }));
+      saveBoard(newBoard);
     }
   };
 
@@ -458,19 +458,21 @@ export function BoardManage({ children }) {
     }
   };
 
-  const saveBoard = () => {
+  const saveBoard = (board) => {
     if (loggedIn && mode === "multiPlayer") {
-      fetch(`${baseURL}saveBoard.php`, {
-        method: "post",
-        body: JSON.stringify({
-          id: JSON.parse(sessionStorage.getItem("user")).id,
-          board,
-        }),
-      })
-        .then((data) => data.json())
-        .then((data) => {
-         
-        });
+      if (board !== BOARD) {
+        fetch(`${baseURL}saveBoard.php`, {
+          method: "post",
+          body: JSON.stringify({
+            id: JSON.parse(sessionStorage.getItem("user")).id,
+            board,
+          }),
+        })
+          .then((data) => data.json())
+          .then((data) => {
+            console.log(board);
+          });
+      }
     }
   };
 
@@ -483,6 +485,7 @@ export function BoardManage({ children }) {
         windowSize,
         newItem,
         getBoard,
+        saveBoard,
       }}
     >
       {children}

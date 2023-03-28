@@ -1,21 +1,19 @@
 <?php
-header('Access-Control-Allow-Origin: *');
 require("./header.php");
 
-if ($input !== NULL && $input["code"] !== "" && $input["round"] !== "") {
+if ($input !== NULL && $input["code"] !== "" && $input["page"] !== "") {
     require_once("./connect/connect.php");
 
     $code = $input["code"];
-    $round = $input["round"];
-    $page = "join";
+    $page = $input["page"];
 
     $stmt = $database->stmt_init();
-    if (!$stmt = $database->prepare("UPDATE groups SET round = ?, actpage = ? WHERE code = ?")) {
+    if (!$stmt = $database->prepare("UPDATE groups SET actpage = ? WHERE code = ?")) {
         $data["status"] = "failed to connect";
         echo json_encode($data);
         exit;
     };
-    $stmt->bind_param("isi", $round, $page, $code);
+    $stmt->bind_param("ss", $page, $code);
     $stmt->execute();
     
     $data["status"] = "ok";

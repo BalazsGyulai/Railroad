@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
 require("./header.php");
 
 if ($input !== NULL && $input["code"] !== "") {

@@ -27,7 +27,6 @@ const Login = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
         if (data.status === "ok"){
           sessionStorage.setItem("user", JSON.stringify(data.userInfos));
           modeHandler("multiPlayer");
@@ -62,7 +61,6 @@ const Login = () => {
 
   return (
     <div id="LoginPage">
-      <div className="PageDivider">{/* img */}</div>
       <div className="PageDivider LoginHolder">
         {selectedMode === "" ? (
           <div className="BasicInfos">

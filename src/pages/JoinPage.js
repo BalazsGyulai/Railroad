@@ -5,6 +5,7 @@ import CodeImg from "../Icons/CodeImg";
 import Moving from "../data/Moving";
 import BoardManage from "../data/Board";
 import Piece from "../components/Piece";
+import Clipboard from "../Icons/Clipboard";
 
 function NORMALS() {
   return [
@@ -78,11 +79,12 @@ const JoinPage = () => {
   const { cellSize } = useContext(BoardManage);
   const [code, setCode] = useState("");
   const [players, setPlayers] = useState("");
-  const { baseURL, PageHandler } = useContext(LoginData);
+  const { baseURL, PageHandler, page } = useContext(LoginData);
   const { round } = useContext(Moving);
-  const [page, setPage] = useState("players");
+  const [amdinPage, setPage] = useState("players");
   const [cubes, setCubes] = useState("");
   const [selectedcubes, setselectedCubes] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setCode(JSON.parse(sessionStorage.getItem("user")).code);
@@ -151,21 +153,47 @@ const JoinPage = () => {
 
   const setsRollItems = () => {
     upgradePage("roll");
+
+    fetch(`${baseURL}setPage.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        page: "roll",
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          console.log(data);
+          // RoundHandler(data.page.round);
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
   };
 
   const upgradePage = (val) => {
     setPage(val);
   };
 
+  const copyCode = async (copy) => {
+    try {
+      navigator.clipboard.writeText(copy);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   return (
     <div id="JoinPage">
       {JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
-        page === "players" ? (
+        amdinPage === "players" ? (
           <>
-            <div className="joinInfos">
-              <div>
-                <CodeImg />
-              </div>
+            <div className="joinInfos" onClick={() => copyCode(code)}>
+              <div>{copied ? <Clipboard /> : <CodeImg />}</div>
               <div>
                 <p>Oszd meg a kódot másokkal, hogy együtt tudjatok játszani!</p>
                 <p>{code}</p>
@@ -191,7 +219,7 @@ const JoinPage = () => {
                 : ""}
             </div>
           </>
-        ) : page === "roll" ? (
+        ) : amdinPage === "roll" ? (
           <>
             <div className="GameBtn">
               {selectedcubes.length > 0 ? (
@@ -203,9 +231,9 @@ const JoinPage = () => {
               )}
             </div>
             <div className="cubesHolder">
-              {selectedcubes.length < 4 ? (
-                <div className="cubes">
-                  {cubes !== ""
+              <div className="cubes">
+                {selectedcubes.length < 4
+                  ? cubes !== ""
                     ? cubes.map((face, index) => (
                         <Piece
                           key={index}
@@ -216,11 +244,9 @@ const JoinPage = () => {
                           callClicked={() => SelectCube(index)}
                         />
                       ))
-                    : ""}
-                </div>
-              ) : (
-                ""
-              )}
+                    : ""
+                  : ""}
+              </div>
             </div>
 
             <div className="selectedCubesHolder">
@@ -248,9 +274,13 @@ const JoinPage = () => {
         ) : (
           ""
         )
-      ) : (
+      ) : page === "join" ? (
         <div className="waiting">
           <p>Várakozás a többi játékosra!</p>
+        </div>
+      ) : (
+        <div className="waiting">
+          <p>Dobás!</p>
         </div>
       )}
     </div>

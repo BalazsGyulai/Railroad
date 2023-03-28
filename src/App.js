@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       {
         loggedIn || mode !== "" ? 
-            page === "join" ?
+            page !== "game" ?
             <JoinPage /> :
         (
           <>

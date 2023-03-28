@@ -97,6 +97,26 @@ const Normals = () => {
     getRolledPieces();
   }, []);
 
+  useEffect(() => {
+    deleteDroppedPiece();
+  }, [board]);
+
+  const deleteDroppedPiece = () => {
+    let dropped = [];
+
+    for (let y = 0; y < board.length; y++) {
+      for (let x = 0; x < board[y].length; x++) {
+        for (let i = 0; i < normals.length; i++) {
+          if (board[y][x] !== null && board[y][x].name === normals[i].name) {
+            dropped.push(normals[i]);
+          }
+        }
+      }
+    }
+
+    console.log(dropped);
+  };
+
   const getRolledPieces = () => {
     fetch(`${baseURL}rolled.php`, {
       method: "post",

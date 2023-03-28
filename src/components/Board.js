@@ -6,8 +6,8 @@ import Moving from "../data/Moving";
 import NextArrow from "../Icons/NextArrow";
 
 const Board = () => {
-
-  const { board, windowSize, cellSize,getBoard } = useContext(BoardTable);
+  const { board, windowSize, cellSize, getBoard, saveBoard } =
+    useContext(BoardTable);
   const { NextRoundHandler, round, selected, action, cellItemSelected } =
     useContext(Moving);
 
@@ -18,16 +18,18 @@ const Board = () => {
     getBoard();
     handlerCalculate(board);
   }, []);
-  
+
   useEffect(() => {
     handlerCalculate(board);
   }, [board, action]);
 
   useEffect(() => {
+    saveBoard(board);
+  }, [action]);
+
+  useEffect(() => {
     handleEmptyCells(board);
   }, [selected, action, board, cellItemSelected]);
-
-  
 
   const handleEmptyCells = (board) => {
     let EnableToPlace = [];

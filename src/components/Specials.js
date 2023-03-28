@@ -14,7 +14,6 @@ function SPECIALS() {
   return [
     {
       name: "S0",
-      item: <S0 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -22,7 +21,6 @@ function SPECIALS() {
     },
     {
       name: "S1",
-      item: <S1 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -30,7 +28,6 @@ function SPECIALS() {
     },
     {
       name: "S2",
-      item: <S2 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -38,7 +35,6 @@ function SPECIALS() {
     },
     {
       name: "S3",
-      item: <S3 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -46,7 +42,6 @@ function SPECIALS() {
     },
     {
       name: "S4",
-      item: <S4 />,
       rotated: 0,
       flip: 0,
       round: 0,
@@ -54,7 +49,6 @@ function SPECIALS() {
     },
     {
       name: "S5",
-      item: <S5 />,
       rotated: 0,
       flip: 0,
       round: 0,

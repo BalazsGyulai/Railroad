@@ -6,7 +6,8 @@ export function LoginMange({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [mode, setMode] = useState("");
   const [page, setPage] = useState("join");
-  const baseURL = "https://railroadink.gyulaibalazs.hu/";
+  // const baseURL = "http://railroadink.gyulaibalazs.hu/";
+  const baseURL = "http://localhost/";
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {

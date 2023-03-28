@@ -11,6 +11,11 @@ export function MovingManage({ children }) {
   const [deleteItem, setDeleteItem] = useState(false);
   const [cellItemSelected, setCellItemSelected] = useState("");
   const [placedAllItem, setPlacedAllItems] = useState(false);
+  const [saveAction, setSaveAction] = useState(false);
+
+  const saveUpdate = () => {
+    setSaveAction(!saveAction);
+  }
 
   useEffect(() =>{
     if (loggedIn === false && mode === "creative"){
@@ -97,8 +102,8 @@ export function MovingManage({ children }) {
       fetch(`${baseURL}setPage.php`, {
         method: "post",
         body: JSON.stringify({
-          round: round + 1,
           code: JSON.parse(sessionStorage.getItem("user")).code,
+          page: "join"
         }),
       })
         .then((data) => data.json())
@@ -114,7 +119,7 @@ export function MovingManage({ children }) {
         }); 
     }
 
-    RoundHandler(round + 1);
+    // RoundHandler(round + 1);
 
     // reset selected
     SetSelected("");
@@ -137,6 +142,7 @@ export function MovingManage({ children }) {
     }
 
     upgradeAction();
+    saveUpdate();
   };
 
   const FlipHandler = () => {
@@ -149,6 +155,7 @@ export function MovingManage({ children }) {
     }
 
     upgradeAction();
+    saveUpdate();
   };
 
   const deleteHandler = (val) => {
@@ -183,7 +190,8 @@ export function MovingManage({ children }) {
         upgradeAction,
         changeCellItemSelected,
         placedAllItem,
-        updatePlacedAllItems
+        updatePlacedAllItems,
+        saveAction
       }}
     >
       {children}
