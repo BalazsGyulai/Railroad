@@ -78,7 +78,7 @@ function NewItem(val) {
 }
 
 const Normals = () => {
-  const { loggedIn, baseURL, mode } = useContext(LoginData);
+  const { loggedIn, baseURL, mode, page } = useContext(LoginData);
   const { round, action, placedAllItem, updatePlacedAllItems } =
     useContext(Moving);
   const { board } = useContext(BoardManage);
@@ -99,7 +99,7 @@ const Normals = () => {
         updateItemsRound(new NORMALS(), round)
       );
     }
-  }, [round]);
+  }, [round, page]);
 
   useEffect(() => {
     getRolledPieces();
