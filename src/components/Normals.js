@@ -78,44 +78,28 @@ function NewItem(val) {
 }
 
 const Normals = () => {
-  const { loggedIn, baseURL, page } = useContext(LoginData);
+  const { loggedIn, baseURL, mode } = useContext(LoginData);
   const { round, action, placedAllItem, updatePlacedAllItems } =
     useContext(Moving);
   const { board } = useContext(BoardManage);
   const [normals, setNormals] = useState("");
 
-  // useEffect(() => {
-  //   let NewSpecials = new NORMALS();
-  //   for (let i = 0; i < NewSpecials.length; i++) {
-  //     NewSpecials[i].round = round;
-  //   }
+  useEffect(() => {
+    if (loggedIn && mode === "multiPlayer") {
+      getRolledPieces();
+    } else {
+      let NewSpecials = new NORMALS();
+      for (let i = 0; i < NewSpecials.length; i++) {
+        NewSpecials[i].round = round;
+      }
 
-  //   setNormals(NewSpecials);
-  // }, [round]);
+      setNormals(NewSpecials);
+    }
+  }, [round]);
 
   useEffect(() => {
     getRolledPieces();
   }, []);
-
-  useEffect(() => {
-    deleteDroppedPiece();
-  }, [board]);
-
-  const deleteDroppedPiece = () => {
-    let dropped = [];
-
-    for (let y = 0; y < board.length; y++) {
-      for (let x = 0; x < board[y].length; x++) {
-        for (let i = 0; i < normals.length; i++) {
-          if (board[y][x] !== null && board[y][x].name === normals[i].name) {
-            dropped.push(normals[i]);
-          }
-        }
-      }
-    }
-
-    console.log(dropped);
-  };
 
   const getRolledPieces = () => {
     fetch(`${baseURL}rolled.php`, {

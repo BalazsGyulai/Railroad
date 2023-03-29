@@ -371,10 +371,20 @@ export function BoardManage({ children }) {
         .then((data) => data.json())
         .then((data) => {
           if (data.status === "ok") {
-            let board = JSON.parse(data.board.userBoard);
-
-            if (board !== null) {
-              setBoard(board);
+            if (JSON.parse(data.board.userBoard) !== null) {
+              setBoard(JSON.parse(data.board.userBoard));
+            } else {
+              fetch(`${baseURL}saveBoard.php`, {
+                method: "post",
+                body: JSON.stringify({
+                  id: JSON.parse(sessionStorage.getItem("user")).id,
+                  board: [...BOARD],
+                }),
+              })
+                .then((data) => data.json())
+                .then((data) => {
+                  setBoard([...BOARD]);
+                });
             }
           } else if (data.status === "failed to connect") {
             console.log("failed to connect");
@@ -458,20 +468,18 @@ export function BoardManage({ children }) {
     }
   };
 
-  const saveBoard = (board) => {
+  const saveBoard = (save) => {
     if (loggedIn && mode === "multiPlayer") {
-      if (board !== BOARD) {
+      if (save !== BOARD) {
         fetch(`${baseURL}saveBoard.php`, {
           method: "post",
           body: JSON.stringify({
             id: JSON.parse(sessionStorage.getItem("user")).id,
-            board,
+            board: save,
           }),
         })
           .then((data) => data.json())
-          .then((data) => {
-            console.log(board);
-          });
+          .then((data) => {});
       }
     }
   };

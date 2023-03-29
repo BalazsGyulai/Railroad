@@ -315,6 +315,9 @@ const Board = () => {
     // console.log(CalculateBoard);
   };
 
+
+
+
   return (
     <div id="boardHolder">
       <div

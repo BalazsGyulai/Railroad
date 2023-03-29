@@ -6,6 +6,7 @@ import Moving from "../data/Moving";
 import BoardManage from "../data/Board";
 import Piece from "../components/Piece";
 import Clipboard from "../Icons/Clipboard";
+import Board from "../components/Board";
 
 function NORMALS() {
   return [
@@ -151,6 +152,30 @@ const JoinPage = () => {
       });
   };
 
+  const ResetGame = () => {
+    fetch(`${baseURL}ResetGame.php`, {
+      method: "post",
+      body: JSON.stringify({
+        round: 0,
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        rolled: null,
+        page: "join",
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status === "ok") {
+          console.log(data);
+          PageHandler("join");
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
+  };
+
   const setsRollItems = () => {
     upgradePage("roll");
 
@@ -158,7 +183,7 @@ const JoinPage = () => {
       method: "post",
       body: JSON.stringify({
         code: JSON.parse(sessionStorage.getItem("user")).code,
-        page: "roll",
+        page: round < 7 ? "roll" : "calculate",
       }),
     })
       .then((data) => data.json())
@@ -190,7 +215,7 @@ const JoinPage = () => {
   return (
     <div id="JoinPage">
       {JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
-        amdinPage === "players" ? (
+        page === "join" ? (
           <>
             <div className="joinInfos" onClick={() => copyCode(code)}>
               <div>{copied ? <Clipboard /> : <CodeImg />}</div>
@@ -219,7 +244,7 @@ const JoinPage = () => {
                 : ""}
             </div>
           </>
-        ) : amdinPage === "roll" ? (
+        ) : page === "roll" && round < 7 ? (
           <>
             <div className="GameBtn">
               {selectedcubes.length > 0 ? (
@@ -272,16 +297,31 @@ const JoinPage = () => {
             </div>
           </>
         ) : (
-          ""
+          <div className="newGameHolder">
+            <Board />
+            <div className="NewGameBtns">
+              <div className="Controls">
+                <div className="ControlsBtn">Next</div>
+                <div className="PlayerName">Bali</div>
+                <div className="ControlsBtn">Prev</div>
+              </div>
+
+              <button onClick={() => ResetGame()}>Új játék</button>
+            </div>
+          </div>
         )
       ) : page === "join" ? (
         <div className="waiting">
           <p>Várakozás a többi játékosra!</p>
         </div>
-      ) : (
+      ) : page === "roll" ? (
         <div className="waiting">
           <p>Dobás!</p>
         </div>
+      ) : page === "calculate" ? (
+        <Board />
+      ) : (
+        ""
       )}
     </div>
   );

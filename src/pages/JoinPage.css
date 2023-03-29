@@ -137,3 +137,33 @@
   position: relative;
   background: #fff;
 }
+
+#JoinPage .newGameHolder{
+  display: flex;
+}
+
+#JoinPage .NewGameBtns{
+  width: 50%;
+}
+
+.Controls{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Controls .ControlsBtn{
+  max-width: 100px;
+  min-width: none;
+}
+
+
+@media (max-width: 769px) {
+  .NewGameBtns{
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+  }
+}
