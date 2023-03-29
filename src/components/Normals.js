@@ -99,6 +99,8 @@ const Normals = () => {
         updateItemsRound(new NORMALS(), round)
       );
     }
+
+    // aaaaaaaaaaaaaaaaaaaaaaa
   }, [round, page]);
 
   useEffect(() => {
