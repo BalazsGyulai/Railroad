@@ -1,10 +1,11 @@
 <?php
 require("./header.php");
 
-if ($input !== NULL && $input["code"] !== "") {
+if ($input !== NULL && $input["code"] !== "" && $input["id"] !== "") {
     require_once("./connect/connect.php");
 
     $code = $input["code"];
+    $id = $input["id"];
     $data = [];
 
     $stmt = $database->stmt_init();
@@ -15,9 +16,45 @@ if ($input !== NULL && $input["code"] !== "") {
     };
     $stmt->bind_param("s", $code);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    $rolled = json_decode($result["rolled"]);
+    $round = $result["round"];
+
+    $stmt->close();
+
+    $stmt = $database->stmt_init();
+    if (!$stmt = $database->prepare("SELECT userBoard FROM boards WHERE userID = ?")) {
+        $data["status"] = "failed to connect";
+        echo json_encode($data);
+        exit;
+    };
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $board = json_decode($stmt->get_result()->fetch_assoc()["userBoard"]);
     
-    $data["rolled"] = $result->fetch_assoc();
+    $stmt->close();
+
+    for ($y = 0; $y < count($board); $y++) {
+        for ($x = 0; $x < count($board[$y]); $x++) {
+            if ($board[$y][$x] !== null) {
+                $i = 0;
+                $found = false;
+
+                while ($i < count($rolled) && !$found) {
+                    if ($rolled[$i]->name === $board[$y][$x]->name && $rolled[$i]->round === $board[$y][$x]->round){
+                        $found = true;
+                        array_splice($rolled, $i, 1);
+                    }
+
+                    $i++;
+                }
+
+            }
+        }
+    }
+
+    $data["rolled"] = $rolled;
 
     $data["status"] = "ok";
 

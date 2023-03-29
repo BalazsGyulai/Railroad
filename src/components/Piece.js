@@ -26,6 +26,8 @@ const Piece = ({
   borderRadius,
   clickable,
   callClicked,
+  pieceId,
+  clicked
 }) => {
   // ------ global variables ---------
   const { SetSelected, selected, action, changeCellItemSelected, round } =
@@ -65,7 +67,7 @@ const Piece = ({
   
   const chooseItem = (item) => {
     if (CLICKABLE) {
-      SetSelected(item);
+      SetSelected(item, pieceId);
       changeCellItemSelected("");
     } else {
       callClicked();
@@ -77,7 +79,7 @@ const Piece = ({
       className="SpecialItem"
       onClick={() => chooseItem(piece)}
       style={{
-        background: piece.name === selected.name ? SelectedColor : BaseColor,
+        background: clicked ? SelectedColor : BaseColor,
         borderRadius: `${BorderRadius}px`,
       }}
     >

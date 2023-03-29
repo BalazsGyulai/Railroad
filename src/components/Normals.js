@@ -79,10 +79,10 @@ function NewItem(val) {
 
 const Normals = () => {
   const { loggedIn, baseURL, mode, page } = useContext(LoginData);
-  const { round, action, placedAllItem, updatePlacedAllItems } =
+  const { round, action, placedAllItem, updatePlacedAllItems, selectedId } =
     useContext(Moving);
-  const { board } = useContext(BoardManage);
-  const [normals, setNormals] = useState("");
+  const { board, normals, changeNormals } = useContext(BoardManage);
+  // const [normals, setNormals] = useState("");
 
   useEffect(() => {
     if (loggedIn && mode === "multiPlayer") {
@@ -95,13 +95,9 @@ const Normals = () => {
 
       // setNormals(NewSpecials);
 
-      setNormals(
-        updateItemsRound(new NORMALS(), round)
-      );
+      changeNormals(updateItemsRound(new NORMALS(), round));
     }
-
-    // aaaaaaaaaaaaaaaaaaaaaaa
-  }, [round, page]);
+  }, [round, page, action]);
 
   useEffect(() => {
     getRolledPieces();
@@ -121,14 +117,13 @@ const Normals = () => {
       method: "post",
       body: JSON.stringify({
         code: JSON.parse(sessionStorage.getItem("user")).code,
+        id: JSON.parse(sessionStorage.getItem("user")).id,
       }),
     })
       .then((data) => data.json())
       .then((data) => {
         if (data.status === "ok") {
-          setNormals(
-            updateItemsRound(JSON.parse(data.rolled.rolled), data.rolled.round)
-          );
+          changeNormals(data.rolled);
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -166,10 +161,11 @@ const Normals = () => {
           ? normals.map((normal, index) => (
               <Piece
                 key={index}
-                item={index}
+                pieceId={index}
                 piece={normal}
                 borderRadius={10}
                 clickable={true}
+                clicked={selectedId === index}
               />
             ))
           : ""}

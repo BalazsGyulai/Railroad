@@ -9,7 +9,13 @@ if ($input !== NULL && $input["code"] !== "" && $input["round"] !== "" && $input
     $rolled = null;
     
     if ($input["rolled"] !== "" && $input["rolled"] !== [] && $input["rolled"] !== null) {
-        $rolled = json_encode($input["rolled"]);
+        $rolled = $input["rolled"];
+
+        for ($i = 0; $i < count($rolled); $i++){
+            $rolled[$i]["round"] = $round;
+        }
+
+        $rolled = json_encode($rolled);
     }
     
     $page = $input["page"];

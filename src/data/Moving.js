@@ -12,6 +12,7 @@ export function MovingManage({ children }) {
   const [cellItemSelected, setCellItemSelected] = useState("");
   const [placedAllItem, setPlacedAllItems] = useState(false);
   const [saveAction, setSaveAction] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const saveUpdate = () => {
     setSaveAction(!saveAction);
@@ -66,14 +67,17 @@ export function MovingManage({ children }) {
     setCellItemSelected(val);
   };
 
+  const ChangeSelectedPieceId = (id) => {
+    setSelectedId(id);
+  };
+
   // ---------------------------------------
   // This is called when an item is tapped.
   // This compares when to select or unselect a piece
   // ---------------------------------------
 
-  const SetSelected = async (newest) => {
-
-    useSelected(AnalyseSelected(newest));
+  const SetSelected = async (newest, pieceId) => {
+    useSelected(AnalyseSelected(newest, pieceId));
 
     // reset cell item selected
     // if (cellItemSelected !== "") {
@@ -81,10 +85,12 @@ export function MovingManage({ children }) {
     // }
   };
 
-  const AnalyseSelected = (newest) => {
+  const AnalyseSelected = (newest, pieceId) => {
     if (newest.name === selected.name) {
+      ChangeSelectedPieceId(null);
       return "";
     } else {
+      ChangeSelectedPieceId(pieceId)
       return newest;
     }
   };
@@ -191,6 +197,8 @@ export function MovingManage({ children }) {
         placedAllItem,
         updatePlacedAllItems,
         saveAction,
+        selectedId,
+        ChangeSelectedPieceId,
       }}
     >
       {children}

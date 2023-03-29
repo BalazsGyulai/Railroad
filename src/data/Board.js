@@ -310,6 +310,7 @@ export function BoardManage({ children }) {
     deleteHandler,
     placedAllItem,
     saveAction,
+    selectedId,
   } = useContext(Moving);
   const { loggedIn, mode, baseURL } = useContext(LoginMange);
   // --------- local global variables -----------
@@ -319,6 +320,12 @@ export function BoardManage({ children }) {
     y: 0,
   });
   const [cellSize, setCellSize] = useState(65);
+  const [normals, setNormals] = useState("");
+
+  const changeNormals = (val) => {
+    setNormals([...val]);
+  };
+
 
   // --------------------------------------------
   // This is for creating a new Board / a new Item
@@ -460,9 +467,11 @@ export function BoardManage({ children }) {
   };
 
   const dropToCellHandler = (x, y) => {
-    if (selected !== "" && selected !== null) {
+    if (selected !== "" && selected !== null && cellItemSelected === "") {
       if (!placedAllItem) {
         dropPieceHandler(x, y);
+        // console.log([...normals], normals.splice(selectedId, 1));
+        normals.splice(selectedId, 1);
       } else if (selected.name[0] === "S") {
         dropPieceHandler(x, y);
       }
@@ -478,7 +487,7 @@ export function BoardManage({ children }) {
             id: JSON.parse(sessionStorage.getItem("user")).id,
             board: save,
           }),
-        })
+        });
       }
     }
   };
@@ -493,6 +502,8 @@ export function BoardManage({ children }) {
         newItem,
         getBoard,
         saveBoard,
+        normals,
+        changeNormals,
       }}
     >
       {children}
