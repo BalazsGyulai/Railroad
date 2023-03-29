@@ -113,23 +113,25 @@ const Normals = () => {
   };
 
   const getRolledPieces = async () => {
-    fetch(`${baseURL}rolled.php`, {
-      method: "post",
-      body: JSON.stringify({
-        code: JSON.parse(sessionStorage.getItem("user")).code,
-        id: JSON.parse(sessionStorage.getItem("user")).id,
-      }),
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        if (data.status === "ok") {
-          changeNormals(data.rolled);
-        } else if (data.status === "failed to connect") {
-          console.log("failed to connect");
-        } else {
-          console.log("something is wrong");
-        }
-      });
+    setInterval(() => {
+      fetch(`${baseURL}rolled.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            changeNormals(data.rolled);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }, 500);
   };
 
   useEffect(() => {

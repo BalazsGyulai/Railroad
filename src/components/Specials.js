@@ -58,7 +58,7 @@ function SPECIALS() {
 }
 
 const Specials = () => {
-  const { round, action } = useContext(Moving);
+  const { round, action,selectedId } = useContext(Moving);
   const { board } = useContext(BoardManage);
   const [specials, setSpecials] = useState("");
 

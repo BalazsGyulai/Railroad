@@ -79,7 +79,7 @@ const Piece = ({
       className="SpecialItem"
       onClick={() => chooseItem(piece)}
       style={{
-        background: clicked ? SelectedColor : BaseColor,
+        background: selected === piece ? SelectedColor : BaseColor,
         borderRadius: `${BorderRadius}px`,
       }}
     >
