@@ -8,7 +8,7 @@ if ($input !== NULL && $input["code"] !== "") {
     $data = [];
 
     $stmt = $database->stmt_init();
-    if (!$stmt = $database->prepare("SELECT rolled FROM groups WHERE code = ?")) {
+    if (!$stmt = $database->prepare("SELECT rolled, round FROM groups WHERE code = ?")) {
         $data["status"] = "failed to connect";
         echo json_encode($data);
         exit;

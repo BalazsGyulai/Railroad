@@ -360,9 +360,9 @@ export function BoardManage({ children }) {
     };
   });
 
-  const getBoard = () => {
+  const getBoard = async () => {
     if (loggedIn && mode === "multiPlayer") {
-      fetch(`${baseURL}getBoard.php`, {
+      await fetch(`${baseURL}getBoard.php`, {
         method: "post",
         body: JSON.stringify({
           id: JSON.parse(sessionStorage.getItem("user")).id,
@@ -451,6 +451,7 @@ export function BoardManage({ children }) {
 
     if (!found) {
       let newBoard = board;
+
       newBoard[y][x] = selected;
 
       setBoard([...board], (board[y][x] = { ...selected }));
@@ -468,18 +469,16 @@ export function BoardManage({ children }) {
     }
   };
 
-  const saveBoard = (save) => {
+  const saveBoard = async (save) => {
     if (loggedIn && mode === "multiPlayer") {
       if (save !== BOARD) {
-        fetch(`${baseURL}saveBoard.php`, {
+        await fetch(`${baseURL}saveBoard.php`, {
           method: "post",
           body: JSON.stringify({
             id: JSON.parse(sessionStorage.getItem("user")).id,
             board: save,
           }),
         })
-          .then((data) => data.json())
-          .then((data) => {});
       }
     }
   };

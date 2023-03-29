@@ -4,7 +4,7 @@ import LoginMange from "./Login";
 const Moving = createContext();
 
 export function MovingManage({ children }) {
-  const {loggedIn, mode, baseURL} = useContext(LoginMange);
+  const { loggedIn, mode, baseURL } = useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(0);
   const [action, setAction] = useState(false);
@@ -15,14 +15,14 @@ export function MovingManage({ children }) {
 
   const saveUpdate = () => {
     setSaveAction(!saveAction);
-  }
+  };
 
-  useEffect(() =>{
-    if (loggedIn === false && mode === "creative"){
+  useEffect(() => {
+    if (loggedIn === false && mode === "creative") {
       RoundHandler(1);
-    } else if(loggedIn && mode === "multiPlayer") {
-      setInterval(() => {
-        fetch(`${baseURL}page.php`, {
+    } else if (loggedIn && mode === "multiPlayer") {
+      setInterval(async () => {
+        await fetch(`${baseURL}page.php`, {
           method: "post",
           body: JSON.stringify({
             code: JSON.parse(sessionStorage.getItem("user")).code,
@@ -41,12 +41,11 @@ export function MovingManage({ children }) {
           });
       }, 1000);
     }
+  }, [mode, loggedIn]);
 
-  }, [mode, loggedIn])
-  
   const updatePlacedAllItems = (val) => {
-    setPlacedAllItems(val)
-  } 
+    setPlacedAllItems(val);
+  };
 
   // ---------------------------------------
   // This is called by the components if
@@ -71,7 +70,9 @@ export function MovingManage({ children }) {
   // This is called when an item is tapped.
   // This compares when to select or unselect a piece
   // ---------------------------------------
-  const SetSelected = (newest) => {
+
+  const SetSelected = async (newest) => {
+
     useSelected(AnalyseSelected(newest));
 
     // reset cell item selected
@@ -94,29 +95,27 @@ export function MovingManage({ children }) {
 
   const RoundHandler = (val) => {
     setRound(val);
-  }
+  };
 
-  const NextRoundHandler = () => {
-
-    if (loggedIn && mode === "multiPlayer"){
-      fetch(`${baseURL}setPage.php`, {
+  const NextRoundHandler = async () => {
+    if (loggedIn && mode === "multiPlayer") {
+      await fetch(`${baseURL}setPage.php`, {
         method: "post",
         body: JSON.stringify({
           code: JSON.parse(sessionStorage.getItem("user")).code,
-          page: "join"
+          page: "join",
         }),
       })
         .then((data) => data.json())
         .then((data) => {
           if (data.status === "ok") {
-            console.log(data)
-            // RoundHandler(data.page.round);
+            RoundHandler(data.page.round);
           } else if (data.status === "failed to connect") {
             console.log("failed to connect");
           } else {
             console.log("something is wrong");
           }
-        }); 
+        });
     }
 
     // RoundHandler(round + 1);
@@ -191,7 +190,7 @@ export function MovingManage({ children }) {
         changeCellItemSelected,
         placedAllItem,
         updatePlacedAllItems,
-        saveAction
+        saveAction,
       }}
     >
       {children}

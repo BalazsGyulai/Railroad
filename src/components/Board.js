@@ -31,7 +31,7 @@ const Board = () => {
     handleEmptyCells(board);
   }, [selected, action, board, cellItemSelected]);
 
-  const handleEmptyCells = (board) => {
+  const handleEmptyCells = async (board) => {
     let EnableToPlace = [];
 
     // init table

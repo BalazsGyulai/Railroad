@@ -139,17 +139,7 @@ const JoinPage = () => {
         page: "game",
       }),
     })
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status === "ok") {
-          PageHandler("game");
-        } else if (data.status === "failed to connect") {
-          console.log("failed to connect");
-        } else {
-          console.log("something is wrong");
-        }
-      });
+   
   };
 
   const ResetGame = () => {
@@ -164,9 +154,7 @@ const JoinPage = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
         if (data.status === "ok") {
-          console.log(data);
           PageHandler("join");
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
@@ -189,7 +177,6 @@ const JoinPage = () => {
       .then((data) => data.json())
       .then((data) => {
         if (data.status === "ok") {
-          console.log(data);
           // RoundHandler(data.page.round);
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");

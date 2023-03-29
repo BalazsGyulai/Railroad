@@ -18,8 +18,8 @@ export function LoginMange({ children }) {
 
   useEffect(() => {
     if (loggedIn && mode === "multiPlayer") {
-      setInterval(() => {
-        fetch(`${baseURL}page.php`, {
+      setInterval(async () => {
+        await fetch(`${baseURL}page.php`, {
           method: "post",
           body: JSON.stringify({
             code: JSON.parse(sessionStorage.getItem("user")).code,

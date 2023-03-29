@@ -43,10 +43,7 @@ function App() {
 
   return (
     <div className="App">
-      {loggedIn ? <button style={{
-        position: "absolute",
-        right: 0
-      }} onClick={() => Logout()}>Kilép</button> : ""}
+      
       {loggedIn || mode !== "" ? (
         page !== "game" ? (
           <JoinPage />

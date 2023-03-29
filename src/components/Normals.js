@@ -88,12 +88,16 @@ const Normals = () => {
     if (loggedIn && mode === "multiPlayer") {
       getRolledPieces();
     } else {
-      let NewSpecials = new NORMALS();
-      for (let i = 0; i < NewSpecials.length; i++) {
-        NewSpecials[i].round = round;
-      }
+      // let NewSpecials = new NORMALS();
+      // for (let i = 0; i < NewSpecials.length; i++) {
+      //   NewSpecials[i].round = round;
+      // }
 
-      setNormals(NewSpecials);
+      // setNormals(NewSpecials);
+
+      setNormals(
+        updateItemsRound(new NORMALS(), round)
+      );
     }
   }, [round]);
 
@@ -101,7 +105,16 @@ const Normals = () => {
     getRolledPieces();
   }, []);
 
-  const getRolledPieces = () => {
+  const updateItemsRound = (changeArray, element) => {
+    let NewSpecials = new NewItem(changeArray);
+    for (let i = 0; i < NewSpecials.length; i++) {
+      NewSpecials[i].round = round;
+    }
+
+    return NewSpecials;
+  };
+
+  const getRolledPieces = async () => {
     fetch(`${baseURL}rolled.php`, {
       method: "post",
       body: JSON.stringify({
@@ -111,12 +124,9 @@ const Normals = () => {
       .then((data) => data.json())
       .then((data) => {
         if (data.status === "ok") {
-          let NewSpecials = JSON.parse(data.rolled.rolled);
-          for (let i = 0; i < NewSpecials.length; i++) {
-            NewSpecials[i].round = round;
-          }
-
-          setNormals(NewSpecials);
+          setNormals(
+            updateItemsRound(JSON.parse(data.rolled.rolled), data.rolled.round)
+          );
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -154,6 +164,7 @@ const Normals = () => {
           ? normals.map((normal, index) => (
               <Piece
                 key={index}
+                item={index}
                 piece={normal}
                 borderRadius={10}
                 clickable={true}
