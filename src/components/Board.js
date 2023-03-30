@@ -3,25 +3,19 @@ import Cell from "./Cell";
 import "./Board.css";
 import BoardTable from "../data/Board";
 import Moving from "../data/Moving";
-import NextArrow from "../Icons/NextArrow";
+import CountTable from "./CountTable";
 
 const Board = () => {
   const { board, windowSize, cellSize, getBoard, saveBoard } =
     useContext(BoardTable);
-  const { NextRoundHandler, round, selected, action, cellItemSelected } =
+  const { selected, action, cellItemSelected } =
     useContext(Moving);
 
-  const [calculate, setCalculate] = useState("");
   const [enabledCells, setEnabledCells] = useState("");
 
   useEffect(() => {
     getBoard();
-    handlerCalculate(board);
   }, []);
-
-  useEffect(() => {
-    handlerCalculate(board);
-  }, [board, action]);
 
   useEffect(() => {
     saveBoard(board);
@@ -303,63 +297,13 @@ const Board = () => {
     setEnabledCells(EnableToPlace);
   };
 
-  const handlerCalculate = (board) => {
-    let CalculateBoard = board;
-
-    // for(let y = 0; y < CalculateBoard.length; y++){
-    //   for(let x = 0; x < CalculateBoard[y].length; x++){
-    //     if ()
-    //   }
-    // }
-
-    // console.log(CalculateBoard);
-  };
 
 
 
 
   return (
     <div id="boardHolder">
-      <div
-        className="statsHolder"
-        style={{
-          height: `${cellSize + 10}px`,
-        }}
-      >
-        <div
-          className="RoundHolder"
-          style={{
-            width: `${cellSize * 0.7 * 2}px`,
-            height: `${cellSize * 0.7}px`,
-          }}
-        >
-          <div
-            className="RoundDisplay"
-            style={{
-              width: `${cellSize * 0.7}px`,
-              height: `${cellSize * 0.7}px`,
-            }}
-          >
-            {round}
-          </div>
-          {sessionStorage.getItem("user") &&
-          JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
-            <div
-              className="nextRoundBtn"
-              onClick={() => NextRoundHandler()}
-              style={{
-                width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
-                padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
-                borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
-              }}
-            >
-              <NextArrow />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+      <CountTable />
 
       <div
         id="boardPlace"

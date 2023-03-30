@@ -113,7 +113,7 @@ const Normals = () => {
   };
 
   const getRolledPieces = async () => {
-    setInterval(() => {
+    await setInterval(() => {
       fetch(`${baseURL}rolled.php`, {
         method: "post",
         body: JSON.stringify({
