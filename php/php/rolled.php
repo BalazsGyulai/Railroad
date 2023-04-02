@@ -31,24 +31,25 @@ if ($input !== NULL && $input["code"] !== "" && $input["id"] !== "") {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $board = json_decode($stmt->get_result()->fetch_assoc()["userBoard"]);
-    
+
     $stmt->close();
 
-    for ($y = 0; $y < count($board); $y++) {
-        for ($x = 0; $x < count($board[$y]); $x++) {
-            if ($board[$y][$x] !== null) {
-                $i = 0;
-                $found = false;
+    if ($board !== null) {
+        for ($y = 0; $y < count($board); $y++) {
+            for ($x = 0; $x < count($board[$y]); $x++) {
+                if ($board[$y][$x] !== null) {
+                    $i = 0;
+                    $found = false;
 
-                while ($i < count($rolled) && !$found) {
-                    if ($rolled[$i]->name === $board[$y][$x]->name && $rolled[$i]->round === $board[$y][$x]->round){
-                        $found = true;
-                        array_splice($rolled, $i, 1);
+                    while ($i < count($rolled) && !$found) {
+                        if ($rolled[$i]->name === $board[$y][$x]->name && $rolled[$i]->round === $board[$y][$x]->round) {
+                            $found = true;
+                            array_splice($rolled, $i, 1);
+                        }
+
+                        $i++;
                     }
-
-                    $i++;
                 }
-
             }
         }
     }

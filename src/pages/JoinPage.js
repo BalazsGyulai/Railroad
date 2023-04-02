@@ -80,7 +80,8 @@ const JoinPage = () => {
   const { cellSize } = useContext(BoardManage);
   const [code, setCode] = useState("");
   const [players, setPlayers] = useState("");
-  const { baseURL, PageHandler, page } = useContext(LoginData);
+  const { baseURL, PageHandler, page, SocketupgradePage } =
+    useContext(LoginData);
   const { round } = useContext(Moving);
   const [amdinPage, setPage] = useState("players");
   const [cubes, setCubes] = useState("");
@@ -172,8 +173,7 @@ const JoinPage = () => {
   };
 
   const setsRollItems = () => {
-    upgradePage("roll");
-
+    SocketupgradePage("roll");
     fetch(`${baseURL}setPage.php`, {
       method: "post",
       body: JSON.stringify({
@@ -191,6 +191,8 @@ const JoinPage = () => {
           console.log("something is wrong");
         }
       });
+
+    PageHandler("roll");
   };
 
   const upgradePage = (val) => {
