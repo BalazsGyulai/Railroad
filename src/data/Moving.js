@@ -4,7 +4,7 @@ import LoginMange from "./Login";
 const Moving = createContext();
 
 export function MovingManage({ children }) {
-  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler } =
+  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler, socket } =
     useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(0);
@@ -23,23 +23,23 @@ export function MovingManage({ children }) {
     if (loggedIn === false && mode === "creative") {
       RoundHandler(1);
     } else if (loggedIn && mode === "multiPlayer") {
-      // fetch(`${baseURL}page.php`, {
-      //   method: "post",
-      //   body: JSON.stringify({
-      //     code: JSON.parse(sessionStorage.getItem("user")).code,
-      //   }),
-      // })
-      //   .then((data) => data.json())
-      //   .then((data) => {
-      //     if (data.status === "ok") {
-      //       // console.log(data.page.round)
-      //       RoundHandler(data.page.round);
-      //     } else if (data.status === "failed to connect") {
-      //       console.log("failed to connect");
-      //     } else {
-      //       console.log("something is wrong");
-      //     }
-      //   });
+      fetch(`${baseURL}page.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            // console.log(data.page.round)
+            RoundHandler(data.page.round);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
     }
   }, [mode, loggedIn]);
 

@@ -86,11 +86,7 @@ const Normals = () => {
 
   useEffect(() => {
     if (loggedIn && mode === "multiPlayer") {
-      let fetched = false;
-      while (!fetched) {
-        fetched = true;
-        getRolledPieces();
-      }
+      getRolledPieces();
     } else {
       // let NewSpecials = new NORMALS();
       // for (let i = 0; i < NewSpecials.length; i++) {
@@ -116,26 +112,24 @@ const Normals = () => {
     return NewSpecials;
   };
 
-  const getRolledPieces = async () => {
-    setTimeout(async () => {
-      fetch(`${baseURL}rolled.php`, {
-        method: "post",
-        body: JSON.stringify({
-          code: JSON.parse(sessionStorage.getItem("user")).code,
-          id: JSON.parse(sessionStorage.getItem("user")).id,
-        }),
-      })
-        .then((data) => data.json())
-        .then((data) => {
-          if (data.status === "ok") {
-            changeNormals(data.rolled);
-          } else if (data.status === "failed to connect") {
-            console.log("failed to connect");
-          } else {
-            console.log("something is wrong");
-          }
-        });
-    }, 500);
+  const getRolledPieces = () => {
+    fetch(`${baseURL}rolled.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        id: JSON.parse(sessionStorage.getItem("user")).id,
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          changeNormals(data.rolled);
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
   };
 
   useEffect(() => {
