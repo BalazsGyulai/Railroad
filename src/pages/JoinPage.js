@@ -128,8 +128,8 @@ const JoinPage = () => {
     setselectedCubes([...rolled]);
   };
 
-  const startGameHandler = () => {
-    fetch(`${baseURL}nextGame.php`, {
+  const startGameHandler = async () => {
+    await fetch(`${baseURL}nextGame.php`, {
       method: "post",
       body: JSON.stringify({
         round,
@@ -148,6 +148,9 @@ const JoinPage = () => {
           console.log("something is wrong");
         }
       });
+
+    SocketupgradePage("game");
+    PageHandler("game");
   };
 
   const ResetGame = () => {
