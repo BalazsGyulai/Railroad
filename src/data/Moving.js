@@ -4,7 +4,8 @@ import LoginMange from "./Login";
 const Moving = createContext();
 
 export function MovingManage({ children }) {
-  const { loggedIn, mode, baseURL } = useContext(LoginMange);
+  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler } =
+    useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(0);
   const [action, setAction] = useState(false);
@@ -112,14 +113,15 @@ export function MovingManage({ children }) {
       })
         .then((data) => data.json())
         .then((data) => {
-          if (data.status === "ok") {
-            RoundHandler(data.page.round);
-          } else if (data.status === "failed to connect") {
+          if (data.status === "failed to connect") {
             console.log("failed to connect");
           } else {
             console.log("something is wrong");
           }
         });
+
+      SocketupgradePage("join");
+      PageHandler("join");
     }
 
     // RoundHandler(round + 1);
