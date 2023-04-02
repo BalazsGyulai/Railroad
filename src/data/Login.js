@@ -7,37 +7,43 @@ export function LoginMange({ children }) {
   const [mode, setMode] = useState("");
   const [page, setPage] = useState("join");
   // const baseURL = "http://railroadink.gyulaibalazs.hu/";
-  const baseURL = "http://localhost/";
+  const baseURL = "http://localhost/php/";
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {
       loggedInHandler(true);
       modeHandler("multiPlayer");
+      FetchPage();
     }
   }, []);
 
   useEffect(() => {
     if (loggedIn && mode === "multiPlayer") {
-      setInterval(async () => {
-        await fetch(`${baseURL}page.php`, {
-          method: "post",
-          body: JSON.stringify({
-            code: JSON.parse(sessionStorage.getItem("user")).code,
-          }),
-        })
-          .then((data) => data.json())
-          .then((data) => {
-            if (data.status === "ok") {
-              PageHandler(data.page.actpage);
-            } else if (data.status === "failed to connect") {
-              console.log("failed to connect");
-            } else {
-              console.log("something is wrong");
-            }
-          });
-      }, 1000);
     }
   }, [loggedIn, mode]);
+
+  const FetchPage = async () => {
+    
+
+    // setTimeout(async () => {
+    //   await fetch(`${baseURL}page.php`, {
+    //     method: "post",
+    //     body: JSON.stringify({
+    //       code: JSON.parse(sessionStorage.getItem("user")).code,
+    //     }),
+    //   })
+    //     .then((data) => data.json())
+    //     .then((data) => {
+    //       if (data.status === "ok") {
+    //         PageHandler(data.page.actpage);
+    //       } else if (data.status === "failed to connect") {
+    //         console.log("failed to connect");
+    //       } else {
+    //         console.log("something is wrong");
+    //       }
+    //     });
+    // }, 1000);
+  };
 
   const PageHandler = (val) => {
     setPage(val);

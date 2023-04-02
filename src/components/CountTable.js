@@ -15,7 +15,198 @@ const CountTable = () => {
   useEffect(() => {
     callculateCenter();
     callculateNotConnected();
+    // findLongestRoad();
   }, [board, action, round]);
+
+  function NewItem(val) {
+    return val;
+  }
+
+  const findLongestRoad = async () => {
+    let CountRoads = [];
+
+    for (let y = 0; y < board.length; y++) {
+      let row = [];
+      for (let x = 0; x < board[y].length; x++) {
+        row.push(null);
+      }
+
+      CountRoads.push(row);
+    }
+
+    for (let y = 0; y < board.length; y++) {
+      for (let x = 0; x < board[y].length; x++) {
+        if (board[y][x] !== null) {
+          let count =
+            y === 0 || y === 8 || x === 0 || x === 8
+              ? 0
+              : 0;
+
+          let i = 0;
+
+          while (i < board[y][x].look.length && board[y][x].look[i] !== "u") {
+            i++;
+          }
+
+          if (i < board[y][x].look.length) {
+            if (y === 0 || y === 8 || x === 0 || x === 8) {
+              CountRoads[y][x] = count;
+
+              let found = {top: false, right: false, bottom: false, left: false};
+              let z = 0;
+              count = getCount(x, y, CountRoads) + 1;
+
+              let k = y;
+              let l = x;
+
+              while ((found.top === true || found.right === true || found.bottom === true || found.left === true || count === 1)&& z < 10) {
+                z += 1;
+                found.top = false;
+                found.right = false;
+                found.bottom = false;
+                found.left = false;
+
+                // top <-> bottom
+                // if (
+                //   itemSides(x, y).top === sidePiecesSides(x, y).top &&
+                //   sidePiecesSides(x, y).top !== "wa" &&
+                //   itemSides(x, y).top !== null &&
+                //   itemSides(x, y).top === "u" &&
+                //   sidePiecesSides(x, y).top === "u"
+                // ) {
+                //   CountRoads[y][x] = count;
+                // }
+                // right <-> left
+                if (
+                  itemSides(l, k).right === sidePiecesSides(l, k).right &&
+                  sidePiecesSides(l, k).right !== "wa" &&
+                  itemSides(l, k).right !== null &&
+                  itemSides(l, k).right === "u" &&
+                  sidePiecesSides(l, k).right === "u"
+                ) {
+                  if (l + 1 < CountRoads[k].length){
+                    CountRoads[k][l + 1] = count;
+                    found.left = true;
+                  }
+                }
+                // bottom <-> top
+                if (
+                  itemSides(l, k).bottom === sidePiecesSides(l, k).bottom &&
+                  sidePiecesSides(l, k).bottom !== "wa" &&
+                  itemSides(l, k).bottom !== null &&
+                  itemSides(l, k).bottom === "u" &&
+                  sidePiecesSides(l, k).bottom === "u"
+                ) {
+                  if (k + 1 < CountRoads.length) {
+                    CountRoads[k + 1][l] = count;
+                    found.bottom = true;
+                  }
+                  // console.log(getCount(x, y, CountRoads));
+                }
+                // left <-> right
+                if (
+                  itemSides(l, k).left === sidePiecesSides(l, k).left &&
+                  sidePiecesSides(l, k).left !== "wa" &&
+                  itemSides(l, k).left !== null &&
+                  itemSides(l, k).left === "u" &&
+                  sidePiecesSides(l, k).left === "u"
+                ) {
+                  if (l - 1 > 0) {
+                    CountRoads[k][l - 1] = count;
+                    found.left = true;
+                  }
+                }
+
+                l = found.left ? l - 1 : found.right ? l + 1 : l;
+                k = found.top ? k - 1 : found.bottom ? k + 1 : k;
+              }
+            } else {
+              // // top <-> bottom
+              // if (
+              //   itemSides(x, y).top === sidePiecesSides(x, y).top &&
+              //   sidePiecesSides(x, y).top !== "wa" &&
+              //   itemSides(x, y).top !== null &&
+              //   itemSides(x, y).top === "u" &&
+              //   sidePiecesSides(x, y).top === "u"
+              // ) {
+              //   CountRoads[y][x] = count;
+              // }
+              // // right <-> left
+              // if (
+              //   itemSides(x, y).right === sidePiecesSides(x, y).right &&
+              //   sidePiecesSides(x, y).right !== "wa" &&
+              //   itemSides(x, y).right !== null &&
+              //   itemSides(x, y).right === "u" &&
+              //   sidePiecesSides(x, y).right === "u"
+              // ) {
+              //   CountRoads[y][x] = count;
+              // }
+              // // bottom <-> top
+              // if (
+              //   itemSides(x, y).bottom === sidePiecesSides(x, y).bottom &&
+              //   sidePiecesSides(x, y).bottom !== "wa" &&
+              //   itemSides(x, y).bottom !== null &&
+              //   itemSides(x, y).bottom === "u" &&
+              //   sidePiecesSides(x, y).bottom === "u"
+              // ) {
+              //   CountRoads[y][x] = count;
+              //   // console.log(getCount(x, y, CountRoads));
+              // }
+              // // left <-> right
+              // if (
+              //   itemSides(x, y).left === sidePiecesSides(x, y).left &&
+              //   sidePiecesSides(x, y).left !== "wa" &&
+              //   itemSides(x, y).left !== null &&
+              //   itemSides(x, y).left === "u" &&
+              //   sidePiecesSides(x, y).left === "u"
+              //   ) {
+              //   CountRoads[y][x] = count;
+              // }
+            }
+          }
+
+          // console.log(`${y} ${x}`, itemSides(x, y), sidePiecesSides(x, y));
+        }
+      }
+    }
+
+    let max = 0;
+
+    for (let y = 0; y < CountRoads.length; y++) {
+      for (let x = 0; x < CountRoads[y].length; x++) {
+        if (CountRoads[y][x] !== null && CountRoads[y][x] > max) {
+          max = CountRoads[y][x];
+        }
+      }
+    }
+
+    console.log(CountRoads);
+    console.log(max);
+  };
+
+  const getCount = (x, y, array) => {
+    let Counts = [
+      y - 1 >= 0 && array[y - 1][x] !== null ? array[y - 1][x] : null,
+
+      x + 1 < array[y].length && array[y][x + 1] !== null
+        ? array[y][x + 1]
+        : null,
+
+      y + 1 < array.length && array[y + 1][x] !== null ? array[y + 1][x] : null,
+
+      x - 1 >= 0 && array[y][x - 1] !== null ? array[y][x - 1] : null,
+    ];
+
+    let max = 0;
+
+    for (let i = 0; i < Counts.length; i++) {
+      if (Counts[i] !== null && Counts[i] > max) {
+        max = Counts[i];
+      }
+    }
+
+    return max;
+  };
 
   const callculateCenter = async () => {
     let count = 0;
@@ -31,30 +222,44 @@ const CountTable = () => {
 
   const callculateNotConnected = async () => {
     let count = 0;
-    for (let y = 1; y < (board.length - 1); y++) {
-      for (let x = 1; x < (board[y].length - 1); x++) {
+    for (let y = 1; y < board.length - 1; y++) {
+      for (let x = 1; x < board[y].length - 1; x++) {
         if (board[y][x] !== null) {
-            // top <-> bottom
-            if (itemSides(x, y).top !== sidePiecesSides(x, y).top && sidePiecesSides(x, y).top !== "wa" && itemSides(x, y).top !== null){
-                count += 1;
-            }
+          // top <-> bottom
+          if (
+            itemSides(x, y).top !== sidePiecesSides(x, y).top &&
+            sidePiecesSides(x, y).top !== "wa" &&
+            itemSides(x, y).top !== null
+          ) {
+            count += 1;
+          }
 
-            // right <-> left
-            if (itemSides(x, y).right !== sidePiecesSides(x, y).right && sidePiecesSides(x, y).right !== "wa" && itemSides(x, y).right !== null){
-                count += 1;
-            }
+          // right <-> left
+          if (
+            itemSides(x, y).right !== sidePiecesSides(x, y).right &&
+            sidePiecesSides(x, y).right !== "wa" &&
+            itemSides(x, y).right !== null
+          ) {
+            count += 1;
+          }
 
-            // bottom <-> top
-            if (itemSides(x, y).bottom !== sidePiecesSides(x, y).bottom && sidePiecesSides(x, y).bottom !== "wa" && itemSides(x, y).bottom !== null){
-                count += 1;
-            }
+          // bottom <-> top
+          if (
+            itemSides(x, y).bottom !== sidePiecesSides(x, y).bottom &&
+            sidePiecesSides(x, y).bottom !== "wa" &&
+            itemSides(x, y).bottom !== null
+          ) {
+            count += 1;
+          }
 
-            // left <-> right
-            if (itemSides(x, y).left !== sidePiecesSides(x, y).left && sidePiecesSides(x, y).left !== "wa" && itemSides(x, y).left !== null){
-                count += 1;
-            }
-
-          console.log(sidePiecesSides(x, y), itemSides(x, y));
+          // left <-> right
+          if (
+            itemSides(x, y).left !== sidePiecesSides(x, y).left &&
+            sidePiecesSides(x, y).left !== "wa" &&
+            itemSides(x, y).left !== null
+          ) {
+            count += 1;
+          }
         }
       }
     }
@@ -64,75 +269,76 @@ const CountTable = () => {
 
   const itemSides = (x, y) => {
     let Placed = {
-        top: board[y][x].look[
-          ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
-            ? 2
-            : 0) +
+      top: board[y][x].look[
+        ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1 ? 2 : 0) +
+          ((4 - board[y][x].rotated) % 4)) %
+          4
+      ],
+      right:
+        board[y][x].look[
+          ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1 ? 3 : 1) +
             ((4 - board[y][x].rotated) % 4)) %
             4
         ],
-        right:
-          board[y][x].look[
-            ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
-              ? 3
-              : 1) +
-              ((4 - board[y][x].rotated) % 4)) %
-              4
-          ],
-        bottom:
-          board[y][x].look[
-            ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
-              ? 0
-              : 2) +
-              ((4 - board[y][x].rotated) % 4)) %
-              4
-          ],
-        left: board[y][x].look[
-          ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
-            ? 1
-            : 3) +
+      bottom:
+        board[y][x].look[
+          ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1 ? 0 : 2) +
             ((4 - board[y][x].rotated) % 4)) %
             4
         ],
-      };
+      left: board[y][x].look[
+        ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1 ? 1 : 3) +
+          ((4 - board[y][x].rotated) % 4)) %
+          4
+      ],
+    };
 
-      return Placed;
-  }
+    return Placed;
+  };
 
   const sidePiecesSides = (x, y) => {
     let Placed = {
-        top: board[y - 1][x] !== null ?  board[y - 1][x].look[
-          ((board[y - 1][x].rotated % 2 === 1 && board[y - 1][x].flip === -1
-            ? 0
-            : 2) +
-            ((4 - board[y - 1][x].rotated) % 4)) %
-            4
-        ] : null,
-        right: board[y][x + 1] !== null ?
-          board[y][x + 1].look[
-            ((board[y][x + 1].rotated % 2 === 0 && board[y][x + 1].flip === -1
-              ? 1
-              : 3) +
-              ((4 - board[y][x + 1].rotated) % 4)) %
-              4
-          ] : null,
-        bottom:
-        board[y + 1][x] !== null ?
-          board[y + 1][x].look[
-            ((board[y + 1][x].rotated % 2 === 1 && board[y + 1][x].flip === -1
-              ? 2
-              : 0) +
-              ((4 - board[y + 1][x].rotated) % 4)) %
-              4
-          ] : null,
-        left: board[y][x - 1] !== null ? board[y][x - 1].look[
-          ((board[y][x - 1].rotated % 2 === 0 && board[y][x - 1].flip === -1
-            ? 3
-            : 1) +
-            ((4 - board[y][x - 1].rotated) % 4)) %
-            4
-        ] : null,
-      };
+      top:
+        y - 1 >= 0 && board[y - 1][x] !== null
+          ? board[y - 1][x].look[
+              ((board[y - 1][x].rotated % 2 === 1 && board[y - 1][x].flip === -1
+                ? 0
+                : 2) +
+                ((4 - board[y - 1][x].rotated) % 4)) %
+                4
+            ]
+          : null,
+      right:
+        x + 1 < board[y].length && board[y][x + 1] !== null
+          ? board[y][x + 1].look[
+              ((board[y][x + 1].rotated % 2 === 0 && board[y][x + 1].flip === -1
+                ? 1
+                : 3) +
+                ((4 - board[y][x + 1].rotated) % 4)) %
+                4
+            ]
+          : null,
+      bottom:
+        y + 1 < board.length && board[y + 1][x] !== null
+          ? board[y + 1][x].look[
+              ((board[y + 1][x].rotated % 2 === 1 && board[y + 1][x].flip === -1
+                ? 2
+                : 0) +
+                ((4 - board[y + 1][x].rotated) % 4)) %
+                4
+            ]
+          : null,
+      left:
+        x - 1 >= 0 && board[y][x - 1] !== null
+          ? board[y][x - 1].look[
+              ((board[y][x - 1].rotated % 2 === 0 && board[y][x - 1].flip === -1
+                ? 3
+                : 1) +
+                ((4 - board[y][x - 1].rotated) % 4)) %
+                4
+            ]
+          : null,
+    };
 
     return Placed;
   };

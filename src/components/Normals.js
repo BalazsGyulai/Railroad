@@ -86,7 +86,11 @@ const Normals = () => {
 
   useEffect(() => {
     if (loggedIn && mode === "multiPlayer") {
-      getRolledPieces();
+      let fetched = false;
+      while (!fetched) {
+        fetched = true;
+        getRolledPieces();
+      }
     } else {
       // let NewSpecials = new NORMALS();
       // for (let i = 0; i < NewSpecials.length; i++) {
@@ -97,7 +101,7 @@ const Normals = () => {
 
       changeNormals(updateItemsRound(new NORMALS(), round));
     }
-  }, [round, page, action]);
+  }, [page, action]);
 
   useEffect(() => {
     getRolledPieces();
@@ -113,7 +117,7 @@ const Normals = () => {
   };
 
   const getRolledPieces = async () => {
-    await setInterval(() => {
+    setTimeout(async () => {
       fetch(`${baseURL}rolled.php`, {
         method: "post",
         body: JSON.stringify({

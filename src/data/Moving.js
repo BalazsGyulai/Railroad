@@ -22,25 +22,23 @@ export function MovingManage({ children }) {
     if (loggedIn === false && mode === "creative") {
       RoundHandler(1);
     } else if (loggedIn && mode === "multiPlayer") {
-      setInterval(async () => {
-        await fetch(`${baseURL}page.php`, {
-          method: "post",
-          body: JSON.stringify({
-            code: JSON.parse(sessionStorage.getItem("user")).code,
-          }),
-        })
-          .then((data) => data.json())
-          .then((data) => {
-            if (data.status === "ok") {
-              // console.log(data.page.round)
-              RoundHandler(data.page.round);
-            } else if (data.status === "failed to connect") {
-              console.log("failed to connect");
-            } else {
-              console.log("something is wrong");
-            }
-          });
-      }, 1000);
+      // fetch(`${baseURL}page.php`, {
+      //   method: "post",
+      //   body: JSON.stringify({
+      //     code: JSON.parse(sessionStorage.getItem("user")).code,
+      //   }),
+      // })
+      //   .then((data) => data.json())
+      //   .then((data) => {
+      //     if (data.status === "ok") {
+      //       // console.log(data.page.round)
+      //       RoundHandler(data.page.round);
+      //     } else if (data.status === "failed to connect") {
+      //       console.log("failed to connect");
+      //     } else {
+      //       console.log("something is wrong");
+      //     }
+      //   });
     }
   }, [mode, loggedIn]);
 
@@ -90,7 +88,7 @@ export function MovingManage({ children }) {
       ChangeSelectedPieceId(null);
       return "";
     } else {
-      ChangeSelectedPieceId(pieceId)
+      ChangeSelectedPieceId(pieceId);
       return newest;
     }
   };

@@ -98,24 +98,22 @@ const JoinPage = () => {
   }, []);
 
   async function getPlayers(code) {
-    setInterval(() => {
-      fetch(`${baseURL}players.php`, {
-        method: "post",
-        body: JSON.stringify({
-          code,
-        }),
-      })
-        .then((data) => data.json())
-        .then((data) => {
-          if (data.status === "ok") {
-            setPlayers(data.users);
-          } else if (data.status === "failed to connect") {
-            console.log("failed to connect");
-          } else {
-            console.log("something is wrong");
-          }
-        });
-    }, 1000);
+    fetch(`${baseURL}players.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code,
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setPlayers(data.users);
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
   }
 
   const SelectCube = (index) => {
@@ -138,17 +136,17 @@ const JoinPage = () => {
         rolled: selectedcubes,
         page: "game",
       }),
-    }).then((data) => data.json())
-    .then((data) => {
-      if (data.status === "ok") {
-        PageHandler("game");
-      } else if (data.status === "failed to connect") {
-        console.log("failed to connect");
-      } else {
-        console.log("something is wrong");
-      }
-    });
-   
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          PageHandler("game");
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
   };
 
   const ResetGame = () => {

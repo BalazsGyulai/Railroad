@@ -2,7 +2,6 @@
 require("./header.php");
 
 if ($input !== NULL && $input["round"] !== "" && $input["code"] !== "" && $input["page"] !== "") {
-    require_once("./connect/connect.php");
 
     $round = intval($input["round"]);
     $code = $input["code"];

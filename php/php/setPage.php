@@ -2,7 +2,6 @@
 require("./header.php");
 
 if ($input !== NULL && $input["code"] !== "" && $input["page"] !== "") {
-    require_once("./connect/connect.php");
 
     $code = $input["code"];
     $page = $input["page"];

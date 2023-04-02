@@ -504,6 +504,7 @@ export function BoardManage({ children }) {
         saveBoard,
         normals,
         changeNormals,
+        BOARD
       }}
     >
       {children}

@@ -3,7 +3,6 @@ require("./header.php");
 
 
 if ($input !== NULL && $input["email"] !== "" && $input["userName"] !== "") {
-    require_once("./connect/connect.php");
 
     $userName = $input["userName"];
     $email = $input["email"];
