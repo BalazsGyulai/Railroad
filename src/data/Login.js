@@ -7,13 +7,20 @@ export function LoginMange({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [mode, setMode] = useState("");
   const [page, setPage] = useState("join");
-  // const baseURL = "http://railroadink.gyulaibalazs.hu/";
+  // const baseURL = "http://railroadink.gyulaibalazs.hu/php/";
   const baseURL = "http://localhost/php/";
   const [socket, setSocket] = useState(
     io.connect("http://localhost:4000", {
       autoConnect: false,
     })
   );
+  const [userReady, setUserReady] = useState("unready");
+  // const [socket, setSocket] = useState(
+  //   io.connect("http://railroadink.gyulaibalazs.hu:4000", {
+  //     autoConnect: false,
+  //   })
+  // );
+
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {
@@ -65,6 +72,14 @@ export function LoginMange({ children }) {
     });
   };
 
+  const SocketPlayerStatus = ({status, id}) => {
+    socket.emit("playerStatus", {
+      group: JSON.parse(sessionStorage.getItem("user")).code,
+      status: status,
+      id: id
+    })
+  }
+
   const PageHandler = (val) => {
     setPage(val);
   };
@@ -76,6 +91,10 @@ export function LoginMange({ children }) {
   const modeHandler = (val) => {
     setMode(val);
   };
+
+  const changeUserStatus = (val) => {
+    setUserReady(val);
+  }
 
   return (
     <LoginData.Provider
@@ -89,6 +108,9 @@ export function LoginMange({ children }) {
         page,
         socket,
         SocketupgradePage,
+        SocketPlayerStatus,
+        userReady,
+        changeUserStatus
       }}
     >
       {children}

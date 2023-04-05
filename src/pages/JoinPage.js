@@ -77,16 +77,18 @@ function NORMALS() {
 }
 
 const JoinPage = () => {
-  const { cellSize } = useContext(BoardManage);
+  const { cellSize, board } = useContext(BoardManage);
   const [code, setCode] = useState("");
   const [players, setPlayers] = useState("");
-  const { baseURL, PageHandler, page, SocketupgradePage } =
+  const { baseURL, PageHandler, page, SocketupgradePage, SocketPlayerStatus, socket, changeUserStatus } =
     useContext(LoginData);
-  const { round } = useContext(Moving);
+  const { round, RoundHandler } = useContext(Moving);
   const [amdinPage, setPage] = useState("players");
   const [cubes, setCubes] = useState("");
   const [selectedcubes, setselectedCubes] = useState("");
   const [copied, setCopied] = useState(false);
+  const [showBoard, setShowBoard] = useState("");
+  const [showBoardPlayer, setShowBoardPlayer] = useState(0);
 
   useEffect(() => {
     setCode(JSON.parse(sessionStorage.getItem("user")).code);
@@ -96,6 +98,18 @@ const JoinPage = () => {
     }
 
     setCubes(new NORMALS());
+
+    if (showBoard === "") {
+      setShowBoard({
+        username: "Bali",
+        userBoard: board,
+      });
+    }
+
+    socket.on("changedPlayerStatus", ({status, id}) =>{
+      getPlayers(JSON.parse(sessionStorage.getItem("user")).code);
+    });
+
   }, []);
 
   async function getPlayers(code) {
@@ -167,6 +181,8 @@ const JoinPage = () => {
       .then((data) => {
         if (data.status === "ok") {
           PageHandler("join");
+          SocketupgradePage("join");
+          RoundHandler(0);
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -175,9 +191,9 @@ const JoinPage = () => {
       });
   };
 
-  const setsRollItems = () => {
-    SocketupgradePage("roll");
-    fetch(`${baseURL}setPage.php`, {
+  const setsRollItems = async () => {
+    // SocketupgradePage("roll");
+    await fetch(`${baseURL}setPage.php`, {
       method: "post",
       body: JSON.stringify({
         code: JSON.parse(sessionStorage.getItem("user")).code,
@@ -187,7 +203,7 @@ const JoinPage = () => {
       .then((data) => data.json())
       .then((data) => {
         if (data.status === "ok") {
-          // RoundHandler(data.page.round);
+          PageHandler("roll");
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -195,7 +211,11 @@ const JoinPage = () => {
         }
       });
 
-    PageHandler("roll");
+    if (round < 7) {
+      SocketupgradePage("roll");
+    } else {
+      SocketupgradePage("calculate");
+    }
   };
 
   const upgradePage = (val) => {
@@ -209,6 +229,51 @@ const JoinPage = () => {
     } catch {
       setCopied(false);
     }
+  };
+
+  const PlayerBoardShow = (val) => {
+    fetch(`${baseURL}showPlayerBoard.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        actual: showBoardPlayer + val,
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          setShowBoard(data.users);
+          // RoundHandler(data.page.round);
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
+    setShowBoardPlayer(showBoardPlayer + val);
+  };
+
+  const Unready = async () => {
+    await fetch(`${baseURL}statusPlayer.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        id: JSON.parse(sessionStorage.getItem("user")).id,
+        status: "unready"
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
+
+      SocketPlayerStatus({status: "unready", id: JSON.parse(sessionStorage.getItem("user")).id});
+      changeUserStatus("unready");
   };
 
   return (
@@ -297,12 +362,22 @@ const JoinPage = () => {
           </>
         ) : (
           <div className="newGameHolder">
-            <Board />
+            <Board custumBoard={showBoard.userBoard} />
             <div className="NewGameBtns">
               <div className="Controls">
-                <div className="ControlsBtn">Next</div>
-                <div className="PlayerName">Bali</div>
-                <div className="ControlsBtn">Prev</div>
+                <button
+                  className="ControlsBtn"
+                  onClick={() => PlayerBoardShow(1)}
+                >
+                  Next
+                </button>
+                <div className="PlayerName">{showBoard.username}</div>
+                <button
+                  className="ControlsBtn"
+                  onClick={() => PlayerBoardShow(-1)}
+                >
+                  Prev
+                </button>
               </div>
 
               <button onClick={() => ResetGame()}>Új játék</button>
@@ -312,6 +387,7 @@ const JoinPage = () => {
       ) : page === "join" ? (
         <div className="waiting">
           <p>Várakozás a többi játékosra!</p>
+          <button onClick={() => Unready()}>Nem vagyok kész!</button>
         </div>
       ) : page === "roll" ? (
         <div className="waiting">

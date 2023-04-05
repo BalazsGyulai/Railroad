@@ -37,10 +37,7 @@ const CountTable = () => {
     for (let y = 0; y < board.length; y++) {
       for (let x = 0; x < board[y].length; x++) {
         if (board[y][x] !== null) {
-          let count =
-            y === 0 || y === 8 || x === 0 || x === 8
-              ? 0
-              : 0;
+          let count = y === 0 || y === 8 || x === 0 || x === 8 ? 0 : 0;
 
           let i = 0;
 
@@ -52,14 +49,26 @@ const CountTable = () => {
             if (y === 0 || y === 8 || x === 0 || x === 8) {
               CountRoads[y][x] = count;
 
-              let found = {top: false, right: false, bottom: false, left: false};
+              let found = {
+                top: false,
+                right: false,
+                bottom: false,
+                left: false,
+              };
               let z = 0;
               count = getCount(x, y, CountRoads) + 1;
 
               let k = y;
               let l = x;
 
-              while ((found.top === true || found.right === true || found.bottom === true || found.left === true || count === 1)&& z < 10) {
+              while (
+                (found.top === true ||
+                  found.right === true ||
+                  found.bottom === true ||
+                  found.left === true ||
+                  count === 1) &&
+                z < 10
+              ) {
                 z += 1;
                 found.top = false;
                 found.right = false;
@@ -84,7 +93,7 @@ const CountTable = () => {
                   itemSides(l, k).right === "u" &&
                   sidePiecesSides(l, k).right === "u"
                 ) {
-                  if (l + 1 < CountRoads[k].length){
+                  if (l + 1 < CountRoads[k].length) {
                     CountRoads[k][l + 1] = count;
                     found.left = true;
                   }
@@ -366,22 +375,18 @@ const CountTable = () => {
         >
           {round}
         </div>
-        {sessionStorage.getItem("user") &&
-        JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
-          <div
-            className="nextRoundBtn"
-            onClick={() => NextRoundHandler()}
-            style={{
-              width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
-              padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
-              borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
-            }}
-          >
-            <NextArrow />
-          </div>
-        ) : (
-          ""
-        )}
+
+        <div
+          className="nextRoundBtn"
+          onClick={() => NextRoundHandler()}
+          style={{
+            width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
+            padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
+            borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
+          }}
+        >
+          <NextArrow />
+        </div>
       </div>
 
       <div className="CountTable">

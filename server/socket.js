@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         method: ["GET", "POST"],
     },
 });
@@ -34,6 +34,9 @@ io.on("connect", (socket) =>{
         socket.to(group).emit("RolledItemChanged");
     })
 
+    socket.on("playerStatus", ({group, status, id}) => {
+        socket.to(group).emit("changedPlayerStatus", {status, id});
+    });
     // socket.emit("hello", "hello from server");
 })
 

@@ -4,7 +4,7 @@ import LoginMange from "./Login";
 const Moving = createContext();
 
 export function MovingManage({ children }) {
-  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler, socket } =
+  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler, SocketPlayerStatus, changeUserStatus } =
     useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(0);
@@ -103,7 +103,11 @@ export function MovingManage({ children }) {
   };
 
   const NextRoundHandler = async () => {
-    if (loggedIn && mode === "multiPlayer") {
+    if (
+      loggedIn &&
+      mode === "multiPlayer" &&
+      JSON.parse(sessionStorage.getItem("user")).rank === "admin"
+    ) {
       await fetch(`${baseURL}setPage.php`, {
         method: "post",
         body: JSON.stringify({
@@ -120,16 +124,34 @@ export function MovingManage({ children }) {
           }
         });
 
-      SocketupgradePage("join");
       PageHandler("join");
+    } else if (loggedIn && mode === "multiPlayer") {
+      await fetch(`${baseURL}statusPlayer.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+          status: "ready",
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+
+
+      SocketPlayerStatus({
+        status: "ready",
+        id: JSON.parse(sessionStorage.getItem("user")).id,
+      });
+      changeUserStatus("ready");
+    } else {
     }
-
-    // RoundHandler(round + 1);
-
-    // reset selected
-    SetSelected("");
-
-    upgradeAction();
   };
 
   // -----------------------------------------
@@ -199,6 +221,7 @@ export function MovingManage({ children }) {
         saveAction,
         selectedId,
         ChangeSelectedPieceId,
+        RoundHandler,
       }}
     >
       {children}

@@ -5,25 +5,35 @@ import BoardTable from "../data/Board";
 import Moving from "../data/Moving";
 import CountTable from "./CountTable";
 
-const Board = () => {
+const Board = ({ custumBoard }) => {
   const { board, windowSize, cellSize, getBoard, saveBoard } =
     useContext(BoardTable);
-  const { selected, action, cellItemSelected } =
-    useContext(Moving);
+  const { selected, action, cellItemSelected } = useContext(Moving);
 
   const [enabledCells, setEnabledCells] = useState("");
+  const [renderBoard, setRenderBoard] = useState("");
 
   useEffect(() => {
     getBoard();
+    RenderBoardHandler();
   }, []);
 
   useEffect(() => {
     saveBoard(board);
   }, [action]);
-
+  
   useEffect(() => {
+    RenderBoardHandler();
     handleEmptyCells(board);
-  }, [selected, action, board, cellItemSelected]);
+  }, [selected, action, board, cellItemSelected, custumBoard]);
+
+  const RenderBoardHandler = () => {
+    if (custumBoard !== null && custumBoard !== undefined) {
+      setRenderBoard(custumBoard);
+    } else {
+      setRenderBoard(board);
+    }
+  }
 
   const handleEmptyCells = async (board) => {
     let EnableToPlace = [];
@@ -297,10 +307,6 @@ const Board = () => {
     setEnabledCells(EnableToPlace);
   };
 
-
-
-
-
   return (
     <div id="boardHolder">
       <CountTable />
@@ -315,31 +321,33 @@ const Board = () => {
         }}
       >
         <div id="board">
-          {board.map((row, y) => (
-            <>
-              <div className="row" key={y}>
-                {row.map((cell, x) =>
-                  cell === null ? (
-                    <Cell
-                      key={`${y}${x}`}
-                      borderColor="rgb(0, 106, 255)"
-                      properties={cell}
-                      selectable={
-                        enabledCells !== "" ? enabledCells[y][x] : null
-                      }
-                      position={{ x: x, y: y }}
-                    />
-                  ) : (
-                    <Cell
-                      key={`${y}${x}`}
-                      properties={cell}
-                      position={{ x: x, y: y }}
-                    />
-                  )
-                )}
-              </div>
-            </>
-          ))}
+          {renderBoard !== ""
+            ? renderBoard.map((row, y) => (
+                <>
+                  <div className="row" key={y}>
+                    {row.map((cell, x) =>
+                      cell === null ? (
+                        <Cell
+                          key={`${y}${x}`}
+                          borderColor="rgb(0, 106, 255)"
+                          properties={cell}
+                          selectable={
+                            enabledCells !== "" ? enabledCells[y][x] : null
+                          }
+                          position={{ x: x, y: y }}
+                        />
+                      ) : (
+                        <Cell
+                          key={`${y}${x}`}
+                          properties={cell}
+                          position={{ x: x, y: y }}
+                        />
+                      )
+                    )}
+                  </div>
+                </>
+              ))
+            : ""}
         </div>
       </div>
     </div>

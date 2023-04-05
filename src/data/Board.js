@@ -311,6 +311,7 @@ export function BoardManage({ children }) {
     placedAllItem,
     saveAction,
     selectedId,
+    RoundHandler,
   } = useContext(Moving);
   const { loggedIn, mode, baseURL } = useContext(LoginMange);
   // --------- local global variables -----------
@@ -324,8 +325,11 @@ export function BoardManage({ children }) {
 
   const changeNormals = (val) => {
     setNormals([...val]);
-  };
 
+    if (val !== null && val !== "" && val.length !== 0) {
+      RoundHandler(val[0].round);
+    }
+  };
 
   // --------------------------------------------
   // This is for creating a new Board / a new Item
@@ -504,7 +508,7 @@ export function BoardManage({ children }) {
         saveBoard,
         normals,
         changeNormals,
-        BOARD
+        BOARD,
       }}
     >
       {children}
