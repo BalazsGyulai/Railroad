@@ -27,7 +27,7 @@ import S4 from "./Rails/S4";
 import S5 from "./Rails/S5";
 
 function App() {
-  const { selected } = React.useContext(Moving);
+  const { selected, round } = React.useContext(Moving);
   const { cellSize, windowSize } = React.useContext(BoardTable);
   const {
     loggedIn,
@@ -38,9 +38,8 @@ function App() {
     baseURL,
     socket,
     userReady,
-    changeUserStatus
+    changeUserStatus,
   } = React.useContext(LoginData);
-
 
   const [showPieces, setShowPieces] = React.useState(
     windowSize.x < 769 ? false : true
@@ -53,13 +52,7 @@ function App() {
 
   React.useEffect(() => {
     getUserStatusInfo();
-
-    socket.on("changedPlayerStatus", (status, id) => {
-      if (JSON.parse(sessionStorage.getItem("user")).id === id) {
-        getUserStatusInfo();
-      }
-    });
-  }, []);
+  }, [page]);
 
   const getUserStatusInfo = () => {
     fetch(`${baseURL}userStatus.php`, {
@@ -73,7 +66,6 @@ function App() {
       .then((data) => {
         if (data.status === "ok") {
           changeUserStatus(data.player);
-          console.log(data);
         } else if (data.status === "failed to connect") {
           console.log("failed to connect");
         } else {
@@ -85,7 +77,7 @@ function App() {
   return (
     <div className="App">
       {loggedIn || mode !== "" ? (
-        page !== "game" && userReady === "ready" ? (
+        ((page !== "game" || userReady === "ready") && userReady === "ready") || page === "calculate" ? (
           <JoinPage />
         ) : (
           <>

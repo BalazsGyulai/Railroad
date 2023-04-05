@@ -131,22 +131,23 @@
   width: 100%;
 }
 
-#JoinPage .cubesHolder{
+#JoinPage .cubesHolder {
   width: 100%;
   padding: 10px;
   position: relative;
   background: #fff;
 }
 
-#JoinPage .newGameHolder{
+#JoinPage .newGameHolder {
   display: flex;
 }
 
-#JoinPage .NewGameBtns{
+#JoinPage .NewGameBtns {
   width: 50%;
+  padding: 10px;
 }
 
-.Controls{
+.Controls {
   margin: 10px 0;
   display: flex;
   align-items: center;
@@ -154,17 +155,41 @@
   gap: 10px;
 }
 
-.Controls .ControlsBtn{
+#JoinPage .ControlsBtn {
   max-width: 100px;
   min-width: none;
 }
 
+.newGameHolder .PlayerName{
+  text-align: center;
+}
 
 @media (max-width: 769px) {
-  .NewGameBtns{
+  .NewGameBtns {
     position: absolute;
     bottom: 0;
     display: block;
     width: 100%;
+  }
+
+  #JoinPage .NewGameBtns {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .Controls {
+    display: block;
+  }
+
+  #JoinPage button {
+    width: 100%;
+    max-width: 100%;
+    min-width: none;
+  }
+
+  #JoinPage .ControlsBtn {
+    width: 100%;
+    max-width: 100%;
+    min-width: none;
   }
 }

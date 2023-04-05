@@ -80,8 +80,15 @@ const JoinPage = () => {
   const { cellSize, board } = useContext(BoardManage);
   const [code, setCode] = useState("");
   const [players, setPlayers] = useState("");
-  const { baseURL, PageHandler, page, SocketupgradePage, SocketPlayerStatus, socket, changeUserStatus } =
-    useContext(LoginData);
+  const {
+    baseURL,
+    PageHandler,
+    page,
+    SocketupgradePage,
+    SocketPlayerStatus,
+    socket,
+    changeUserStatus,
+  } = useContext(LoginData);
   const { round, RoundHandler } = useContext(Moving);
   const [amdinPage, setPage] = useState("players");
   const [cubes, setCubes] = useState("");
@@ -106,10 +113,9 @@ const JoinPage = () => {
       });
     }
 
-    socket.on("changedPlayerStatus", ({status, id}) =>{
+    socket.on("changedPlayerStatus", ({ status, id }) => {
       getPlayers(JSON.parse(sessionStorage.getItem("user")).code);
     });
-
   }, []);
 
   async function getPlayers(code) {
@@ -143,6 +149,24 @@ const JoinPage = () => {
   };
 
   const startGameHandler = async () => {
+    await fetch(`${baseURL}statusPlayer.php`, {
+      method: "post",
+      body: JSON.stringify({
+        code: JSON.parse(sessionStorage.getItem("user")).code,
+        id: JSON.parse(sessionStorage.getItem("user")).id,
+        status: "allunready",
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === "ok") {
+        } else if (data.status === "failed to connect") {
+          console.log("failed to connect");
+        } else {
+          console.log("something is wrong");
+        }
+      });
+
     await fetch(`${baseURL}nextGame.php`, {
       method: "post",
       body: JSON.stringify({
@@ -193,6 +217,26 @@ const JoinPage = () => {
 
   const setsRollItems = async () => {
     // SocketupgradePage("roll");
+    if (round < 7) {
+      await fetch(`${baseURL}statusPlayer.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+          status: "allready",
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }
+
     await fetch(`${baseURL}setPage.php`, {
       method: "post",
       body: JSON.stringify({
@@ -259,7 +303,7 @@ const JoinPage = () => {
       body: JSON.stringify({
         code: JSON.parse(sessionStorage.getItem("user")).code,
         id: JSON.parse(sessionStorage.getItem("user")).id,
-        status: "unready"
+        status: "unready",
       }),
     })
       .then((data) => data.json())
@@ -272,8 +316,11 @@ const JoinPage = () => {
         }
       });
 
-      SocketPlayerStatus({status: "unready", id: JSON.parse(sessionStorage.getItem("user")).id});
-      changeUserStatus("unready");
+    SocketPlayerStatus({
+      status: "unready",
+      id: JSON.parse(sessionStorage.getItem("user")).id,
+    });
+    changeUserStatus("unready");
   };
 
   return (
@@ -281,6 +328,7 @@ const JoinPage = () => {
       {JSON.parse(sessionStorage.getItem("user")).rank === "admin" ? (
         page === "join" ? (
           <>
+            <div onClick={() => Unready()}>Vissza</div>
             <div className="joinInfos" onClick={() => copyCode(code)}>
               <div>{copied ? <Clipboard /> : <CodeImg />}</div>
               <div>
@@ -384,7 +432,7 @@ const JoinPage = () => {
             </div>
           </div>
         )
-      ) : page === "join" ? (
+      ) : page === "join" || page === "game" ? (
         <div className="waiting">
           <p>Várakozás a többi játékosra!</p>
           <button onClick={() => Unready()}>Nem vagyok kész!</button>

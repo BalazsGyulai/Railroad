@@ -21,6 +21,28 @@ export function LoginMange({ children }) {
   //   })
   // );
 
+  socket.on("changedPlayerStatus", (status, id) => {
+    if (JSON.parse(sessionStorage.getItem("user")).id === id) {
+      fetch(`${baseURL}userStatus.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            changeUserStatus(data.player);
+            console.log(data);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }
+  });
 
   useEffect(() => {
     if (sessionStorage.getItem("user") !== null) {
@@ -72,13 +94,13 @@ export function LoginMange({ children }) {
     });
   };
 
-  const SocketPlayerStatus = ({status, id}) => {
+  const SocketPlayerStatus = ({ status, id }) => {
     socket.emit("playerStatus", {
       group: JSON.parse(sessionStorage.getItem("user")).code,
       status: status,
-      id: id
-    })
-  }
+      id: id,
+    });
+  };
 
   const PageHandler = (val) => {
     setPage(val);
@@ -94,7 +116,7 @@ export function LoginMange({ children }) {
 
   const changeUserStatus = (val) => {
     setUserReady(val);
-  }
+  };
 
   return (
     <LoginData.Provider
@@ -110,7 +132,7 @@ export function LoginMange({ children }) {
         SocketupgradePage,
         SocketPlayerStatus,
         userReady,
-        changeUserStatus
+        changeUserStatus,
       }}
     >
       {children}

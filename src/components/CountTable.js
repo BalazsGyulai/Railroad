@@ -6,17 +6,19 @@ import Center from "../Icons/Center";
 import NotConnected from "../Icons/NotConnected";
 import "./CountTable.css";
 
-const CountTable = () => {
-  const { board, cellSize } = useContext(BoardTable);
+const CountTable = ({custumBoard}) => {
+  const {cellSize, board } = useContext(BoardTable);
   const { NextRoundHandler, round, action } = useContext(Moving);
   const [centerVal, setCenterVal] = useState(0);
   const [notConnects, setnotConnects] = useState(0);
+
+  custumBoard = custumBoard !== "" && custumBoard !== null && custumBoard !== undefined ? custumBoard : board;
 
   useEffect(() => {
     callculateCenter();
     callculateNotConnected();
     // findLongestRoad();
-  }, [board, action, round]);
+  }, [custumBoard, action, round]);
 
   function NewItem(val) {
     return val;
@@ -25,27 +27,27 @@ const CountTable = () => {
   const findLongestRoad = async () => {
     let CountRoads = [];
 
-    for (let y = 0; y < board.length; y++) {
+    for (let y = 0; y < custumBoard.length; y++) {
       let row = [];
-      for (let x = 0; x < board[y].length; x++) {
+      for (let x = 0; x < custumBoard[y].length; x++) {
         row.push(null);
       }
 
       CountRoads.push(row);
     }
 
-    for (let y = 0; y < board.length; y++) {
-      for (let x = 0; x < board[y].length; x++) {
-        if (board[y][x] !== null) {
+    for (let y = 0; y < custumBoard.length; y++) {
+      for (let x = 0; x < custumBoard[y].length; x++) {
+        if (custumBoard[y][x] !== null) {
           let count = y === 0 || y === 8 || x === 0 || x === 8 ? 0 : 0;
 
           let i = 0;
 
-          while (i < board[y][x].look.length && board[y][x].look[i] !== "u") {
+          while (i < custumBoard[y][x].look.length && custumBoard[y][x].look[i] !== "u") {
             i++;
           }
 
-          if (i < board[y][x].look.length) {
+          if (i < custumBoard[y][x].look.length) {
             if (y === 0 || y === 8 || x === 0 || x === 8) {
               CountRoads[y][x] = count;
 
@@ -221,7 +223,7 @@ const CountTable = () => {
     let count = 0;
     for (let y = 3; y < 6; y++) {
       for (let x = 3; x < 6; x++) {
-        if (board[y][x] !== null) {
+        if (custumBoard[y][x] !== null) {
           count += 1;
         }
       }
@@ -231,9 +233,9 @@ const CountTable = () => {
 
   const callculateNotConnected = async () => {
     let count = 0;
-    for (let y = 1; y < board.length - 1; y++) {
-      for (let x = 1; x < board[y].length - 1; x++) {
-        if (board[y][x] !== null) {
+    for (let y = 1; y < custumBoard.length - 1; y++) {
+      for (let x = 1; x < custumBoard[y].length - 1; x++) {
+        if (custumBoard[y][x] !== null) {
           // top <-> bottom
           if (
             itemSides(x, y).top !== sidePiecesSides(x, y).top &&
@@ -278,26 +280,26 @@ const CountTable = () => {
 
   const itemSides = (x, y) => {
     let Placed = {
-      top: board[y][x].look[
-        ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1 ? 2 : 0) +
-          ((4 - board[y][x].rotated) % 4)) %
+      top: custumBoard[y][x].look[
+        ((custumBoard[y][x].rotated % 2 === 1 && custumBoard[y][x].flip === -1 ? 2 : 0) +
+          ((4 - custumBoard[y][x].rotated) % 4)) %
           4
       ],
       right:
-        board[y][x].look[
-          ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1 ? 3 : 1) +
-            ((4 - board[y][x].rotated) % 4)) %
+        custumBoard[y][x].look[
+          ((custumBoard[y][x].rotated % 2 === 0 && custumBoard[y][x].flip === -1 ? 3 : 1) +
+            ((4 - custumBoard[y][x].rotated) % 4)) %
             4
         ],
       bottom:
-        board[y][x].look[
-          ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1 ? 0 : 2) +
-            ((4 - board[y][x].rotated) % 4)) %
+        custumBoard[y][x].look[
+          ((custumBoard[y][x].rotated % 2 === 1 && custumBoard[y][x].flip === -1 ? 0 : 2) +
+            ((4 - custumBoard[y][x].rotated) % 4)) %
             4
         ],
-      left: board[y][x].look[
-        ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1 ? 1 : 3) +
-          ((4 - board[y][x].rotated) % 4)) %
+      left: custumBoard[y][x].look[
+        ((custumBoard[y][x].rotated % 2 === 0 && custumBoard[y][x].flip === -1 ? 1 : 3) +
+          ((4 - custumBoard[y][x].rotated) % 4)) %
           4
       ],
     };
@@ -308,42 +310,42 @@ const CountTable = () => {
   const sidePiecesSides = (x, y) => {
     let Placed = {
       top:
-        y - 1 >= 0 && board[y - 1][x] !== null
-          ? board[y - 1][x].look[
-              ((board[y - 1][x].rotated % 2 === 1 && board[y - 1][x].flip === -1
+        y - 1 >= 0 && custumBoard[y - 1][x] !== null
+          ? custumBoard[y - 1][x].look[
+              ((custumBoard[y - 1][x].rotated % 2 === 1 && custumBoard[y - 1][x].flip === -1
                 ? 0
                 : 2) +
-                ((4 - board[y - 1][x].rotated) % 4)) %
+                ((4 - custumBoard[y - 1][x].rotated) % 4)) %
                 4
             ]
           : null,
       right:
-        x + 1 < board[y].length && board[y][x + 1] !== null
-          ? board[y][x + 1].look[
-              ((board[y][x + 1].rotated % 2 === 0 && board[y][x + 1].flip === -1
+        x + 1 < custumBoard[y].length && custumBoard[y][x + 1] !== null
+          ? custumBoard[y][x + 1].look[
+              ((custumBoard[y][x + 1].rotated % 2 === 0 && custumBoard[y][x + 1].flip === -1
                 ? 1
                 : 3) +
-                ((4 - board[y][x + 1].rotated) % 4)) %
+                ((4 - custumBoard[y][x + 1].rotated) % 4)) %
                 4
             ]
           : null,
       bottom:
-        y + 1 < board.length && board[y + 1][x] !== null
-          ? board[y + 1][x].look[
-              ((board[y + 1][x].rotated % 2 === 1 && board[y + 1][x].flip === -1
+        y + 1 < custumBoard.length && custumBoard[y + 1][x] !== null
+          ? custumBoard[y + 1][x].look[
+              ((custumBoard[y + 1][x].rotated % 2 === 1 && custumBoard[y + 1][x].flip === -1
                 ? 2
                 : 0) +
-                ((4 - board[y + 1][x].rotated) % 4)) %
+                ((4 - custumBoard[y + 1][x].rotated) % 4)) %
                 4
             ]
           : null,
       left:
-        x - 1 >= 0 && board[y][x - 1] !== null
-          ? board[y][x - 1].look[
-              ((board[y][x - 1].rotated % 2 === 0 && board[y][x - 1].flip === -1
+        x - 1 >= 0 && custumBoard[y][x - 1] !== null
+          ? custumBoard[y][x - 1].look[
+              ((custumBoard[y][x - 1].rotated % 2 === 0 && custumBoard[y][x - 1].flip === -1
                 ? 3
                 : 1) +
-                ((4 - board[y][x - 1].rotated) % 4)) %
+                ((4 - custumBoard[y][x - 1].rotated) % 4)) %
                 4
             ]
           : null,
@@ -376,6 +378,7 @@ const CountTable = () => {
           {round}
         </div>
 
+          {round <= 7 ?
         <div
           className="nextRoundBtn"
           onClick={() => NextRoundHandler()}
@@ -387,6 +390,7 @@ const CountTable = () => {
         >
           <NextArrow />
         </div>
+          : ""}
       </div>
 
       <div className="CountTable">

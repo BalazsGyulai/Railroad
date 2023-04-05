@@ -307,9 +307,10 @@ const Board = ({ custumBoard }) => {
     setEnabledCells(EnableToPlace);
   };
 
+
   return (
     <div id="boardHolder">
-      <CountTable />
+      <CountTable custumBoard={renderBoard} />
 
       <div
         id="boardPlace"

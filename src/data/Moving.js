@@ -4,8 +4,15 @@ import LoginMange from "./Login";
 const Moving = createContext();
 
 export function MovingManage({ children }) {
-  const { loggedIn, mode, baseURL, SocketupgradePage, PageHandler, SocketPlayerStatus, changeUserStatus } =
-    useContext(LoginMange);
+  const {
+    loggedIn,
+    mode,
+    baseURL,
+    SocketupgradePage,
+    PageHandler,
+    SocketPlayerStatus,
+    changeUserStatus,
+  } = useContext(LoginMange);
   const [selected, useSelected] = useState("");
   const [round, setRound] = useState(0);
   const [action, setAction] = useState(false);
@@ -108,6 +115,21 @@ export function MovingManage({ children }) {
       mode === "multiPlayer" &&
       JSON.parse(sessionStorage.getItem("user")).rank === "admin"
     ) {
+      await fetch(`${baseURL}statusPlayer.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+          status: "ready",
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          }
+        });
+
       await fetch(`${baseURL}setPage.php`, {
         method: "post",
         body: JSON.stringify({
@@ -119,12 +141,11 @@ export function MovingManage({ children }) {
         .then((data) => {
           if (data.status === "failed to connect") {
             console.log("failed to connect");
-          } else {
-            console.log("something is wrong");
           }
         });
 
       PageHandler("join");
+      changeUserStatus("ready");
     } else if (loggedIn && mode === "multiPlayer") {
       await fetch(`${baseURL}statusPlayer.php`, {
         method: "post",
@@ -143,7 +164,6 @@ export function MovingManage({ children }) {
             console.log("something is wrong");
           }
         });
-
 
       SocketPlayerStatus({
         status: "ready",
