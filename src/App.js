@@ -55,29 +55,32 @@ function App() {
   }, [page]);
 
   const getUserStatusInfo = () => {
-    fetch(`${baseURL}userStatus.php`, {
-      method: "post",
-      body: JSON.stringify({
-        code: JSON.parse(sessionStorage.getItem("user")).code,
-        id: JSON.parse(sessionStorage.getItem("user")).id,
-      }),
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        if (data.status === "ok") {
-          changeUserStatus(data.player);
-        } else if (data.status === "failed to connect") {
-          console.log("failed to connect");
-        } else {
-          console.log("something is wrong");
-        }
-      });
+    if (loggedIn && mode === "multiPlayer") {
+      fetch(`${baseURL}userStatus.php`, {
+        method: "post",
+        body: JSON.stringify({
+          code: JSON.parse(sessionStorage.getItem("user")).code,
+          id: JSON.parse(sessionStorage.getItem("user")).id,
+        }),
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            changeUserStatus(data.player);
+          } else if (data.status === "failed to connect") {
+            console.log("failed to connect");
+          } else {
+            console.log("something is wrong");
+          }
+        });
+    }
   };
 
   return (
     <div className="App">
       {loggedIn || mode !== "" ? (
-        ((page !== "game" || userReady === "ready") && userReady === "ready") || page === "calculate" ? (
+        ((page !== "game" || userReady === "ready") && userReady === "ready") ||
+        page === "calculate" ? (
           <JoinPage />
         ) : (
           <>

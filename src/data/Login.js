@@ -7,11 +7,13 @@ export function LoginMange({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [mode, setMode] = useState("");
   const [page, setPage] = useState("join");
-  // const baseURL = "http://railroadink.gyulaibalazs.hu/php/";
-  const baseURL = "http://localhost/php/";
+  const baseURL = "https://railroadink.gyulaibalazs.hu/php/";
+  // const baseURL = "http://localhost/php/";
   const [socket, setSocket] = useState(
-    io.connect("http://localhost:4000", {
+    io.connect("https://railroadink.gyulaibalazs.hu:4000", {
       autoConnect: false,
+      secure: true,
+      rejectUnauthorized: false
     })
   );
   const [userReady, setUserReady] = useState("unready");
