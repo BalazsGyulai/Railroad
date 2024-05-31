@@ -107,7 +107,7 @@ const BOARD = [
   [
     {
       name: "ra",
-      look: ["s", null, "s", null],
+      look: [null, "s", null, "s"],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -122,7 +122,7 @@ const BOARD = [
     null,
     {
       name: "ra",
-      look: ["s", null, "s", null],
+      look: [null, "s", null, "s"],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -157,7 +157,7 @@ const BOARD = [
   [
     {
       name: "ro",
-      look: ["u", null, "u", null],
+      look: [null, "u",null, "u"],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -172,7 +172,7 @@ const BOARD = [
     null,
     {
       name: "ro",
-      look: ["u", null, "u", null],
+      look: [null, "u",null, "u"],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -207,7 +207,7 @@ const BOARD = [
   [
     {
       name: "ra",
-      look: ["s", null, "s", null],
+      look: [null, "s", null, "s"],
       item: <Trail />,
       rotated: 1,
       flip: 0,
@@ -222,7 +222,7 @@ const BOARD = [
     null,
     {
       name: "ra",
-      look: ["s", null, "s", null],
+      look: [null, "s", null, "s"],
       item: <Trail />,
       rotated: 1,
       flip: 0,
