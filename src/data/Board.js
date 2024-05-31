@@ -444,6 +444,7 @@ export function BoardManage({ children }) {
 
     if (!found) {
       let newBoard = board;
+      // console.log(selected);
       newBoard[y][x] = selected;
 
       setBoard([...board], (board[y][x] = { ...selected }));

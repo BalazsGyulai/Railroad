@@ -48,30 +48,30 @@ const Board = () => {
                   ? 2
                   : 0) +
                   ((4 - board[y][x].rotated) % 4)) %
-                  4
+                4
               ],
               right:
                 board[y][x].look[
-                  ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
-                    ? 3
-                    : 1) +
-                    ((4 - board[y][x].rotated) % 4)) %
-                    4
+                ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
+                  ? 3
+                  : 1) +
+                  ((4 - board[y][x].rotated) % 4)) %
+                4
                 ],
               bottom:
                 board[y][x].look[
-                  ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
-                    ? 0
-                    : 2) +
-                    ((4 - board[y][x].rotated) % 4)) %
-                    4
+                ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
+                  ? 0
+                  : 2) +
+                  ((4 - board[y][x].rotated) % 4)) %
+                4
                 ],
               left: board[y][x].look[
                 ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
                   ? 1
                   : 3) +
                   ((4 - board[y][x].rotated) % 4)) %
-                  4
+                4
               ],
             };
 
@@ -79,28 +79,28 @@ const Board = () => {
               top: selected.look[
                 ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
                   ((4 - selected.rotated) % 4)) %
-                  4
+                4
               ],
               right:
                 selected.look[
-                  ((selected.rotated % 2 === 0 && selected.flip === -1
-                    ? 3
-                    : 1) +
-                    ((4 - selected.rotated) % 4)) %
-                    4
+                ((selected.rotated % 2 === 0 && selected.flip === -1
+                  ? 3
+                  : 1) +
+                  ((4 - selected.rotated) % 4)) %
+                4
                 ],
               bottom:
                 selected.look[
-                  ((selected.rotated % 2 === 1 && selected.flip === -1
-                    ? 0
-                    : 2) +
-                    ((4 - selected.rotated) % 4)) %
-                    4
+                ((selected.rotated % 2 === 1 && selected.flip === -1
+                  ? 0
+                  : 2) +
+                  ((4 - selected.rotated) % 4)) %
+                4
                 ],
               left: selected.look[
                 ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
                   ((4 - selected.rotated) % 4)) %
-                  4
+                4
               ],
             };
 
@@ -158,28 +158,28 @@ const Board = () => {
               top: selected.look[
                 ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
                   ((4 - selected.rotated) % 4)) %
-                  4
+                4
               ],
               right:
                 selected.look[
-                  ((selected.rotated % 2 === 0 && selected.flip === -1
-                    ? 3
-                    : 1) +
-                    ((4 - selected.rotated) % 4)) %
-                    4
+                ((selected.rotated % 2 === 0 && selected.flip === -1
+                  ? 3
+                  : 1) +
+                  ((4 - selected.rotated) % 4)) %
+                4
                 ],
               bottom:
                 selected.look[
-                  ((selected.rotated % 2 === 1 && selected.flip === -1
-                    ? 0
-                    : 2) +
-                    ((4 - selected.rotated) % 4)) %
-                    4
+                ((selected.rotated % 2 === 1 && selected.flip === -1
+                  ? 0
+                  : 2) +
+                  ((4 - selected.rotated) % 4)) %
+                4
                 ],
               left: selected.look[
                 ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
                   ((4 - selected.rotated) % 4)) %
-                  4
+                4
               ],
             };
 
@@ -189,12 +189,12 @@ const Board = () => {
                 let AbovePlaced = {
                   bottom:
                     board[y - 1][x].look[
-                      ((board[y - 1][x].rotated % 2 === 1 &&
+                    ((board[y - 1][x].rotated % 2 === 1 &&
                       board[y - 1][x].flip === -1
-                        ? 0
-                        : 2) +
-                        ((4 - board[y - 1][x].rotated) % 4)) %
-                        4
+                      ? 0
+                      : 2) +
+                      ((4 - board[y - 1][x].rotated) % 4)) %
+                    4
                     ],
                 };
 
@@ -213,11 +213,11 @@ const Board = () => {
                 let LeftSide = {
                   left: board[y][x + 1].look[
                     ((board[y][x + 1].rotated % 2 === 0 &&
-                    board[y][x + 1].flip === -1
+                      board[y][x + 1].flip === -1
                       ? 1
                       : 3) +
                       ((4 - board[y][x + 1].rotated) % 4)) %
-                      4
+                    4
                   ],
                 };
 
@@ -235,11 +235,11 @@ const Board = () => {
                 let UnderPlace = {
                   top: board[y + 1][x].look[
                     ((board[y + 1][x].rotated % 2 === 1 &&
-                    board[y + 1][x].flip === -1
+                      board[y + 1][x].flip === -1
                       ? 2
                       : 0) +
                       ((4 - board[y + 1][x].rotated) % 4)) %
-                      4
+                    4
                   ],
                 };
 
@@ -257,12 +257,12 @@ const Board = () => {
                 let RightSide = {
                   right:
                     board[y][x - 1].look[
-                      ((board[y][x - 1].rotated % 2 === 0 &&
+                    ((board[y][x - 1].rotated % 2 === 0 &&
                       board[y][x - 1].flip === -1
-                        ? 3
-                        : 1) +
-                        ((4 - board[y][x - 1].rotated) % 4)) %
-                        4
+                      ? 3
+                      : 1) +
+                      ((4 - board[y][x - 1].rotated) % 4)) %
+                    4
                     ],
                 };
 
@@ -282,16 +282,42 @@ const Board = () => {
     setEnabledCells(EnableToPlace);
   };
 
-  const handlerCalculate = (board) => {
-    let CalculateBoard = board;
+  const calculateExits = (board) => {
+    let calculationBoard = [];
 
-    // for(let y = 0; y < CalculateBoard.length; y++){
-    //   for(let x = 0; x < CalculateBoard[y].length; x++){
-    //     if ()
+    for (let i = 0; i < board.length; i++) {
+      let row = [];
+      for (let j = 0; j < board[i].length; j++) {
+        row.push(null);
+      }
+      calculationBoard.push(row);
+    }
+
+
+    // for (let i = 1; i < board.length - 1; i++) {
+    //   for (let j = 1; j < board[i].length - 1; j++) {
+    //     // check for matchin top
+    //     if (board[i][j] != null) {
+    //       let myTop = board[i][j].look[(3 - board[i][j].rotated % 4)];
+    //       if (board[i][j].look[0] == board[i - 1][j].look[2]) {
+    //         // checks for a calculated value above
+    //         if (calculationBoard[i - 1][j] != null){
+    //           calculationBoard[i][j] = calculationBoard[i - 1][j] + 1;
+    //         } else{
+    //           calculationBoard[i][j] = 1;
+    //         }
+    //       }
+    //     }
     //   }
     // }
 
-    // console.log(CalculateBoard);
+
+    console.log(calculationBoard);
+  }
+
+  const handlerCalculate = (board) => {
+    calculateExits(board);
+    console.log(board);
   };
 
   return (

@@ -12,7 +12,7 @@ export function MovingManage({ children }) {
 
   const updatePlacedAllItems = (val) => {
     setPlacedAllItems(val)
-  } 
+  }
 
   // ---------------------------------------
   // This is called by the components if
@@ -71,8 +71,23 @@ export function MovingManage({ children }) {
   // -----------------------------------------
   const RotateHandler = (val) => {
     let turnable = selected;
+    let temp = "";
 
     turnable.rotated = turnable.rotated + val;
+    
+    if (val > 0) { // turning right
+      temp = turnable.look[3];
+      for (let i = 3; i > 0; i--) {
+        turnable.look[i] = turnable.look[i - 1];
+      }
+      turnable.look[0] = temp;
+    } else { // turning left
+      temp = turnable.look[0];
+      for (let i = 0; i < 3; i++) {
+        turnable.look[i] = turnable.look[i + 1];
+      }
+      turnable.look[3] = temp;
+    }
 
     if (turnable.rotated < 0) {
       turnable.rotated = 3;
@@ -85,13 +100,24 @@ export function MovingManage({ children }) {
 
   const FlipHandler = () => {
     let flipable = selected;
+    let temp = "";
 
+    if (flipable.rotated % 2 == 0){ // left <-> right
+      temp = flipable.look[1];
+      flipable.look[1] = flipable.look[3];
+      flipable.look[3] = temp;
+
+    } else { // top <-> bottom
+      temp = flipable.look[0];
+      flipable.look[0] = flipable.look[2];
+      flipable.look[2] = temp;
+    }
     if (flipable.flip === 0) {
-      flipable.flip = -1;
+      flipable.flip = 1;
     } else {
       flipable.flip = 0;
     }
-
+    
     upgradeAction();
   };
 
