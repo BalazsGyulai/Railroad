@@ -157,7 +157,7 @@ const BOARD = [
   [
     {
       name: "ro",
-      look: [null, "u",null, "u"],
+      look: [null, "u", null, "u"],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -172,7 +172,7 @@ const BOARD = [
     null,
     {
       name: "ro",
-      look: [null, "u",null, "u"],
+      look: [null, "u", null, "u"],
       item: <Road />,
       rotated: 1,
       flip: 0,
@@ -347,6 +347,7 @@ export function BoardManage({ children }) {
 
   // --------- local global variables -----------
   const [board, setBoard] = useState(BOARD);
+  const [dropped, setDropped] = useState(false);
   const [windowSize, setWindowSize] = useState({
     x: 0,
     y: 0,
@@ -426,6 +427,11 @@ export function BoardManage({ children }) {
     }
   };
 
+  const droppedHandler = () => {
+    console.log(dropped);
+    setDropped(!dropped);
+  }
+
   // -------------------------------------
   // Sets the selected item to the board
   // -------------------------------------
@@ -443,20 +449,56 @@ export function BoardManage({ children }) {
     }
 
     if (!found) {
-      let newBoard = board;
-      // console.log(selected);
-      newBoard[y][x] = selected;
 
-      setBoard([...board], (board[y][x] = { ...selected }));
+      // const newBoard = board.map((row, i) => {
+      //   row.map((column, j) => {
+      //     if (i === y && j === x) {
+      //       return selected;
+      //     } else {
+      //       return column;
+      //     }
+      //   })
+      // });
+      let newBoard = [];
+      newBoard = board.map((row, i) => {
+        if (i === y){
+          let sor = row.map((column, j) => {
+            if (j === x){
+              let newSelected = selected;
+              newSelected.key = {i,j};
+              return newSelected;
+            } else {
+              return column;
+            }
+          });
+          return sor;
+        } else {
+          return row;
+        }
+      })
+
+      console.log(newBoard);
+
+      setBoard([...newBoard], (newBoard[y][x] = {...selected}));
+
+      // let newBoard = board;
+      // // console.log(selected);
+      // newBoard[y][x] = selected;
+
+      // setBoard([...board], (board[y][x] = { ...selected }));
     }
   }
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
       if (!placedAllItem) {
-        dropPieceHandler(x,y);
+        console.log("dropped");
+        droppedHandler();
+        dropPieceHandler(x, y);
       } else if (selected.name[0] === "S") {
-        dropPieceHandler(x,y);
+        console.log("dropped");
+        dropPieceHandler(x, y);
+        droppedHandler();
       }
     }
   };
@@ -469,6 +511,8 @@ export function BoardManage({ children }) {
         cellSize,
         windowSize,
         newItem,
+        dropped,
+        droppedHandler
       }}
     >
       {children}

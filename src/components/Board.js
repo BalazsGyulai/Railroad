@@ -39,303 +39,124 @@ const Board = () => {
 
     if (selected !== "" && selected !== null && cellItemSelected === "") {
       // make it enable
-      console.log(selected.look);
+      // console.log(selected.look);
       for (let y = 1; y < board.length - 1; y++) {
         for (let x = 1; x < board[y].length - 1; x++) {
 
           // top --- bottom
           if (board[y - 1][x] !== null && board[y - 1][x].look && selected.look) {
-            if (selected.look[0] === board[y - 1][x].look[2]){
+            if (elementNotEmpty(selected.look[0]) && elementNotEmpty(board[y - 1][x].look[2]) && selected.look[0] === board[y - 1][x].look[2]) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // left --- right
           if (board[y][x + 1] !== null && board[y][x + 1].look && selected.look) {
-            if (selected.look[1] === board[y][x + 1].look[3]){
+            if (elementNotEmpty(selected.look[1]) && elementNotEmpty(board[y][x + 1].look[3]) && selected.look[1] === board[y][x + 1].look[3]) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // bottom --- top
           if (board[y + 1][x] !== null && board[y + 1][x].look && selected.look) {
-            if (selected.look[2] === board[y + 1][x].look[0]){
+            if (elementNotEmpty(selected.look[2]) && elementNotEmpty(board[y + 1][x].look[0]) && selected.look[2] === board[y + 1][x].look[0]) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // right --- left
           if (board[y][x - 1] !== null && board[y][x - 1].look && selected.look) {
-            if (selected.look[3] === board[y][x - 1].look[1]){
+            if (elementNotEmpty(selected.look[3]) && elementNotEmpty(board[y][x - 1].look[1]) && selected.look[3] === board[y][x - 1].look[1]) {
               EnableToPlace[y][x] = "enable";
             }
           }
-
-          // if (selected.look[0] === board[y][x].look[2]){
-          //   EnableToPlace[y][x] = "enable";
-          // }
         }
       }
     }
 
 
-
-    // if (selected !== "" && selected !== null && cellItemSelected === "") {
-    //   // make it enable
-    //   for (let y = 0; y < board.length; y++) {
-    //     for (let x = 0; x < board[y].length; x++) {
-    //       if (board[y][x] !== null && board[y][x].look && selected.look) {
-    //         let Placed = {
-    //           top: board[y][x].look[
-    //             ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
-    //               ? 2
-    //               : 0) +
-    //               ((4 - board[y][x].rotated) % 4)) %
-    //             4
-    //           ],
-    //           right:
-    //             board[y][x].look[
-    //             ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
-    //               ? 3
-    //               : 1) +
-    //               ((4 - board[y][x].rotated) % 4)) %
-    //             4
-    //             ],
-    //           bottom:
-    //             board[y][x].look[
-    //             ((board[y][x].rotated % 2 === 1 && board[y][x].flip === -1
-    //               ? 0
-    //               : 2) +
-    //               ((4 - board[y][x].rotated) % 4)) %
-    //             4
-    //             ],
-    //           left: board[y][x].look[
-    //             ((board[y][x].rotated % 2 === 0 && board[y][x].flip === -1
-    //               ? 1
-    //               : 3) +
-    //               ((4 - board[y][x].rotated) % 4)) %
-    //             4
-    //           ],
-    //         };
-
-    //         let Selected = {
-    //           top: selected.look[
-    //             ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //           ],
-    //           right:
-    //             selected.look[
-    //             ((selected.rotated % 2 === 0 && selected.flip === -1
-    //               ? 3
-    //               : 1) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //             ],
-    //           bottom:
-    //             selected.look[
-    //             ((selected.rotated % 2 === 1 && selected.flip === -1
-    //               ? 0
-    //               : 2) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //             ],
-    //           left: selected.look[
-    //             ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //           ],
-    //         };
-
-    //         // top <-> bottom
-    //         if (y - 1 > 0) {
-    //           if (
-    //             Placed.top === Selected.bottom &&
-    //             Placed.top !== null &&
-    //             Selected.bottom !== null
-    //           ) {
-    //             EnableToPlace[y - 1][x] = "enable";
-    //           }
-    //         }
-
-    //         if (y + 1 < board.length) {
-    //           if (
-    //             Placed.bottom === Selected.top &&
-    //             Placed.bottom !== null &&
-    //             Selected.top !== null
-    //           ) {
-    //             EnableToPlace[y + 1][x] = "enable";
-    //           }
-    //         }
-
-    //         // left <-> right
-    //         if (x - 1 > 0) {
-    //           if (
-    //             Placed.left === Selected.right &&
-    //             Placed.left !== null &&
-    //             Selected.right !== null
-    //           ) {
-    //             EnableToPlace[y][x - 1] = "enable";
-    //           }
-    //         }
-
-    //         if (x + 1 < board[y].length) {
-    //           if (
-    //             Placed.right === Selected.left &&
-    //             Placed.right !== null &&
-    //             Selected.left !== null
-    //           ) {
-    //             EnableToPlace[y][x + 1] = "enable";
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   // unable if you cant place it
-    //   for (let y = 0; y < EnableToPlace.length; y++) {
-    //     // for (let y = 4; y < 5; y++) {
-    //     for (let x = 0; x < EnableToPlace[y].length; x++) {
-    //       if (EnableToPlace[y][x] !== null && selected.look) {
-    //         let Selected = {
-    //           top: selected.look[
-    //             ((selected.rotated % 2 === 1 && selected.flip === -1 ? 2 : 0) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //           ],
-    //           right:
-    //             selected.look[
-    //             ((selected.rotated % 2 === 0 && selected.flip === -1
-    //               ? 3
-    //               : 1) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //             ],
-    //           bottom:
-    //             selected.look[
-    //             ((selected.rotated % 2 === 1 && selected.flip === -1
-    //               ? 0
-    //               : 2) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //             ],
-    //           left: selected.look[
-    //             ((selected.rotated % 2 === 0 && selected.flip === -1 ? 1 : 3) +
-    //               ((4 - selected.rotated) % 4)) %
-    //             4
-    //           ],
-    //         };
-
-    //         // top <-> bottom
-    //         if (y - 1 > 0) {
-    //           if (board[y - 1][x] !== null && board[y - 1][x].look) {
-    //             let AbovePlaced = {
-    //               bottom:
-    //                 board[y - 1][x].look[
-    //                 ((board[y - 1][x].rotated % 2 === 1 &&
-    //                   board[y - 1][x].flip === -1
-    //                   ? 0
-    //                   : 2) +
-    //                   ((4 - board[y - 1][x].rotated) % 4)) %
-    //                 4
-    //                 ],
-    //             };
-
-    //             if (Selected.top !== AbovePlaced.bottom) {
-    //               if (Selected.top !== null && AbovePlaced.bottom !== null && AbovePlaced.bottom !== "wa") {
-    //                 EnableToPlace[y][x] = null;
-    //               }
-    //             }
-    //           }
-    //         }
-
-    //         // right <-> left
-
-    //         if (x + 1 < EnableToPlace[y].length) {
-    //           if (board[y][x + 1] !== null && board[y][x + 1].look) {
-    //             let LeftSide = {
-    //               left: board[y][x + 1].look[
-    //                 ((board[y][x + 1].rotated % 2 === 0 &&
-    //                   board[y][x + 1].flip === -1
-    //                   ? 1
-    //                   : 3) +
-    //                   ((4 - board[y][x + 1].rotated) % 4)) %
-    //                 4
-    //               ],
-    //             };
-
-    //             if (Selected.right !== LeftSide.left) {
-    //               if (Selected.right !== null && LeftSide.left !== null && LeftSide.left !== "wa") {
-    //                 EnableToPlace[y][x] = null;
-    //               }
-    //             }
-    //           }
-    //         }
-
-    //         // bottom <-> top
-    //         if (y + 1 < EnableToPlace.length) {
-    //           if (board[y + 1][x] !== null && board[y + 1][x].look) {
-    //             let UnderPlace = {
-    //               top: board[y + 1][x].look[
-    //                 ((board[y + 1][x].rotated % 2 === 1 &&
-    //                   board[y + 1][x].flip === -1
-    //                   ? 2
-    //                   : 0) +
-    //                   ((4 - board[y + 1][x].rotated) % 4)) %
-    //                 4
-    //               ],
-    //             };
-
-    //             if (Selected.bottom !== UnderPlace.top) {
-    //               if (Selected.bottom !== null && UnderPlace.top !== null && UnderPlace.top !== "wa") {
-    //                 EnableToPlace[y][x] = null;
-    //               }
-    //             }
-    //           }
-    //         }
-
-    //         // left <-> right
-    //         if (x - 1 > 0) {
-    //           if (board[y][x - 1] !== null && board[y][x - 1].look) {
-    //             let RightSide = {
-    //               right:
-    //                 board[y][x - 1].look[
-    //                 ((board[y][x - 1].rotated % 2 === 0 &&
-    //                   board[y][x - 1].flip === -1
-    //                   ? 3
-    //                   : 1) +
-    //                   ((4 - board[y][x - 1].rotated) % 4)) %
-    //                 4
-    //                 ],
-    //             };
-
-    //             if (Selected.left !== RightSide.right) {
-    //               if (Selected.left !== null && RightSide.right !== null && RightSide.right !== "wa") {
-    //                 EnableToPlace[y][x] = null;
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // } 
-
-    console.log(EnableToPlace);
     setEnabledCells(EnableToPlace);
   };
 
+  const elementNotEmpty = (elem) => {
+    if (elem !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const elementNotWall = elem => {
+    if (elem.name !== "wa") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const matchingTopAndBottom = (currentE, otherE) => {
+    if (currentE.look[0] === otherE.look[2]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const matchingBottomAndTop = (currentE, otherE) => {
+    if (elementNotEmpty(otherE) && elementNotWall(otherE)) {
+      if (currentE.look[2] === otherE.look[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  const changingAllTheExistedPathToTheSame = (array, changeThis, changeToThat) => {
+    for (let x = 0; x < array.length; x++) {
+      for (let y = 0; y < array[x].length; y++) {
+        if (array[x][y] === changeThis) {
+          array[x][y] = changeToThat;
+        }
+      }
+    }
+
+    return array;
+  }
+
   const calculateExits = (board) => {
     let calculationBoard = [];
+    let exits = 1;
 
     for (let i = 0; i < board.length; i++) {
       let row = [];
+
       for (let j = 0; j < board[i].length; j++) {
-        row.push(null);
+        if (board[i][j] !== null && (board[i][j].name === "ro" || board[i][j].name === "ra")) {
+          row.push(exits);
+          exits++;
+        } else {
+          row.push(null);
+        }
       }
       calculationBoard.push(row);
     }
 
+    for (let i = 0; i < board.length - 1; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (elementNotEmpty(board[i][j]) && elementNotWall(board[i][j])) {
+          if (matchingBottomAndTop(board[i][j], board[i + 1][j])) {
+            if (elementNotEmpty(calculationBoard[i + 1][j]) && calculationBoard[i + 1][j] < calculationBoard[i][j]) {
+              calculationBoard = changingAllTheExistedPathToTheSame(calculationBoard, calculationBoard[i][j], calculationBoard[i + 1][j]);
+            } else {
+              calculationBoard[i + 1][j] = calculationBoard[i][j];
+            }
+          } // bottom <-> top validator
+        } // board x y validator
+      }
+    }
 
     // for (let i = 1; i < board.length - 1; i++) {
     //   for (let j = 1; j < board[i].length - 1; j++) {
@@ -359,8 +180,8 @@ const Board = () => {
   }
 
   const handlerCalculate = (board) => {
-    calculateExits(board);
     console.log(board);
+    calculateExits(board);
   };
 
   return (

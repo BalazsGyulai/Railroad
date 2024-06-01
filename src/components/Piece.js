@@ -7,7 +7,7 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
 
   // ------ global variables ---------
   const { SetSelected, selected, action, changeCellItemSelected, round } = useContext(Moving);
-  const {cellSize} = useContext(BoardManage);
+  const {cellSize, dropped} = useContext(BoardManage);
 
   // -------- states -----------------
   const [rotate, setRotate] = useState(piece.rotated);
@@ -33,7 +33,7 @@ const Piece = ({ piece, selectedColor, baseColor, borderRadius }) => {
   useEffect(() => {
     setRotate(0);
     setFlip(0);
-  }, [round])
+  }, [round, dropped])
 
   // ------------------------------------------
   // This will be called if the item was clicked

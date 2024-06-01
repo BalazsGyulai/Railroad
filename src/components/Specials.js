@@ -29,7 +29,7 @@ function SPECIALS() {
       look: ["s", "s", "u", "s"]
     },
     {
-      name: "S2",
+      name: "S2C",
       item: <S2 />,
       rotated: 0,
       flip: 0,
@@ -37,7 +37,7 @@ function SPECIALS() {
       look: ["u", "u", "u", "u"]
     },
     {
-      name: "S3",
+      name: "S3C",
       item: <S3 />,
       rotated: 0,
       flip: 0,

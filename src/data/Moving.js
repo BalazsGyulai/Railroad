@@ -73,26 +73,26 @@ export function MovingManage({ children }) {
     let turnable = selected;
     let temp = "";
 
-    turnable.rotated = turnable.rotated + val;
+    selected.rotated = selected.rotated + val;
     
     if (val > 0) { // turning right
-      temp = turnable.look[3];
+      temp = selected.look[3];
       for (let i = 3; i > 0; i--) {
-        turnable.look[i] = turnable.look[i - 1];
+        selected.look[i] = selected.look[i - 1];
       }
-      turnable.look[0] = temp;
+      selected.look[0] = temp;
     } else { // turning left
-      temp = turnable.look[0];
+      temp = selected.look[0];
       for (let i = 0; i < 3; i++) {
-        turnable.look[i] = turnable.look[i + 1];
+        selected.look[i] = selected.look[i + 1];
       }
-      turnable.look[3] = temp;
+      selected.look[3] = temp;
     }
 
-    if (turnable.rotated < 0) {
-      turnable.rotated = 3;
-    } else if (turnable.rotated > 3) {
-      turnable.rotated = 0;
+    if (selected.rotated < 0) {
+      selected.rotated = 3;
+    } else if (selected.rotated > 3) {
+      selected.rotated = 0;
     }
 
     upgradeAction();

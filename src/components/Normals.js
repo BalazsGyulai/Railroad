@@ -64,7 +64,7 @@ function NORMALS() {
       look: ["u", null, "u", null]
     },
     {
-      name: "B0",
+      name: "B0C",
       item: <B0 />,
       rotated: 0,
       flip: 0,
@@ -92,7 +92,7 @@ function NORMALS() {
 
 const Normals = () => {
   const { round, action, placedAllItem, updatePlacedAllItems } = useContext(Moving);
-  const { board } = useContext(BoardManage);
+  const { board, dropped } = useContext(BoardManage);
   const [normals, setNormals] = useState("");
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Normals = () => {
     }
 
     setNormals(NewSpecials);
-  }, [round]);
+  }, [round, dropped]);
 
   useEffect(() => {
     let countPlacedItem = 0; // count the item which is placed in the round
