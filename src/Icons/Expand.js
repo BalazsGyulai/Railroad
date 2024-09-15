@@ -1,6 +1,6 @@
 import React from "react";
 
-const expand = () => {
+const Expand = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,4 +13,4 @@ const expand = () => {
   );
 };
 
-export default expand;
+export default Expand;

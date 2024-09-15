@@ -4,6 +4,12 @@ import "./Board.css";
 import BoardTable from "../data/Board";
 import Moving from "../data/Moving";
 import NextArrow from "../Icons/NextArrow";
+import PlayerEarnedPoints from "./PlayerEarnedPoints";
+import Exits from "./../Icons/Exits";
+import MiniRoad from "./../Icons/MiniRoad";
+import MiniRail from "./../Icons/MiniRail";
+import Center from "./../Icons/Center";
+import NotConnected from "./../Icons/NotConnected";
 
 const Board = () => {
   const { board, windowSize, cellSize } = useContext(BoardTable);
@@ -12,6 +18,7 @@ const Board = () => {
 
   const [calculate, setCalculate] = useState("");
   const [enabledCells, setEnabledCells] = useState("");
+  const [EarnedPoints, setEarnedPoints] = useState(0);
 
   useEffect(() => {
     handlerCalculate(board);
@@ -159,6 +166,17 @@ const Board = () => {
       return false;
     }
   };
+  const matchingLeftAndRight = (currentE, otherE) => {
+    if (elementNotEmpty(otherE) && elementNotWall(otherE)) {
+      if (currentE.look[3] === otherE.look[1]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const changingAllTheExistedPathToTheSame = (
     array,
@@ -179,11 +197,8 @@ const Board = () => {
   const calculateExits = (board) => {
     let calculationBoard = [];
     let exits = 1;
+    let EarnedPoints = 0;
     let PointsForConnectedExits = [
-      {
-        connected: 1,
-        points: 0
-      },
       {
         connected: 2,
         points: 4
@@ -309,25 +324,25 @@ const Board = () => {
                   }
                 }
               } // right <-> left validator
+            }
 
-              if (j > 0) {
-                if (matchingRightAndLeft(board[i][j], board[i][j - 1])) {
-                  if (
-                    elementNotEmpty(calculationBoard[i][j - 1]) &&
-                    calculationBoard[i][j - 1] < calculationBoard[i][j]
-                  ) {
-                    calculationBoard = changingAllTheExistedPathToTheSame(
-                      calculationBoard,
-                      calculationBoard[i][j],
-                      calculationBoard[i][j - 1]
-                    );
-                  } else {
-                    if (elementNotEmpty(calculationBoard[i][j])) {
-                      calculationBoard[i][j - 1] = calculationBoard[i][j];
-                    }
+            if (j > 0) {
+              if (matchingLeftAndRight(board[i][j], board[i][j - 1])) {
+                if (
+                  elementNotEmpty(calculationBoard[i][j - 1]) &&
+                  calculationBoard[i][j - 1] < calculationBoard[i][j]
+                ) {
+                  calculationBoard = changingAllTheExistedPathToTheSame(
+                    calculationBoard,
+                    calculationBoard[i][j],
+                    calculationBoard[i][j - 1]
+                  );
+                } else {
+                  if (elementNotEmpty(calculationBoard[i][j])) {
+                    calculationBoard[i][j - 1] = calculationBoard[i][j];
                   }
-                } // lfet <-> right validator
-              }
+                }
+              } // lfet <-> right validator
             }
           } // board x y validator
         }
@@ -338,6 +353,56 @@ const Board = () => {
     // calculates the points
     //---------------------------------------------------------
 
+    let maxExits = 0;
+    for (let i = 0; i < calculationBoard.length; i += 2) {
+      for (let j = 0; j < calculationBoard[i].length; j += 2) {
+        if (
+          i > 0 &&
+          i < calculationBoard.length - 1 &&
+          j > 0 &&
+          j < calculationBoard[i].length - 1
+        ) {
+          continue;
+          console.log(calculationBoard[i][j]);
+        }
+        if (elementNotEmpty(calculationBoard[i][j])) {
+          if (calculationBoard[i][j] > maxExits) {
+            maxExits = calculationBoard[i][j];
+          }
+        }
+      }
+    } // finds out how many exits are there
+
+    for (let n = 1; n <= maxExits; n++) {
+      let conected = 0;
+      for (let i = 0; i < calculationBoard.length; i += 2) {
+        for (let j = 0; j < calculationBoard[i].length; j += 2) {
+          if (
+            i > 0 &&
+            i < calculationBoard.length - 1 &&
+            j > 0 &&
+            j < calculationBoard[i].length - 1
+          ) {
+            continue;
+          }
+          if (
+            elementNotEmpty(calculationBoard[i][j]) &&
+            calculationBoard[i][j] == n
+          ) {
+            conected++;
+          }
+        }
+      }
+
+      for (let k = 0; k < PointsForConnectedExits.length; k++) {
+        if (conected == PointsForConnectedExits[k].connected) {
+          setEarnedPoints((EarnedPoints += PointsForConnectedExits[k].points));
+        }
+      }
+      console.log(conected);
+    }
+
+    console.log(`POINTS: ${EarnedPoints}`);
     console.log(calculationBoard);
   };
 
@@ -381,6 +446,41 @@ const Board = () => {
           >
             <NextArrow />
           </div>
+        </div>
+
+        <div
+          className="PlayerPointsHolder"
+          style={{
+            height: `${cellSize * 0.7}px`
+          }}
+        >
+          <PlayerEarnedPoints
+            cellSize={cellSize}
+            EarnedPoints={EarnedPoints}
+            icon={<Exits />}
+            fill="none"
+          />
+          <PlayerEarnedPoints
+            cellSize={cellSize}
+            EarnedPoints={EarnedPoints}
+            icon={<MiniRoad />}
+          />
+          <PlayerEarnedPoints
+            cellSize={cellSize}
+            EarnedPoints={EarnedPoints}
+            icon={<MiniRail />}
+          />
+          <PlayerEarnedPoints
+            cellSize={cellSize}
+            EarnedPoints={EarnedPoints}
+            icon={<Center />}
+            fill={"none"}
+          />
+          <PlayerEarnedPoints
+            cellSize={cellSize}
+            EarnedPoints={EarnedPoints}
+            icon={<NotConnected />}
+          />
         </div>
       </div>
 
