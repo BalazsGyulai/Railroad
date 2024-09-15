@@ -42,38 +42,68 @@ const Board = () => {
       // console.log(selected.look);
       for (let y = 1; y < board.length - 1; y++) {
         for (let x = 1; x < board[y].length - 1; x++) {
-
           // top --- bottom
-          if (board[y - 1][x] !== null && board[y - 1][x].look && selected.look) {
-            if (elementNotEmpty(selected.look[0]) && elementNotEmpty(board[y - 1][x].look[2]) && selected.look[0] === board[y - 1][x].look[2]) {
+          if (
+            board[y - 1][x] !== null &&
+            board[y - 1][x].look &&
+            selected.look
+          ) {
+            if (
+              elementNotEmpty(selected.look[0]) &&
+              elementNotEmpty(board[y - 1][x].look[2]) &&
+              selected.look[0] === board[y - 1][x].look[2]
+            ) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // left --- right
-          if (board[y][x + 1] !== null && board[y][x + 1].look && selected.look) {
-            if (elementNotEmpty(selected.look[1]) && elementNotEmpty(board[y][x + 1].look[3]) && selected.look[1] === board[y][x + 1].look[3]) {
+          if (
+            board[y][x + 1] !== null &&
+            board[y][x + 1].look &&
+            selected.look
+          ) {
+            if (
+              elementNotEmpty(selected.look[1]) &&
+              elementNotEmpty(board[y][x + 1].look[3]) &&
+              selected.look[1] === board[y][x + 1].look[3]
+            ) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // bottom --- top
-          if (board[y + 1][x] !== null && board[y + 1][x].look && selected.look) {
-            if (elementNotEmpty(selected.look[2]) && elementNotEmpty(board[y + 1][x].look[0]) && selected.look[2] === board[y + 1][x].look[0]) {
+          if (
+            board[y + 1][x] !== null &&
+            board[y + 1][x].look &&
+            selected.look
+          ) {
+            if (
+              elementNotEmpty(selected.look[2]) &&
+              elementNotEmpty(board[y + 1][x].look[0]) &&
+              selected.look[2] === board[y + 1][x].look[0]
+            ) {
               EnableToPlace[y][x] = "enable";
             }
           }
 
           // right --- left
-          if (board[y][x - 1] !== null && board[y][x - 1].look && selected.look) {
-            if (elementNotEmpty(selected.look[3]) && elementNotEmpty(board[y][x - 1].look[1]) && selected.look[3] === board[y][x - 1].look[1]) {
+          if (
+            board[y][x - 1] !== null &&
+            board[y][x - 1].look &&
+            selected.look
+          ) {
+            if (
+              elementNotEmpty(selected.look[3]) &&
+              elementNotEmpty(board[y][x - 1].look[1]) &&
+              selected.look[3] === board[y][x - 1].look[1]
+            ) {
               EnableToPlace[y][x] = "enable";
             }
           }
         }
       }
     }
-
 
     setEnabledCells(EnableToPlace);
   };
@@ -84,23 +114,27 @@ const Board = () => {
     } else {
       return false;
     }
-  }
+  };
 
-  const elementNotWall = elem => {
+  const elementNotWall = (elem) => {
     if (elem.name !== "wa") {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   const matchingTopAndBottom = (currentE, otherE) => {
-    if (currentE.look[0] === otherE.look[2]) {
-      return true;
+    if (elementNotEmpty(otherE) && elementNotWall(otherE)) {
+      if (currentE.look[0] === otherE.look[2]) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
-  }
+  };
 
   const matchingBottomAndTop = (currentE, otherE) => {
     if (elementNotEmpty(otherE) && elementNotWall(otherE)) {
@@ -112,9 +146,25 @@ const Board = () => {
     } else {
       return false;
     }
-  }
+  };
 
-  const changingAllTheExistedPathToTheSame = (array, changeThis, changeToThat) => {
+  const matchingRightAndLeft = (currentE, otherE) => {
+    if (elementNotEmpty(otherE) && elementNotWall(otherE)) {
+      if (currentE.look[1] === otherE.look[3]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const changingAllTheExistedPathToTheSame = (
+    array,
+    changeThis,
+    changeToThat
+  ) => {
     for (let x = 0; x < array.length; x++) {
       for (let y = 0; y < array[x].length; y++) {
         if (array[x][y] === changeThis) {
@@ -124,17 +174,70 @@ const Board = () => {
     }
 
     return array;
-  }
+  };
 
   const calculateExits = (board) => {
     let calculationBoard = [];
     let exits = 1;
+    let PointsForConnectedExits = [
+      {
+        connected: 1,
+        points: 0
+      },
+      {
+        connected: 2,
+        points: 4
+      },
+      {
+        connected: 3,
+        points: 8
+      },
+      {
+        connected: 4,
+        points: 12
+      },
+      {
+        connected: 5,
+        points: 16
+      },
+      {
+        connected: 6,
+        points: 20
+      },
+      {
+        connected: 7,
+        points: 24
+      },
+      {
+        connected: 8,
+        points: 28
+      },
+      {
+        connected: 9,
+        points: 32
+      },
+      {
+        connected: 10,
+        points: 36
+      },
+      {
+        connected: 11,
+        points: 40
+      },
+      {
+        connected: 12,
+        points: 45
+      }
+    ];
 
     for (let i = 0; i < board.length; i++) {
       let row = [];
 
       for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] !== null && (board[i][j].name === "ro" || board[i][j].name === "ra")) {
+        if (
+          board[i][j] !== null &&
+          (board[i][j].name === "ro" || board[i][j].name === "ra")
+        ) {
           row.push(exits);
           exits++;
         } else {
@@ -144,40 +247,99 @@ const Board = () => {
       calculationBoard.push(row);
     }
 
-    for (let i = 0; i < board.length - 1; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (elementNotEmpty(board[i][j]) && elementNotWall(board[i][j])) {
-          if (matchingBottomAndTop(board[i][j], board[i + 1][j])) {
-            if (elementNotEmpty(calculationBoard[i + 1][j]) && calculationBoard[i + 1][j] < calculationBoard[i][j]) {
-              calculationBoard = changingAllTheExistedPathToTheSame(calculationBoard, calculationBoard[i][j], calculationBoard[i + 1][j]);
-            } else {
-              calculationBoard[i + 1][j] = calculationBoard[i][j];
+    // ----------------------------------------------
+    // Connects the exits
+    // ----------------------------------------------
+
+    for (let n = 0; n < board.length * board[0].length; n++) {
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (elementNotEmpty(board[i][j]) && elementNotWall(board[i][j])) {
+            if (i < board.length - 1) {
+              if (matchingBottomAndTop(board[i][j], board[i + 1][j])) {
+                if (
+                  elementNotEmpty(calculationBoard[i + 1][j]) &&
+                  calculationBoard[i + 1][j] < calculationBoard[i][j]
+                ) {
+                  calculationBoard = changingAllTheExistedPathToTheSame(
+                    calculationBoard,
+                    calculationBoard[i][j],
+                    calculationBoard[i + 1][j]
+                  );
+                } else {
+                  if (elementNotEmpty(calculationBoard[i][j])) {
+                    calculationBoard[i + 1][j] = calculationBoard[i][j];
+                  }
+                }
+              } // bottom <-> top validator
             }
-          } // bottom <-> top validator
-        } // board x y validator
+            if (i > 0) {
+              if (matchingTopAndBottom(board[i][j], board[i - 1][j])) {
+                if (
+                  elementNotEmpty(calculationBoard[i - 1][j]) &&
+                  calculationBoard[i - 1][j] < calculationBoard[i][j]
+                ) {
+                  calculationBoard = changingAllTheExistedPathToTheSame(
+                    calculationBoard,
+                    calculationBoard[i][j],
+                    calculationBoard[i - 1][j]
+                  );
+                } else {
+                  if (elementNotEmpty(calculationBoard[i][j])) {
+                    calculationBoard[i - 1][j] = calculationBoard[i][j];
+                  }
+                }
+              }
+            } // top <-> bottom validator
+
+            if (j < board[i].length - 1) {
+              if (matchingRightAndLeft(board[i][j], board[i][j + 1])) {
+                if (
+                  elementNotEmpty(calculationBoard[i][j + 1]) &&
+                  calculationBoard[i][j + 1] < calculationBoard[i][j]
+                ) {
+                  calculationBoard = changingAllTheExistedPathToTheSame(
+                    calculationBoard,
+                    calculationBoard[i][j],
+                    calculationBoard[i][j + 1]
+                  );
+                } else {
+                  if (elementNotEmpty(calculationBoard[i][j])) {
+                    calculationBoard[i][j + 1] = calculationBoard[i][j];
+                  }
+                }
+              } // right <-> left validator
+
+              if (j > 0) {
+                if (matchingRightAndLeft(board[i][j], board[i][j - 1])) {
+                  if (
+                    elementNotEmpty(calculationBoard[i][j - 1]) &&
+                    calculationBoard[i][j - 1] < calculationBoard[i][j]
+                  ) {
+                    calculationBoard = changingAllTheExistedPathToTheSame(
+                      calculationBoard,
+                      calculationBoard[i][j],
+                      calculationBoard[i][j - 1]
+                    );
+                  } else {
+                    if (elementNotEmpty(calculationBoard[i][j])) {
+                      calculationBoard[i][j - 1] = calculationBoard[i][j];
+                    }
+                  }
+                } // lfet <-> right validator
+              }
+            }
+          } // board x y validator
+        }
       }
-    }
+    } // connects the exits
 
-    // for (let i = 1; i < board.length - 1; i++) {
-    //   for (let j = 1; j < board[i].length - 1; j++) {
-    //     // check for matchin top
-    //     if (board[i][j] != null) {
-    //       let myTop = board[i][j].look[(3 - board[i][j].rotated % 4)];
-    //       if (board[i][j].look[0] == board[i - 1][j].look[2]) {
-    //         // checks for a calculated value above
-    //         if (calculationBoard[i - 1][j] != null){
-    //           calculationBoard[i][j] = calculationBoard[i - 1][j] + 1;
-    //         } else{
-    //           calculationBoard[i][j] = 1;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
+    //---------------------------------------------------------
+    // calculates the points
+    //---------------------------------------------------------
 
     console.log(calculationBoard);
-  }
+  };
 
   const handlerCalculate = (board) => {
     console.log(board);
@@ -189,21 +351,21 @@ const Board = () => {
       <div
         className="statsHolder"
         style={{
-          height: `${cellSize + 10}px`,
+          height: `${cellSize + 10}px`
         }}
       >
         <div
           className="RoundHolder"
           style={{
             width: `${cellSize * 0.7 * 2}px`,
-            height: `${cellSize * 0.7}px`,
+            height: `${cellSize * 0.7}px`
           }}
         >
           <div
             className="RoundDisplay"
             style={{
               width: `${cellSize * 0.7}px`,
-              height: `${cellSize * 0.7}px`,
+              height: `${cellSize * 0.7}px`
             }}
           >
             {round}
@@ -214,7 +376,7 @@ const Board = () => {
             style={{
               width: `${cellSize * 0.7 * 2 - (cellSize * 0.7) / 2}px`,
               padding: `5px 5px 5px ${(cellSize * 0.7) / 2 + 5}px`,
-              borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`,
+              borderRadius: `0 ${cellSize / 2}px ${cellSize / 2}px 0`
             }}
           >
             <NextArrow />
@@ -228,7 +390,7 @@ const Board = () => {
           height:
             windowSize.x < 769
               ? `${windowSize.y - (cellSize + 10) * 4 - 5}px`
-              : `${windowSize.y - (cellSize + 10)}px`,
+              : `${windowSize.y - (cellSize + 10)}px`
         }}
       >
         <div id="board">

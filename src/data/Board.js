@@ -12,7 +12,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -20,7 +20,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "ro",
@@ -28,7 +28,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -36,7 +36,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     {
       name: "ra",
@@ -44,7 +44,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -52,7 +52,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "ro",
@@ -60,7 +60,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -68,7 +68,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -76,8 +76,8 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 1
   [
     {
@@ -86,7 +86,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -101,8 +101,8 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 2
   [
     {
@@ -111,7 +111,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 1,
       flip: 0,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -126,8 +126,8 @@ const BOARD = [
       item: <Trail />,
       rotated: 1,
       flip: 0,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 3
   [
     {
@@ -136,7 +136,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -151,8 +151,8 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 4
   [
     {
@@ -161,7 +161,7 @@ const BOARD = [
       item: <Road />,
       rotated: 1,
       flip: 0,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -176,8 +176,8 @@ const BOARD = [
       item: <Road />,
       rotated: 1,
       flip: 0,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 5
   [
     {
@@ -186,7 +186,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -201,8 +201,8 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 6
   [
     {
@@ -211,7 +211,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 1,
       flip: 0,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -226,8 +226,8 @@ const BOARD = [
       item: <Trail />,
       rotated: 1,
       flip: 0,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 7
   [
     {
@@ -236,7 +236,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     null,
     null,
@@ -251,8 +251,8 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
-    },
+      round: 0
+    }
   ], // 8
   [
     {
@@ -261,7 +261,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -269,7 +269,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     {
       name: "ro",
@@ -277,7 +277,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -285,7 +285,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "ra",
@@ -293,7 +293,7 @@ const BOARD = [
       item: <Trail />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -301,7 +301,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 1,
-      round: 0,
+      round: 0
     },
     {
       name: "ro",
@@ -309,7 +309,7 @@ const BOARD = [
       item: <Road />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -317,7 +317,7 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
+      round: 0
     },
     {
       name: "wa",
@@ -325,9 +325,9 @@ const BOARD = [
       item: <WA />,
       rotated: 0,
       flip: 0,
-      round: 0,
-    },
-  ], // 9
+      round: 0
+    }
+  ] // 9
 ];
 
 const BoardTable = createContext();
@@ -342,7 +342,7 @@ export function BoardManage({ children }) {
     upgradeAction,
     deleteItem,
     deleteHandler,
-    placedAllItem,
+    placedAllItem
   } = useContext(Moving);
 
   // --------- local global variables -----------
@@ -350,7 +350,7 @@ export function BoardManage({ children }) {
   const [dropped, setDropped] = useState(false);
   const [windowSize, setWindowSize] = useState({
     x: 0,
-    y: 0,
+    y: 0
   });
   const [cellSize, setCellSize] = useState(65);
 
@@ -397,7 +397,7 @@ export function BoardManage({ children }) {
   const handleWindowResize = () => {
     setWindowSize({
       x: window.innerWidth,
-      y: window.innerHeight,
+      y: window.innerHeight
     });
 
     let x = window.innerWidth;
@@ -430,7 +430,7 @@ export function BoardManage({ children }) {
   const droppedHandler = () => {
     console.log(dropped);
     setDropped(!dropped);
-  }
+  };
 
   // -------------------------------------
   // Sets the selected item to the board
@@ -449,7 +449,6 @@ export function BoardManage({ children }) {
     }
 
     if (!found) {
-
       // const newBoard = board.map((row, i) => {
       //   row.map((column, j) => {
       //     if (i === y && j === x) {
@@ -461,11 +460,11 @@ export function BoardManage({ children }) {
       // });
       let newBoard = [];
       newBoard = board.map((row, i) => {
-        if (i === y){
+        if (i === y) {
           let sor = row.map((column, j) => {
-            if (j === x){
+            if (j === x) {
               let newSelected = selected;
-              newSelected.key = {i,j};
+              newSelected.key = { i, j };
               return newSelected;
             } else {
               return column;
@@ -475,11 +474,11 @@ export function BoardManage({ children }) {
         } else {
           return row;
         }
-      })
+      });
 
-      console.log(newBoard);
+      // console.log(newBoard);
 
-      setBoard([...newBoard], (newBoard[y][x] = {...selected}));
+      setBoard([...newBoard], (newBoard[y][x] = { ...selected }));
 
       // let newBoard = board;
       // // console.log(selected);
@@ -487,7 +486,7 @@ export function BoardManage({ children }) {
 
       // setBoard([...board], (board[y][x] = { ...selected }));
     }
-  }
+  };
 
   const dropToCellHandler = (x, y) => {
     if (selected !== "" && selected !== null) {
