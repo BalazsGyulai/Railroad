@@ -1,4 +1,4 @@
-NOTE: The repo is not maintained nowadays so the packages and the game versino and socket communication is really depricated.
+NOTE: The repo is not maintained nowadays so the packages and the game versino and socket communication is depricated. :(
 
 # Getting Started with Create React App
 
