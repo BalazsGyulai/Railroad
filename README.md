@@ -1,3 +1,5 @@
+NOTE: The repo is not maintained nowadays so the packages and the game versino and socket communication is really depricated.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
